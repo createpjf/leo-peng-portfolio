@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "WebFetch(domain:www.base.org)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(npm create vite@latest . -- --template react)",
+      "Bash(npm install)",
+      "Bash(npx vite build)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

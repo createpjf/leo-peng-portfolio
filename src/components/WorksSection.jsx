@@ -20,7 +20,7 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       }}
     >
       <div style={{
-        background: T.bgSec, aspectRatio: '4/5', marginBottom: 16,
+        background: T.bgSec, aspectRatio: '2/1', marginBottom: 12,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden', position: 'relative',
         border: `1px solid ${hover ? T.accent : T.border}`,
@@ -28,8 +28,7 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       }}>
         <div style={{
           transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-          transform: hover ? 'scale(1.04)' : 'scale(1)',
-          filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.05))',
+          transform: hover ? 'scale(1.06)' : 'scale(1)',
         }}>{children}</div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 14 }}>
@@ -44,8 +43,8 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
 };
 
 const WorksSection = () => (
-  <section id="work" className="section-pad" style={{ padding: '80px 40px', background: '#fafafa' }}>
-    <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>Selected Projects</h2>
+  <section id="work" className="section-pad" style={{ padding: '60px 40px', background: '#fafafa' }}>
+    <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 32, letterSpacing: '-0.01em' }}>Selected Work.</h2>
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} delay={`${i * 0.1}s`} href={p.href}>

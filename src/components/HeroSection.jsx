@@ -1,8 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from '../data/theme';
 import { personalInfo, expertisePills } from '../data/siteContent';
 
-const HeroSection = ({ selectedPills, togglePill }) => (
+const PillWithTooltip = ({ pill }) => {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      style={{ position: 'relative', display: 'inline-block' }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {/* Apple-style tooltip */}
+      <div style={{
+        position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%',
+        transform: `translateX(-50%) translateY(${hover ? '0' : '4px'})`,
+        background: '#fff', color: T.text,
+        fontSize: 12, lineHeight: 1.55, padding: '10px 16px',
+        borderRadius: 10, pointerEvents: 'none',
+        boxShadow: '0 2px 20px rgba(0,0,0,0.10), 0 0 0 0.5px rgba(0,0,0,0.06)',
+        width: 260, textAlign: 'center',
+        opacity: hover ? 1 : 0,
+        transition: 'opacity 0.2s ease, transform 0.2s ease',
+        letterSpacing: '-0.01em',
+        zIndex: 10,
+      }}>
+        {pill.desc}
+        {/* Arrow */}
+        <div style={{
+          position: 'absolute', top: '100%', left: '50%',
+          transform: 'translateX(-50%)',
+          width: 0, height: 0,
+          borderLeft: '7px solid transparent',
+          borderRight: '7px solid transparent',
+          borderTop: '7px solid #fff',
+          filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.06))',
+        }} />
+      </div>
+      <div
+        style={{
+          border: `1px solid ${T.border}`,
+          padding: '10px 24px', fontSize: 13, borderRadius: 3,
+          cursor: 'default', transition: 'all 0.25s ease',
+          background: hover ? '#000' : 'transparent',
+          color: hover ? '#fff' : T.text,
+          borderColor: hover ? '#000' : T.border,
+        }}
+      >{pill.label}</div>
+    </div>
+  );
+};
+
+const HeroSection = () => (
   <section className="hero-grid">
     {/* Left — dark panel */}
     <div className="hero-dark" style={{
@@ -34,7 +82,7 @@ const HeroSection = ({ selectedPills, togglePill }) => (
         animation: 'fadeUp 0.7s ease 0.2s forwards', opacity: 0,
       }}>
         <div className="scroll-line" style={{ height: 1, background: 'rgba(255,255,255,0.2)' }} />
-        Scroll to explore
+        Scroll
       </div>
     </div>
 
@@ -59,7 +107,7 @@ const HeroSection = ({ selectedPills, togglePill }) => (
         <span style={{
           display: 'block', marginBottom: 8, textTransform: 'uppercase',
           letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
-        }}>Current Status</span>
+        }}>Status</span>
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
           <span style={{
             width: 24, height: 24, borderRadius: '50%',
@@ -77,23 +125,9 @@ const HeroSection = ({ selectedPills, togglePill }) => (
           letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
         }}>Expertise</span>
         <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
-          {expertisePills.map(pill => {
-            const active = selectedPills.includes(pill);
-            return (
-              <div key={pill}
-                onClick={() => togglePill(pill)}
-                onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = '#000'; }}
-                onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = T.border; }}
-                style={{
-                  border: `1px solid ${active ? '#000' : T.border}`,
-                  padding: '10px 24px', fontSize: 13, borderRadius: 3,
-                  cursor: 'pointer', transition: 'all 0.2s ease',
-                  background: active ? '#000' : 'transparent',
-                  color: active ? '#fff' : T.text,
-                }}
-              >{pill}</div>
-            );
-          })}
+          {expertisePills.map(pill => (
+            <PillWithTooltip key={pill.label} pill={pill} />
+          ))}
         </div>
       </div>
 
@@ -108,11 +142,7 @@ const HeroSection = ({ selectedPills, togglePill }) => (
         onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
         onClick={e => e.preventDefault()}
       >
-        Download Resume (PDF)
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transition: 'transform 0.3s ease' }}>
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
+        View Resume →
       </a>
     </div>
   </section>

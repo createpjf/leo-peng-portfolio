@@ -5,7 +5,6 @@ const GlobalStyles = () => {
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
       body { overflow-x: hidden; background: ${T.bg}; }
       a { text-decoration: none; color: inherit; cursor: pointer; }
@@ -51,11 +50,12 @@ const GlobalStyles = () => {
       .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
       .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
       .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
-      .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
       .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
 
       @media (max-width: 1024px) {
         .services-grid { grid-template-columns: repeat(2, 1fr); }
+        .works-grid { grid-template-columns: repeat(2, 1fr); }
       }
 
       @media (max-width: 768px) {

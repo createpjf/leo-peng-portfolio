@@ -16,7 +16,7 @@ const theme = {
   border:   '#e5e5e5',
   borderDk: '#222222',
   white:    '#ffffff',
-  font:     "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  font:     "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif",
 };
 
 export default theme;

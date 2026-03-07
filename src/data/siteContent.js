@@ -9,46 +9,50 @@
 export const personalInfo = {
   name: 'Leo Peng',
   title: 'Creative Technologist',
-  tagline: 'Shanghai-based creative technologist. I bridge storytelling, code, and growth strategy — turning ideas into products that resonate across cultures and platforms.',
-  heroHeadline: ['I build things', 'that ', 'move', 'people.'],  // 第二行的斜体词用第3个元素
-  heroSubtags: 'Video · Code · Marketing · Commerce',
-  quote: '"The best products happen when storytelling meets engineering — when you stop separating the art from the system."',
+  tagline: 'I turn ideas into products. Storytelling meets engineering, across cultures and platforms.',
+  heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],  // 第二行的斜体词用第3个元素
+  heroSubtags: 'Video · Code · Marketing',
+  quote: '"The best work happens when you stop separating the art from the system."',
   quoteAttribution: '— Leo Peng',
-  currentStatus: 'Available for new projects',
-  email: 'hello@leopeng.com',
+  currentStatus: 'Open to new projects.',
+  email: 'leo@flock.io',
   locations: 'Shanghai · Hong Kong · Remote',
-  footerBio: 'Creative technologist bridging video, code, marketing, and commerce. Based in Shanghai, working globally.',
+  footerBio: 'Storytelling meets engineering. Shanghai, working globally.',
 };
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
-export const expertisePills = ['Video', 'Coding', 'Marketing'];
+export const expertisePills = [
+  { label: 'Film', desc: 'Cinematic storytelling with 4A precision—from lens to high-end VFX.' },
+  { label: 'Code', desc: 'Building enterprise-grade tools and developer experiences through "Vibe Coding."' },
+  { label: 'Growth', desc: 'Scaling AI ecosystems and developer communities through strategic, accelerator-led growth.' },
+];
 
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
-export const defaultSelectedPills = ['Video', 'Coding', 'Marketing'];
+export const defaultSelectedPills = ['Film', 'Code', 'Growth'];
 
 /* ─── 导航项 / Navigation Items ─── */
-export const navItems = ['Services', 'Work', 'Experience', 'Writing', 'Contact'];
+export const navItems = ['Services', 'Writing', 'Work', 'Experience', 'Contact'];
 
 /* ─── 服务列表 / Services ─── */
 export const services = [
   {
     num: '01',
-    title: 'Video Production',
-    desc: 'From concept to final cut — brand films, product launches, social content, and documentary storytelling.',
+    title: 'Film & Motion',
+    desc: 'From concept to final cut. Brand films, product stories, social content.',
     tags: ['Directing', 'Editing', 'Motion'],
     iconType: 'video',
   },
   {
     num: '02',
-    title: 'Coding & AI Tools',
-    desc: 'Full-stack prototyping, AI-assisted development, multi-agent systems, and creative tooling.',
+    title: 'Code & AI',
+    desc: 'Full-stack prototyping, multi-agent systems, and tools that think with you.',
     tags: ['React', 'Python', 'AI Agents'],
     iconType: 'code',
   },
   {
     num: '03',
-    title: 'Marketing & Growth',
-    desc: 'Content strategy, community building, KOL partnerships, and bilingual campaign execution.',
+    title: 'Growth & Strategy',
+    desc: 'Content strategy, community building, and bilingual campaigns that land.',
     tags: ['Content', 'Community', 'Bilingual'],
     iconType: 'marketing',
   },
@@ -71,18 +75,39 @@ export const extraExperience = [
 /* ─── 精选项目 / Selected Projects ─── */
 export const projects = [
   {
+    title: 'RouteBox',
+    category: 'Code · AI · API',
+    year: '2026',
+    href: 'https://api.routebox.dev/',
+    thumbnailType: 'api',
+  },
+  {
+    title: 'Suber',
+    category: 'Code · macOS · App',
+    year: '2026',
+    href: 'https://github.com/createpjf/suber-macos',
+    thumbnailType: 'app',
+  },
+  {
+    title: 'OpenClaw FLock Plugin',
+    category: 'Code · AI · Plugin',
+    year: '2026',
+    href: 'https://github.com/createpjf/openclaw-flock-api-platform',
+    thumbnailType: 'plugin',
+  },
+  {
+    title: 'Cleo Agent System',
+    category: 'Code · AI · Multi-Agent',
+    year: '2026',
+    href: 'https://github.com/createpjf/cleo-dev',
+    thumbnailType: 'agents',
+  },
+  {
     title: 'Brand Film',
     category: 'Video · Brand',
     year: '2024',
     href: 'https://www.youtube.com/watch?v=ntZSYRKRlbg',
     thumbnailType: 'video',
-  },
-  {
-    title: 'Cleo Agent System',
-    category: 'Code · AI · Multi-Agent',
-    year: '2025',
-    href: 'https://github.com/createpjf/cleo-dev',
-    thumbnailType: 'agents',
   },
   {
     title: 'Building Agent Worlds from Communication Theory',

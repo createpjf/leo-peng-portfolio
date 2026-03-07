@@ -7,7 +7,7 @@ const ServicesSection = () => {
   const [hovered, setHovered] = useState(null);
   return (
     <section id="services" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>What I Do</h2>
+      <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>What I Do.</h2>
       <div className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
         {services.map((s, i) => (
           <div key={s.num}

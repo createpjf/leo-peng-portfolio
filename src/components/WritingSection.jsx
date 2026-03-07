@@ -87,7 +87,7 @@ const WritingSection = () => (
       marginBottom: 40,
       letterSpacing: '-0.01em',
     }}>
-      Writing
+      Writing.
     </h2>
     <div>
       {writings.map((w, i) => (

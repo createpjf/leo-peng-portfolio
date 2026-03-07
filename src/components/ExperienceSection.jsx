@@ -8,7 +8,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
 
   return (
     <section id="experience" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>Where I've Been</h2>
+      <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>Experience.</h2>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {items.map((item, i) => (
           <div key={item.id}
@@ -45,7 +45,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
             background: 'transparent', color: T.text,
             transition: 'all 0.2s', marginTop: 24, cursor: 'pointer', fontFamily: T.font,
           }}
-        >{showFull ? 'Show Less' : 'View Full History'}</button>
+        >{showFull ? 'Show less' : 'See more'}</button>
       </div>
     </section>
   );

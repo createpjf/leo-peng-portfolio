@@ -21,13 +21,13 @@ export const personalInfo = {
 };
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
-export const expertisePills = ['Video', 'Coding', 'Marketing', 'E-Commerce'];
+export const expertisePills = ['Video', 'Coding', 'Marketing'];
 
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
 export const defaultSelectedPills = ['Video', 'Coding', 'Marketing'];
 
 /* ─── 导航项 / Navigation Items ─── */
-export const navItems = ['Services', 'Work', 'Experience', 'Contact'];
+export const navItems = ['Services', 'Work', 'Experience', 'Writing', 'Contact'];
 
 /* ─── 服务列表 / Services ─── */
 export const services = [
@@ -52,13 +52,6 @@ export const services = [
     tags: ['Content', 'Community', 'Bilingual'],
     iconType: 'marketing',
   },
-  {
-    num: '04',
-    title: 'E-Commerce',
-    desc: 'Platform strategy, product page optimization, cross-border commerce, and conversion-focused UX.',
-    tags: ['Shopify', 'DTC', 'Cross-border'],
-    iconType: 'commerce',
-  },
 ];
 
 /* ─── 工作经历 / Experience ─── */
@@ -78,7 +71,7 @@ export const extraExperience = [
 /* ─── 精选项目 / Selected Projects ─── */
 export const projects = [
   {
-    title: 'FLock Brand Film',
+    title: 'Brand Film',
     category: 'Video · Brand',
     year: '2024',
     href: 'https://www.youtube.com/watch?v=ntZSYRKRlbg',
@@ -100,9 +93,37 @@ export const projects = [
   },
 ];
 
+/* ─── 文章列表 / Writing ─── */
+export const writings = [
+  {
+    title: '开源 AI 的加密经济学',
+    date: '2026-02-16',
+    href: 'https://x.com/createpjf/status/2023264735240630697',
+    source: 'X',
+  },
+  {
+    title: 'Agent 高速时代，模型是它的收费站',
+    date: '2026-02-14',
+    href: 'https://x.com/createpjf/status/2022588570356322421',
+    source: 'X',
+  },
+  {
+    title: '奇点不是一个点，是三层天花板',
+    date: '2026-02-08',
+    href: 'https://x.com/createpjf/status/2020470911623708861',
+    source: 'X',
+  },
+  {
+    title: 'Building Agent Worlds from Communication Theory',
+    date: '2025-03',
+    href: 'https://mp.weixin.qq.com/s/D6x7-5p8Inb_acqhCSp4CA?scene=1',
+    source: 'WeChat',
+  },
+];
+
 /* ─── 社交链接 / Social Links ─── */
 export const socialLinks = [
-  { label: 'Twitter / X', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'GitHub', href: '#' },
+  { label: 'Twitter / X', href: 'https://x.com/createpjf' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/leopeng2023/' },
+  { label: 'GitHub', href: 'https://github.com/createpjf' },
 ];

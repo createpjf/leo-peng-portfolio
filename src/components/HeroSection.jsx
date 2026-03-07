@@ -40,11 +40,6 @@ const HeroSection = ({ selectedPills, togglePill }) => (
 
     {/* Right — info panel */}
     <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div style={{ fontSize: 12, color: T.textLt, marginBottom: 40 }}>
-        Home <span style={{ margin: '0 6px', opacity: 0.4 }}>&rsaquo;</span>
-        Profile <span style={{ margin: '0 6px', opacity: 0.4 }}>&rsaquo;</span>
-        Overview
-      </div>
 
       <h2 style={{
         fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',

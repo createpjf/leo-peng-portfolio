@@ -48,8 +48,9 @@ const GlobalStyles = () => {
 
       /* ─── Responsive ─── */
       .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 60px); }
-      .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; }
+      .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
       .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
+      .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
       .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
       .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
 
@@ -63,6 +64,7 @@ const GlobalStyles = () => {
         .services-grid { grid-template-columns: 1fr; }
         .exp-row { grid-template-columns: 1fr; gap: 4px; }
         .exp-type-badge { margin-top: 8px; justify-self: start; }
+        .writing-row { grid-template-columns: 1fr; gap: 4px; }
         .works-grid { grid-template-columns: 1fr; }
         .footer-grid { grid-template-columns: 1fr; gap: 32px; }
         .footer-bottom { flex-direction: column; gap: 8px; }

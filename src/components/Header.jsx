@@ -14,7 +14,12 @@ const Header = ({ activeNav, setActiveNav }) => (
       {navItems.map(item => (
         <a key={item} href={`#${item.toLowerCase()}`}
           className="nav-link"
-          onClick={e => { e.preventDefault(); setActiveNav(item); }}
+          onClick={e => {
+            e.preventDefault();
+            setActiveNav(item);
+            const el = document.getElementById(item.toLowerCase());
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
           style={{
             color: activeNav === item ? T.text : T.textSec,
             fontWeight: activeNav === item ? 500 : 400,

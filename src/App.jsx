@@ -7,6 +7,7 @@ import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
 import ExperienceSection from './components/ExperienceSection';
 import WorksSection from './components/WorksSection';
+import WritingSection from './components/WritingSection';
 import QuoteSection from './components/QuoteSection';
 import Footer from './components/Footer';
 
@@ -30,6 +31,7 @@ const App = () => {
         <ServicesSection />
         <ExperienceSection showFull={showFull} setShowFull={setShowFull} />
         <WorksSection />
+        <WritingSection />
         <QuoteSection />
       </main>
       <Footer />

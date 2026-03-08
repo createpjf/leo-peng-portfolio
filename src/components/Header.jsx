@@ -90,7 +90,7 @@ const Header = ({ activeNav, setActiveNav }) => {
             onClick={e => handleNav(e, item)}
             style={{
               fontSize: 28, fontWeight: 400, letterSpacing: '-0.02em',
-              color: activeNav === item ? T.text : T.textSec,
+              color: T.text,
               padding: '14px 0',
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
               opacity: menuOpen ? 1 : 0,

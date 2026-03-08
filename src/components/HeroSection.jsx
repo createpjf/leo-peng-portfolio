@@ -72,7 +72,7 @@ const HeroSection = () => {
       }}>
         {/* Poster image (revealed when video fades out) */}
         <img
-          src="/hero-poster.jpg" alt=""
+          src="/hero-poster.jpg" alt="Leo Peng portfolio hero"
           className="hero-video"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',

@@ -128,24 +128,28 @@ export const projects = [
 export const writings = [
   {
     title: '开源 AI 的加密经济学',
+    desc: '用代币经济激励开源AI协作与治理',
     date: '2026-02-16',
     href: 'https://x.com/createpjf/status/2023264735240630697',
     source: 'X',
   },
   {
     title: 'Agent 高速时代，模型是它的收费站',
+    desc: '模型API定价如何塑造Agent生态格局',
     date: '2026-02-14',
     href: 'https://x.com/createpjf/status/2022588570356322421',
     source: 'X',
   },
   {
     title: '奇点不是一个点，是三层天花板',
+    desc: '从算力、数据到对齐，拆解AGI三重瓶颈',
     date: '2026-02-08',
     href: 'https://x.com/createpjf/status/2020470911623708861',
     source: 'X',
   },
   {
     title: 'Building Agent Worlds from Communication Theory',
+    desc: '用传播学框架构建多Agent协作系统',
     date: '2025-03',
     href: 'https://mp.weixin.qq.com/s/D6x7-5p8Inb_acqhCSp4CA?scene=1',
     source: 'WeChat',

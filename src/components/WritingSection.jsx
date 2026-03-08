@@ -12,7 +12,7 @@ const fmtDate = (d) => {
   return month ? `${month} ${year}` : year;
 };
 
-const WritingRow = ({ title, date, href, source, delay, isLast }) => {
+const WritingRow = ({ title, desc, date, href, source, delay, isLast }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -49,6 +49,13 @@ const WritingRow = ({ title, date, href, source, delay, isLast }) => {
         transition: 'color 0.2s',
       }}>
         {title}
+        {desc && (
+          <span style={{
+            fontSize: 12, fontWeight: 400, color: T.textLt, marginLeft: 10, fontStyle: 'italic',
+          }}>
+            —&nbsp;&nbsp;{desc}
+          </span>
+        )}
       </span>
 
       <span style={{
@@ -94,6 +101,7 @@ const WritingSection = () => (
         <WritingRow
           key={w.href}
           title={w.title}
+          desc={w.desc}
           date={w.date}
           href={w.href}
           source={w.source}

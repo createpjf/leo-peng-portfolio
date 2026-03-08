@@ -26,6 +26,7 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
         transition: 'border-color 0.3s',
       }}>
         <div style={{
+          width: '100%', height: '100%',
           transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
           transform: hover ? 'scale(1.06)' : 'scale(1)',
         }}>{children}</div>

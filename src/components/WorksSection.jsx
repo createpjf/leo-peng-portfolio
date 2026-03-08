@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { projects } from '../data/siteContent';
-import ProjectThumbnails from './ProjectThumbnails';
 
 const WorkCard = ({ title, category, year, children, delay, href }) => {
   const [hover, setHover] = useState(false);
@@ -48,9 +47,7 @@ const WorksSection = () => (
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} delay={`${i * 0.1}s`} href={p.href}>
-          {p.thumbnailType === 'agents'
-            ? <img src="/cleo-hero.png" alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            : ProjectThumbnails[p.thumbnailType]}
+          <img src={p.heroImg} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </WorkCard>
       ))}
     </div>

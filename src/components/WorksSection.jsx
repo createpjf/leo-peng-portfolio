@@ -48,7 +48,9 @@ const WorksSection = () => (
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} delay={`${i * 0.1}s`} href={p.href}>
-          {ProjectThumbnails[p.thumbnailType]}
+          {p.thumbnailType === 'agents'
+            ? <img src="/cleo-hero.png" alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            : ProjectThumbnails[p.thumbnailType]}
         </WorkCard>
       ))}
     </div>

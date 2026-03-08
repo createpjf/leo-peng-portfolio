@@ -56,6 +56,13 @@ export const services = [
     tags: ['Content', 'Community', 'Bilingual'],
     iconType: 'marketing',
   },
+  {
+    num: '04',
+    title: 'E-Commerce',
+    desc: 'Platform strategy, product page optimization, cross-border commerce, and conversion-focused UX.',
+    tags: ['Shopify', 'DTC', 'Cross-border'],
+    iconType: 'commerce',
+  },
 ];
 
 /* ─── 工作经历 / Experience ─── */

@@ -63,7 +63,7 @@ export const experienceData = [
   { id: 1, date: '2023 — Present', role: 'Head of Operations & Creative', company: 'FLock.io — Decentralized AI', type: 'Full-time', logo: '/logo-flock.png' },
   { id: 2, date: '2023', role: 'Game Product Operation', company: 'NetEase', type: 'Internship', logo: '/logo-netease.png' },
   { id: 3, date: '2022 — 2024', role: 'Community Manager', company: 'BuidlerDAO & SpringX Accelerator', type: 'Full-time', logo: '/logo-buidlerdao.png' },
-  { id: 4, date: '2021 — 2022', role: 'Advertising Strategist', company: 'Ogilvy', type: 'Agency', logo: '/logo-ogilvy.png' },
+  { id: 4, date: '2021 — 2022', role: 'Advertising Strategist', company: 'Ogilvy', type: 'Agency', logo: '/logo-ogilvy.svg' },
 ];
 
 /* ─── 更多经历（点击展开） / Extra Experience ─── */

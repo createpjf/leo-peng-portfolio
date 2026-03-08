@@ -59,8 +59,10 @@ const GlobalStyles = () => {
         .exp-type-badge { margin-top: 8px; justify-self: start; }
         .writing-row { grid-template-columns: 1fr; gap: 4px; }
         .works-grid { grid-template-columns: 1fr; }
-        .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-        .footer-bottom { flex-direction: column; gap: 8px; }
+        .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+        .footer-grid > div:first-child { grid-column: 1 / -1; }
+        #contact { padding: 48px 32px 32px !important; }
+        .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
         .hero-info { padding: 40px 32px !important; }
       }
 
@@ -72,6 +74,13 @@ const GlobalStyles = () => {
           max-width: calc(100vw - 40px) !important;
         }
         .pill-tooltip > div { left: 24px !important; }
+      }
+
+      /* ─── Footer & quote mobile tweaks ─── */
+      @media (max-width: 480px) {
+        #contact { padding: 40px 20px 28px !important; }
+        .footer-grid { gap: 20px !important; }
+        .quote-section { padding: 48px 20px !important; }
       }
 
       /* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */

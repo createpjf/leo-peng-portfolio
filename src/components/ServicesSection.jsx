@@ -26,7 +26,7 @@ const ServicesSection = () => {
               width: 48, height: 48, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
               background: T.bgSec, borderRadius: 3,
             }}>{ServiceIcons[s.iconType]}</div>
-            <div style={{ fontSize: 15, fontWeight: 500, marginBottom: 8 }}>{s.title}</div>
+            <h3 style={{ fontSize: 15, fontWeight: 500, marginBottom: 8 }}>{s.title}</h3>
             <p style={{ fontSize: 13, color: T.textSec, lineHeight: 1.65 }}>{s.desc}</p>
             <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {s.tags.map(t => (

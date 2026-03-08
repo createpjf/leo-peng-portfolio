@@ -30,11 +30,12 @@ const Header = ({ activeNav, setActiveNav }) => {
         <div style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>{personalInfo.name}</div>
 
         {/* Desktop nav */}
-        <nav className="site-nav desktop-nav" style={{ display: 'flex', gap: 24, fontSize: 13 }}>
+        <nav className="site-nav desktop-nav" role="navigation" aria-label="Main navigation" style={{ display: 'flex', gap: 24, fontSize: 13 }}>
           {navItems.map(item => (
             <a key={item} href={`#${item.toLowerCase()}`}
               className="nav-link"
               onClick={e => handleNav(e, item)}
+              aria-current={activeNav === item ? 'true' : undefined}
               style={{
                 color: activeNav === item ? T.text : T.textSec,
                 fontWeight: activeNav === item ? 500 : 400,

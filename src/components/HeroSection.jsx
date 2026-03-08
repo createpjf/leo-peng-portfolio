@@ -84,6 +84,7 @@ const HeroSection = () => {
           ref={videoRef}
           className="hero-video"
           autoPlay muted playsInline
+          aria-label="Background video" role="presentation"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover', zIndex: 0,

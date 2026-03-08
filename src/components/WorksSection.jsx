@@ -33,7 +33,7 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 14 }}>
         <div>
-          <span style={{ fontWeight: 500, marginBottom: 4, display: 'block' }}>{title}</span>
+          <h3 style={{ fontWeight: 500, marginBottom: 4, display: 'block', fontSize: 'inherit' }}>{title}</h3>
           <span style={{ color: T.textSec, fontSize: 12 }}>{category}</span>
         </div>
         <span style={{ fontVariantNumeric: 'tabular-nums', fontSize: 13, color: T.textLt }}>{year}</span>

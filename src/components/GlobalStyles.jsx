@@ -37,7 +37,7 @@ const GlobalStyles = () => {
 
       /* ─── Responsive ─── */
       .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); }
-      .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
+      .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
       .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
       .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
       .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -62,6 +62,16 @@ const GlobalStyles = () => {
         .footer-grid { grid-template-columns: 1fr; gap: 32px; }
         .footer-bottom { flex-direction: column; gap: 8px; }
         .hero-info { padding: 40px 32px !important; }
+      }
+
+      /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
+      @media (max-width: 768px) {
+        .pill-tooltip {
+          left: 0 !important;
+          transform: translateY(0) !important;
+          max-width: calc(100vw - 40px) !important;
+        }
+        .pill-tooltip > div { left: 24px !important; }
       }
 
       /* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */

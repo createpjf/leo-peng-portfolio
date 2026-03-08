@@ -4,11 +4,14 @@ import { personalInfo, expertisePills } from '../data/siteContent';
 
 const PillWithTooltip = ({ pill }) => {
   const [hover, setHover] = useState(false);
+  const timer = useRef(null);
+  const enter = () => { clearTimeout(timer.current); setHover(true); };
+  const leave = () => { timer.current = setTimeout(() => setHover(false), 120); };
   return (
     <div
       style={{ position: 'relative', display: 'inline-block' }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={enter}
+      onMouseLeave={leave}
       onClick={() => setHover(h => !h)}
     >
       <div className="pill-tooltip" style={{
@@ -113,7 +116,7 @@ const HeroSection = () => {
       </div>
 
       {/* Right — info panel */}
-      <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 3 }}>
         <h2 style={{
           fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',
           lineHeight: 1.1, marginBottom: 8,
@@ -156,7 +159,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <a href="#" style={{
+        <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" style={{
           marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 8,
           fontSize: 16, fontWeight: 500, padding: '12px 0',
           borderBottom: `1px solid ${T.text}`, background: 'none',
@@ -165,7 +168,6 @@ const HeroSection = () => {
         }}
           onMouseEnter={e => { e.currentTarget.style.opacity = '0.6'; }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
-          onClick={e => e.preventDefault()}
         >
           View Resume &rarr;
         </a>

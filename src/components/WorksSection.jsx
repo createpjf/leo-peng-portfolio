@@ -19,7 +19,7 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       }}
     >
       <div style={{
-        background: T.bgSec, aspectRatio: '2/1', marginBottom: 12,
+        background: T.bgSec, aspectRatio: '16/9', marginBottom: 12,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden', position: 'relative',
         border: `1px solid ${hover ? T.accent : T.border}`,

@@ -60,16 +60,15 @@ export const services = [
 
 /* ─── 工作经历 / Experience ─── */
 export const experienceData = [
-  { id: 1, date: '2023 — Present', role: 'Head of Operations & Creative', company: 'FLock.io — Decentralized AI', type: 'Full-time' },
-  { id: 2, date: '2023', role: 'Game Product Operation', company: 'NetEase', type: 'Internship' },
-  { id: 3, date: '2021 — 2023', role: 'Community Manager', company: 'BuidlerDAO & SpringX Accelerator', type: 'Full-time' },
-  { id: 4, date: '2019 — 2021', role: 'Advertising Strategist', company: 'Ogilvy', type: 'Agency' },
+  { id: 1, date: '2023 — Present', role: 'Head of Operations & Creative', company: 'FLock.io — Decentralized AI', type: 'Full-time', logo: '/logo-flock.png' },
+  { id: 2, date: '2023', role: 'Game Product Operation', company: 'NetEase', type: 'Internship', logo: '/logo-netease.png' },
+  { id: 3, date: '2022 — 2024', role: 'Community Manager', company: 'BuidlerDAO & SpringX Accelerator', type: 'Full-time', logo: '/logo-buidlerdao.png' },
+  { id: 4, date: '2021 — 2022', role: 'Advertising Strategist', company: 'Ogilvy', type: 'Agency', logo: '/logo-ogilvy.png' },
 ];
 
 /* ─── 更多经历（点击展开） / Extra Experience ─── */
 export const extraExperience = [
   { id: 5, date: '2017 — 2019', role: 'Documentary Producer', company: 'Independent — Film & Media', type: 'Freelance' },
-  { id: 6, date: '2013 — 2015', role: 'Freelance Videographer', company: 'Self-employed', type: 'Freelance' },
 ];
 
 /* ─── 精选项目 / Selected Projects ─── */

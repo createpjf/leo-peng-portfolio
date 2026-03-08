@@ -24,7 +24,10 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
             <span style={{ fontSize: 13, fontVariantNumeric: 'tabular-nums', color: T.textSec }}>{item.date}</span>
             <div>
               <span style={{ fontSize: 15, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</span>
-              <span style={{ fontSize: 13, color: T.textSec }}>{item.company}</span>
+              <span style={{ fontSize: 13, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                {item.logo && <img src={item.logo} alt="" style={{ width: 18, height: 18, borderRadius: 3, objectFit: 'contain' }} />}
+                {item.company}
+              </span>
             </div>
             <span className="exp-type-badge" style={{
               fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em',

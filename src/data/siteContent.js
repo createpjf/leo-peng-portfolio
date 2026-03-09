@@ -27,6 +27,26 @@ export const expertisePills = [
   { label: 'Growth', desc: 'Scaling AI ecosystems and developer communities through strategic, accelerator-led growth.' },
 ];
 
+/* ─── Hero 核心背景 / Credentials Line ─── */
+export const credentialsLine = 'UCI Film & Media · Ogilvy & NetEase Alumni · Head of Ops & Creative at FLock.io';
+
+/* ─── Hero 个人介绍 / Hero Bio ─── */
+export const heroBio = [
+  'Trained in film production and new media, with experience directing micro-films and managing the full creative lifecycle. Career spans Ogilvy China, NetEase Games, and E-CHÉRIE Fashion — building deep cross-disciplinary expertise in brand communication. Specializes in blending minimalist, high-end aesthetics with modern technology.',
+  'Currently driving operations and commercialization at FLock.io in the decentralized AI space. Independently designed and built "Cleo," a multi-agent system, and spearheaded the FLock API Platform\'s expansion — bridging visual aesthetics, brand creativity, and cutting-edge AI.',
+];
+
+/* ─── Hero 成就标签 / Credential Tags ─── */
+export const credentialTags = [
+  'UCI Film & Media',
+  'Ogilvy & NetEase Alumni',
+  'FLock.io / BuidlerDAO',
+  'Multi-Agent Architecture',
+  'Independent Filmmaker',
+  'Minimalist Aesthetics',
+  'Creative & AI Crossover',
+];
+
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
 export const defaultSelectedPills = ['Film', 'Code', 'Growth'];
 

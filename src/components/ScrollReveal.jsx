@@ -21,8 +21,8 @@ const ScrollReveal = ({ children, delay = '0s', style = {}, className = '' }) =>
       className={className}
       style={{
         ...style,
-        opacity: visible ? undefined : 0,
-        animation: visible ? `fadeUp 0.7s ease ${delay} forwards` : 'none',
+        opacity: 0,
+        animation: visible ? `fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} both` : 'none',
       }}
     >
       {children}

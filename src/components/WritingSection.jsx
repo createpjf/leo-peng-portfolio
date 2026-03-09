@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { writings } from '../data/siteContent';
+import ScrollReveal from './ScrollReveal';
 
 /* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
 const fmtDate = (d) => {
@@ -12,7 +13,7 @@ const fmtDate = (d) => {
   return month ? `${month} ${year}` : year;
 };
 
-const WritingRow = ({ title, desc, date, href, source, delay, isLast }) => {
+const WritingRow = ({ title, desc, date, href, source, isLast }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -28,8 +29,6 @@ const WritingRow = ({ title, desc, date, href, source, delay, isLast }) => {
         paddingLeft: hover ? 8 : 0,
         borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
         transition: 'padding-left 0.3s ease',
-        animation: `fadeUp 0.7s ease ${delay} forwards`,
-        opacity: 0,
         textDecoration: 'none',
         color: 'inherit',
       }}
@@ -98,16 +97,16 @@ const WritingSection = () => (
     </h2>
     <div>
       {writings.map((w, i) => (
-        <WritingRow
-          key={w.href}
-          title={w.title}
-          desc={w.desc}
-          date={w.date}
-          href={w.href}
-          source={w.source}
-          delay={`${i * 0.08}s`}
-          isLast={i === writings.length - 1}
-        />
+        <ScrollReveal key={w.href} delay={`${i * 0.08}s`}>
+          <WritingRow
+            title={w.title}
+            desc={w.desc}
+            date={w.date}
+            href={w.href}
+            source={w.source}
+            isLast={i === writings.length - 1}
+          />
+        </ScrollReveal>
       ))}
     </div>
   </section>

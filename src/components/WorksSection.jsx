@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { projects } from '../data/siteContent';
+import ScrollReveal from './ScrollReveal';
 
-const WorkCard = ({ title, category, year, children, delay, href }) => {
+const WorkCard = ({ title, category, year, children, href }) => {
   const [hover, setHover] = useState(false);
   return (
     <a
@@ -14,7 +15,6 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       onClick={e => { if (!href) e.preventDefault(); }}
       style={{
         display: 'flex', flexDirection: 'column', cursor: 'pointer',
-        animation: `fadeUp 0.7s ease ${delay || '0s'} forwards`, opacity: 0,
         textDecoration: 'none', color: 'inherit',
       }}
     >
@@ -47,9 +47,11 @@ const WorksSection = () => (
     <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 32, letterSpacing: '-0.01em' }}>Selected Work.</h2>
     <div className="works-grid">
       {projects.map((p, i) => (
-        <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} delay={`${i * 0.1}s`} href={p.href}>
-          <img src={p.heroImg} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        </WorkCard>
+        <ScrollReveal key={p.title} delay={`${i * 0.1}s`}>
+          <WorkCard title={p.title} category={p.category} year={p.year} href={p.href}>
+            <img src={p.heroImg} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </WorkCard>
+        </ScrollReveal>
       ))}
     </div>
   </section>

@@ -9,7 +9,7 @@ const GlobalStyles = () => {
       body { overflow-x: hidden; background: ${T.bg}; }
       a { text-decoration: none; color: inherit; cursor: pointer; }
       @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(18px); }
+        from { opacity: 0; transform: translateY(28px); }
         to   { opacity: 1; transform: translateY(0); }
       }
       @keyframes expandLine {

@@ -103,14 +103,14 @@ const HeroSection = () => {
         <h1 style={{
           fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
-          animation: 'fadeUp 0.7s ease forwards',
+          animation: 'fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) forwards',
         }}>
           {personalInfo.heroHeadline[0]}<br />{personalInfo.heroHeadline[1]}<em style={{ fontStyle: 'italic' }}>{personalInfo.heroHeadline[2]}</em><br />{personalInfo.heroHeadline[3]}
         </h1>
         <p className="hero-subtags" style={{
           fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em',
           fontWeight: 400, position: 'relative', zIndex: 2, textTransform: 'uppercase',
-          animation: 'fadeUp 0.7s ease 0.1s forwards', opacity: 0,
+          animation: 'fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.35s forwards', opacity: 0,
         }}>
           {personalInfo.heroSubtags}
         </p>
@@ -118,7 +118,7 @@ const HeroSection = () => {
           position: 'relative', zIndex: 2, fontSize: 11, textTransform: 'uppercase',
           letterSpacing: '0.12em', color: 'rgba(255,255,255,0.3)',
           display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
-          animation: 'fadeUp 0.7s ease 0.2s forwards', opacity: 0,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.7s forwards', opacity: 0,
         }}>
           <div className="scroll-line" style={{ height: 1, background: 'rgba(255,255,255,0.2)' }} />
           Scroll to explore
@@ -130,14 +130,14 @@ const HeroSection = () => {
         <h2 style={{
           fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',
           lineHeight: 1.1, marginBottom: 12,
-          animation: 'fadeUp 0.7s ease forwards',
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards', opacity: 0,
         }}>{personalInfo.title}</h2>
 
         {/* Credentials line */}
         <p style={{
           fontSize: 13, fontWeight: 600, color: T.text, letterSpacing: '-0.01em',
           marginBottom: 20,
-          animation: 'fadeUp 0.7s ease 0.1s forwards', opacity: 0,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s forwards', opacity: 0,
         }}>
           {credentialsLine}
         </p>
@@ -145,7 +145,7 @@ const HeroSection = () => {
         {/* Bio */}
         <div className="hero-bio" style={{
           marginBottom: 32,
-          animation: 'fadeUp 0.7s ease 0.15s forwards', opacity: 0,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.55s forwards', opacity: 0,
         }}>
           <p style={{ fontSize: 14, color: T.textSec, lineHeight: 1.7, marginBottom: 12 }}>
             {heroBio[0]}
@@ -156,7 +156,7 @@ const HeroSection = () => {
         </div>
 
         {/* Status */}
-        <div style={{ marginBottom: 24, animation: 'fadeUp 0.7s ease 0.25s forwards', opacity: 0 }}>
+        <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.7s forwards', opacity: 0 }}>
           <span style={{
             display: 'block', marginBottom: 8, textTransform: 'uppercase',
             letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
@@ -172,7 +172,7 @@ const HeroSection = () => {
         </div>
 
         {/* Expertise */}
-        <div style={{ marginBottom: 24, animation: 'fadeUp 0.7s ease 0.3s forwards', opacity: 0 }}>
+        <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.85s forwards', opacity: 0 }}>
           <span style={{
             display: 'block', marginBottom: 8, textTransform: 'uppercase',
             letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
@@ -189,7 +189,7 @@ const HeroSection = () => {
           fontSize: 16, fontWeight: 500, padding: '12px 0',
           borderBottom: `1px solid ${T.text}`, background: 'none',
           color: T.text, width: 'fit-content', transition: 'opacity 0.2s',
-          animation: 'fadeUp 0.7s ease 0.4s forwards', opacity: 0,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 1.0s forwards', opacity: 0,
         }}
           onMouseEnter={e => { e.currentTarget.style.opacity = '0.6'; }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}

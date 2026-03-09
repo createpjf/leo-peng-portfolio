@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { writings } from '../data/siteContent';
+import FadeWords from './FadeWords';
+import useInView from '../hooks/useInView';
 
 /* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
 const fmtDate = (d) => {
@@ -12,11 +14,13 @@ const fmtDate = (d) => {
   return month ? `${month} ${year}` : year;
 };
 
-const WritingRow = ({ title, desc, date, href, source, delay, isLast }) => {
+const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
   const [hover, setHover] = useState(false);
+  const { ref, inView } = useInView({ threshold: 0.15 });
 
   return (
     <a
+      ref={ref}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -27,9 +31,9 @@ const WritingRow = ({ title, desc, date, href, source, delay, isLast }) => {
         padding: '20px 0',
         paddingLeft: hover ? 8 : 0,
         borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
-        transition: 'padding-left 0.3s ease',
-        animation: `fadeUp 0.7s ease ${delay} forwards`,
-        opacity: 0,
+        transition: `padding-left 0.3s ease, opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(20px)',
         textDecoration: 'none',
         color: 'inherit',
       }}
@@ -88,14 +92,7 @@ const WritingSection = () => (
       borderBottom: `1px solid ${T.border}`,
     }}
   >
-    <h2 style={{
-      fontSize: 20,
-      fontWeight: 500,
-      marginBottom: 40,
-      letterSpacing: '-0.01em',
-    }}>
-      Writing.
-    </h2>
+    <FadeWords text="Writing." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
     <div>
       {writings.map((w, i) => (
         <WritingRow
@@ -105,7 +102,7 @@ const WritingSection = () => (
           date={w.date}
           href={w.href}
           source={w.source}
-          delay={`${i * 0.08}s`}
+          idx={i}
           isLast={i === writings.length - 1}
         />
       ))}

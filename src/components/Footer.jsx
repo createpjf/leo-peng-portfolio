@@ -1,14 +1,21 @@
 import React from 'react';
 import T from '../data/theme';
 import { personalInfo, socialLinks } from '../data/siteContent';
+import useInView from '../hooks/useInView';
 
 const Footer = () => {
   const linkHover = (e, enter) => {
     e.currentTarget.style.color = enter ? '#fff' : 'rgba(255,255,255,0.7)';
   };
+  const { ref, inView } = useInView({ threshold: 0.1 });
 
   return (
-    <footer id="contact" className="section-pad" style={{ background: T.bgDark, color: 'rgba(255,255,255,0.7)', padding: '80px 40px 40px' }}>
+    <footer ref={ref} id="contact" className="section-pad" style={{
+      background: T.bgDark, color: 'rgba(255,255,255,0.7)', padding: '80px 40px 40px',
+      opacity: inView ? 1 : 0,
+      transform: inView ? 'translateY(0)' : 'translateY(20px)',
+      transition: 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)',
+    }}>
       <div className="footer-grid" style={{
         paddingBottom: 48, borderBottom: `1px solid ${T.borderDk}`, marginBottom: 24,
       }}>

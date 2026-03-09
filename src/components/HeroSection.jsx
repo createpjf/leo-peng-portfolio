@@ -54,6 +54,7 @@ const PillWithTooltip = ({ pill }) => {
 const HeroSection = () => {
   const videoRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [videoRemoved, setVideoRemoved] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -62,6 +63,13 @@ const HeroSection = () => {
     v.addEventListener('ended', onEnd);
     return () => v.removeEventListener('ended', onEnd);
   }, []);
+
+  // Remove video element from DOM after fade-out completes (frees GPU layer)
+  useEffect(() => {
+    if (!videoEnded) return;
+    const timer = setTimeout(() => setVideoRemoved(true), 2800); // 2.5s transition + buffer
+    return () => clearTimeout(timer);
+  }, [videoEnded]);
 
   return (
     <section className="hero-grid">
@@ -74,26 +82,29 @@ const HeroSection = () => {
         <img
           src="/hero-poster.jpg" alt="Leo Peng portfolio hero"
           className="hero-video"
+          fetchpriority="high"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover', zIndex: 0,
           }}
         />
-        {/* Background video */}
-        <video
-          ref={videoRef}
-          className="hero-video"
-          autoPlay muted playsInline
-          aria-label="Background video" role="presentation"
-          style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover', zIndex: 0,
-            opacity: videoEnded ? 0 : 1,
-            transition: 'opacity 1s ease',
-          }}
-        >
-          <source src="/hero.mp4" type="video/mp4" />
-        </video>
+        {/* Background video — removed from DOM after fade-out to free GPU */}
+        {!videoRemoved && (
+          <video
+            ref={videoRef}
+            className="hero-video"
+            autoPlay muted playsInline
+            aria-label="Background video" role="presentation"
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              objectFit: 'cover', zIndex: 0,
+              opacity: videoEnded ? 0 : 1,
+              transition: 'opacity 2.5s ease',
+            }}
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+        )}
         {/* Dark gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
@@ -103,14 +114,39 @@ const HeroSection = () => {
         <h1 style={{
           fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
-          animation: 'fadeUp 0.7s ease forwards',
         }}>
-          {personalInfo.heroHeadline[0]}<br />{personalInfo.heroHeadline[1]}<em style={{ fontStyle: 'italic' }}>{personalInfo.heroHeadline[2]}</em><br />{personalInfo.heroHeadline[3]}
+          {/* Line 1 — staggered word-by-word fadeUp */}
+          {personalInfo.heroHeadline[0].split(' ').map((w, i) => (
+            <span key={`l1-${i}`} style={{
+              display: 'inline-block', opacity: 0,
+              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 0.12}s forwards`,
+            }}>{w}&nbsp;</span>
+          ))}
+          <br />
+          {/* Line 2 — "Things that " + italic "move" */}
+          {personalInfo.heroHeadline[1].trim().split(' ').map((w, i) => (
+            <span key={`l2-${i}`} style={{
+              display: 'inline-block', opacity: 0,
+              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${(i + 2) * 0.12}s forwards`,
+            }}>{w}&nbsp;</span>
+          ))}
+          <em style={{
+            fontStyle: 'italic', display: 'inline-block', opacity: 0,
+            animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${4 * 0.12}s forwards`,
+          }}>{personalInfo.heroHeadline[2]}</em>
+          <br />
+          {/* Line 3 */}
+          {personalInfo.heroHeadline[3].split(' ').map((w, i) => (
+            <span key={`l3-${i}`} style={{
+              display: 'inline-block', opacity: 0,
+              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${(i + 5) * 0.12}s forwards`,
+            }}>{w}&nbsp;</span>
+          ))}
         </h1>
         <p className="hero-subtags" style={{
           fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em',
           fontWeight: 400, position: 'relative', zIndex: 2, textTransform: 'uppercase',
-          animation: 'fadeUp 0.7s ease 0.1s forwards', opacity: 0,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards', opacity: 0,
         }}>
           {personalInfo.heroSubtags}
         </p>
@@ -120,19 +156,32 @@ const HeroSection = () => {
       <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 3 }}>
         <h2 style={{
           fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',
-          lineHeight: 1.1, marginBottom: 8,
-          animation: 'fadeUp 0.7s ease forwards',
+          lineHeight: 1.1, marginBottom: 6,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) forwards',
         }}>{personalInfo.title}</h2>
 
-        <p style={{
-          fontSize: 15, color: T.textSec, lineHeight: 1.6, maxWidth: '100%', marginBottom: 40,
-          animation: 'fadeUp 0.7s ease 0.1s forwards', opacity: 0,
+        {/* Subtitle — 经历背景线 */}
+        <p className="hero-subtitle" style={{
+          fontSize: 12, color: T.textLt, letterSpacing: '0.04em',
+          textTransform: 'uppercase', marginBottom: 24, lineHeight: 1.5,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards', opacity: 0,
+        }}>{personalInfo.heroSubtitle}</p>
+
+        {/* Bio paragraphs */}
+        <div className="hero-bio" style={{
+          marginBottom: 32,
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards', opacity: 0,
         }}>
-          {personalInfo.tagline}
-        </p>
+          {personalInfo.heroBio.map((text, i) => (
+            <p key={i} style={{
+              fontSize: 15, color: T.textSec, lineHeight: 1.65,
+              marginBottom: i === 0 ? 12 : 0,
+            }}>{text}</p>
+          ))}
+        </div>
 
         {/* Status */}
-        <div style={{ marginBottom: 24, animation: 'fadeUp 0.7s ease 0.2s forwards', opacity: 0 }}>
+        <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards', opacity: 0 }}>
           <span style={{
             display: 'block', marginBottom: 8, textTransform: 'uppercase',
             letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
@@ -148,7 +197,7 @@ const HeroSection = () => {
         </div>
 
         {/* Expertise */}
-        <div style={{ marginBottom: 24, animation: 'fadeUp 0.7s ease 0.3s forwards', opacity: 0 }}>
+        <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s forwards', opacity: 0 }}>
           <span style={{
             display: 'block', marginBottom: 8, textTransform: 'uppercase',
             letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
@@ -164,13 +213,19 @@ const HeroSection = () => {
           marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 8,
           fontSize: 16, fontWeight: 500, padding: '12px 0',
           borderBottom: `1px solid ${T.text}`, background: 'none',
-          color: T.text, width: 'fit-content', transition: 'opacity 0.2s',
-          animation: 'fadeUp 0.7s ease 0.4s forwards', opacity: 0,
+          color: T.text, width: 'fit-content',
+          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards', opacity: 0,
+          transition: 'gap 0.35s cubic-bezier(0.4,0,0.2,1), color 0.3s ease',
         }}
-          onMouseEnter={e => { e.currentTarget.style.opacity = '0.6'; }}
-          onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+          onMouseEnter={e => { e.currentTarget.style.gap = '14px'; }}
+          onMouseLeave={e => { e.currentTarget.style.gap = '8px'; }}
         >
-          View Resume &rarr;
+          View Resume <span style={{
+            display: 'inline-block',
+            transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+          }}
+            className="resume-arrow"
+          >&rarr;</span>
         </a>
       </div>
     </section>

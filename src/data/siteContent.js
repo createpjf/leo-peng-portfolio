@@ -10,6 +10,11 @@ export const personalInfo = {
   name: 'Leo Peng',
   title: 'Creative Technologist',
   tagline: 'I turn ideas into products. Storytelling meets engineering, across cultures and platforms.',
+  heroSubtitle: 'UCI Film & Media · Ogilvy & NetEase Alumni · Head of Ops & Creative at FLock.io',
+  heroBio: [
+    'Directing the full creative lifecycle\u2014from film production to new media. Built across Ogilvy, NetEase, and E-CH\u00c9RIE. Delivering cross-disciplinary brand communication rooted in high-end minimalism.',
+    'Leading operations and creative strategy for Privacy-Preserving AI at FLock.io. Architect of the Cleo multi-agent system and RouteBox smart routing. Merging visual aesthetics with cutting-edge AI.',
+  ],
   heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],  // 第二行的斜体词用第3个元素
   heroSubtags: 'Video · Code · Marketing',
   quote: '"The best work happens when you stop separating the art from the system."',

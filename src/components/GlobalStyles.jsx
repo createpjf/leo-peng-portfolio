@@ -9,10 +9,11 @@ const GlobalStyles = () => {
       body { overflow-x: hidden; background: ${T.bg}; }
       a { text-decoration: none; color: inherit; cursor: pointer; }
       @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(18px); }
+        from { opacity: 0; transform: translateY(20px); }
         to   { opacity: 1; transform: translateY(0); }
       }
-      .hero-video { object-position: center 30%; }
+      .hero-video { object-position: center 30%; backface-visibility: hidden; }
+      .hero-grid { contain: layout style; }
       .service-card::before {
         content: '';
         position: absolute;
@@ -34,9 +35,13 @@ const GlobalStyles = () => {
         transition: width 0.3s ease;
       }
       .nav-link:hover::after { width: 100%; }
+      a:hover .resume-arrow { transform: translateX(4px); }
+
+      /* ─── Performance: isolate layout for off-screen sections ─── */
+      .section-pad { contain: layout style; }
 
       /* ─── Responsive ─── */
-      .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); }
+      .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
       .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
       .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
       .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
@@ -50,8 +55,8 @@ const GlobalStyles = () => {
 
       /* ─── Tablet / small laptop ─── */
       @media (max-width: 768px) {
-        .hero-grid { grid-template-columns: 1fr; min-height: auto; }
-        .hero-dark { min-height: 60vh; }
+        .hero-grid { grid-template-columns: 1fr; min-height: calc(100dvh - 52px); grid-template-rows: 1fr auto; }
+        .hero-dark { min-height: 0; }
         .desktop-nav { display: none !important; }
         .mobile-menu-btn { display: flex !important; }
         .services-grid { grid-template-columns: 1fr; }
@@ -85,6 +90,7 @@ const GlobalStyles = () => {
 
       /* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */
       @media (max-width: 480px) {
+        .hero-grid { min-height: calc(100dvh - 44px) !important; }
         .site-header { padding: 0 20px !important; height: 44px !important; }
         .site-header > div:first-child { font-size: 14px !important; }
         .hero-dark {
@@ -95,7 +101,10 @@ const GlobalStyles = () => {
         .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 11px !important; }
         .hero-info { padding: 24px 20px !important; }
         .hero-info h2 { font-size: 28px !important; margin-bottom: 4px !important; }
-        .hero-info > p { font-size: 14px !important; margin-bottom: 24px !important; }
+        .hero-subtitle { font-size: 10px !important; margin-bottom: 16px !important; }
+        .hero-bio { margin-bottom: 20px !important; }
+        .hero-bio p { font-size: 14px !important; }
+        .hero-bio p:first-child { margin-bottom: 8px !important; }
         .hero-info > div { margin-bottom: 16px !important; }
         .hero-info > div span:first-child { font-size: 10px !important; margin-bottom: 4px !important; }
         .hero-info .pill-row { gap: 6px !important; margin-top: 4px !important; }
@@ -108,32 +117,83 @@ const GlobalStyles = () => {
 
       /* ─── Small mobile: iPhone SE / narrow Android ─── */
       @media (max-width: 375px) {
+        .hero-grid { min-height: calc(100dvh - 40px) !important; }
         .site-header { padding: 0 16px !important; height: 40px !important; }
         .hero-dark { padding: 28px 16px 20px !important; }
         .hero-dark h1 { font-size: 28px !important; margin-bottom: 10px !important; }
         .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 12px !important; }
         .hero-info { padding: 20px 16px !important; }
         .hero-info h2 { font-size: 24px !important; }
-        .hero-info > p { font-size: 13px !important; margin-bottom: 20px !important; }
+        .hero-subtitle { font-size: 9px !important; margin-bottom: 14px !important; }
+        .hero-bio { margin-bottom: 16px !important; }
+        .hero-bio p { font-size: 13px !important; }
+        .hero-bio p:first-child { margin-bottom: 8px !important; }
         .hero-info .pill-item { padding: 6px 12px !important; font-size: 11px !important; }
         .hero-info > a { font-size: 13px !important; }
       }
 
       /* ─── Foldable unfolded: OPPO Find N5 / Samsung Fold ─── */
       @media (min-width: 600px) and (max-width: 768px) {
-        .hero-grid { grid-template-columns: 1fr 1fr; min-height: auto; }
+        .hero-grid { grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
         .hero-dark { min-height: auto; padding: 48px 24px 28px !important; justify-content: center !important; }
         .hero-dark h1 { font-size: clamp(24px, 4.5vw, 36px) !important; margin-bottom: 12px !important; }
         .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 20px !important; }
         .hero-info { padding: 32px 20px !important; }
         .hero-info h2 { font-size: 26px !important; margin-bottom: 4px !important; }
-        .hero-info > p { font-size: 13px !important; margin-bottom: 24px !important; }
+        .hero-subtitle { font-size: 11px !important; margin-bottom: 16px !important; }
+        .hero-bio { margin-bottom: 20px !important; }
+        .hero-bio p { font-size: 13px !important; }
+        .hero-bio p:first-child { margin-bottom: 8px !important; }
         .hero-info > div { margin-bottom: 16px !important; }
         .hero-info .pill-item { padding: 7px 14px !important; font-size: 11px !important; }
         .hero-info > a { font-size: 14px !important; margin-top: 12px !important; }
         .works-grid { grid-template-columns: repeat(2, 1fr); }
         .services-grid { grid-template-columns: repeat(2, 1fr); }
         .hero-video { object-position: center 35% !important; }
+      }
+
+      /* ─── Large desktop: 21-23" FHD monitors ─── */
+      @media (min-width: 1920px) {
+        .hero-dark h1 { font-size: clamp(64px, 5vw, 88px) !important; }
+        .hero-dark .hero-subtags { font-size: 14px !important; }
+        .hero-dark { padding: 108px 56px 56px !important; }
+        .hero-info { padding: 80px 64px !important; }
+        .hero-info h2 { font-size: 50px !important; }
+        .hero-subtitle { font-size: 13px !important; margin-bottom: 24px !important; }
+        .hero-bio { margin-bottom: 36px !important; }
+        .hero-bio p { font-size: 17px !important; }
+        .hero-bio p:first-child { margin-bottom: 12px !important; }
+        .hero-info > div { margin-bottom: 28px !important; }
+        .hero-info .pill-item { font-size: 14px !important; padding: 12px 28px !important; }
+        .hero-info > a { font-size: 17px !important; }
+        .section-pad { padding: 96px 64px !important; }
+        .works-grid { gap: 24px !important; }
+        .exp-row { grid-template-columns: 180px 1fr auto !important; }
+        .writing-row { grid-template-columns: 120px 1fr auto !important; }
+      }
+
+      /* ─── QHD+: 27" monitors / 32" with scaling ─── */
+      @media (min-width: 2560px) {
+        .site-header { height: 64px !important; padding: 0 48px !important; }
+        .hero-grid { min-height: calc(100dvh - 64px) !important; }
+        .hero-dark h1 { font-size: clamp(80px, 4.5vw, 112px) !important; }
+        .hero-dark .hero-subtags { font-size: 16px !important; letter-spacing: 0.2em !important; }
+        .hero-dark { padding: 128px 80px 80px !important; }
+        .hero-info { padding: 96px 88px !important; }
+        .hero-info h2 { font-size: 60px !important; }
+        .hero-subtitle { font-size: 14px !important; margin-bottom: 28px !important; }
+        .hero-bio { margin-bottom: 40px !important; }
+        .hero-bio p { font-size: 19px !important; line-height: 1.7 !important; }
+        .hero-bio p:first-child { margin-bottom: 14px !important; }
+        .hero-info > div { margin-bottom: 32px !important; }
+        .hero-info > div span:first-child { font-size: 13px !important; }
+        .hero-info .pill-item { font-size: 15px !important; padding: 14px 32px !important; }
+        .hero-info > a { font-size: 19px !important; padding: 16px 0 !important; }
+        .status-dot { width: 24px !important; height: 24px !important; }
+        .section-pad { padding: 120px 96px !important; }
+        .works-grid { gap: 32px !important; }
+        .exp-row { grid-template-columns: 200px 1fr auto !important; }
+        .writing-row { grid-template-columns: 140px 1fr auto !important; }
       }
     `;
     document.head.appendChild(style);

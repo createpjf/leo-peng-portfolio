@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { projects } from '../data/siteContent';
+import FadeWords from './FadeWords';
+import useInView from '../hooks/useInView';
 
-const WorkCard = ({ title, category, year, children, delay, href }) => {
+const WorkCard = ({ title, category, year, children, idx, href }) => {
   const [hover, setHover] = useState(false);
+  const { ref, inView } = useInView({ threshold: 0.15 });
   return (
     <a
+      ref={ref}
       href={href || '#'}
       target={href ? '_blank' : undefined}
       rel={href ? 'noopener noreferrer' : undefined}
@@ -14,7 +18,9 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
       onClick={e => { if (!href) e.preventDefault(); }}
       style={{
         display: 'flex', flexDirection: 'column', cursor: 'pointer',
-        animation: `fadeUp 0.7s ease ${delay || '0s'} forwards`, opacity: 0,
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(20px)',
+        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
         textDecoration: 'none', color: 'inherit',
       }}
     >
@@ -44,10 +50,10 @@ const WorkCard = ({ title, category, year, children, delay, href }) => {
 
 const WorksSection = () => (
   <section id="work" className="section-pad" style={{ padding: '60px 40px', background: '#fafafa' }}>
-    <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 32, letterSpacing: '-0.01em' }}>Selected Work.</h2>
+    <FadeWords text="Selected Work." style={{ fontSize: 20, fontWeight: 500, marginBottom: 32, letterSpacing: '-0.01em' }} />
     <div className="works-grid">
       {projects.map((p, i) => (
-        <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} delay={`${i * 0.1}s`} href={p.href}>
+        <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
           <img src={p.heroImg} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </WorkCard>
       ))}

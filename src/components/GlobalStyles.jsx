@@ -64,6 +64,9 @@ const GlobalStyles = () => {
         #contact { padding: 48px 32px 32px !important; }
         .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
         .hero-info { padding: 40px 32px !important; }
+        .hero-bio p { font-size: 13px !important; }
+        .hero-credential-tags { gap: 6px !important; }
+        .hero-credential-tag { font-size: 11px !important; padding: 5px 10px !important; }
       }
 
       /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
@@ -104,6 +107,10 @@ const GlobalStyles = () => {
         .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
         .status-dot { width: 16px !important; height: 16px !important; }
         .hero-video { object-position: center 40% !important; }
+        .hero-bio p { font-size: 13px !important; margin-bottom: 8px !important; }
+        .hero-bio { margin-bottom: 20px !important; }
+        .hero-credential-tags { gap: 5px !important; }
+        .hero-credential-tag { font-size: 11px !important; padding: 4px 10px !important; }
       }
 
       /* ─── Small mobile: iPhone SE / narrow Android ─── */
@@ -117,6 +124,7 @@ const GlobalStyles = () => {
         .hero-info > p { font-size: 13px !important; margin-bottom: 20px !important; }
         .hero-info .pill-item { padding: 6px 12px !important; font-size: 11px !important; }
         .hero-info > a { font-size: 13px !important; }
+        .hero-bio-secondary { display: none !important; }
       }
 
       /* ─── Foldable unfolded: OPPO Find N5 / Samsung Fold ─── */

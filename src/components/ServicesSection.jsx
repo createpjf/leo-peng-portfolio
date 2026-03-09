@@ -13,7 +13,8 @@ const ServicesSection = () => {
       <FadeWords text="What I Do." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
       <div ref={gridRef} className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
         {services.map((s, i) => (
-          <div key={s.num}
+          <ScrollReveal key={s.num} delay={`${i * 0.1}s`}>
+          <div
             className="service-card"
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
@@ -43,6 +44,7 @@ const ServicesSection = () => {
               ))}
             </div>
           </div>
+          </ScrollReveal>
         ))}
       </div>
     </section>

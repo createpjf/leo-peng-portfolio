@@ -32,6 +32,15 @@ export const expertisePills = [
   { label: 'Growth', desc: 'Scaling AI ecosystems and developer communities through strategic, accelerator-led growth.' },
 ];
 
+/* ─── Hero 核心背景 / Credentials Line ─── */
+export const credentialsLine = 'UCI Film & Media · Ogilvy & NetEase Alumni · Head of Ops & Creative at FLock.io';
+
+/* ─── Hero 个人介绍 / Hero Bio ─── */
+export const heroBio = [
+  'Directing the full creative lifecycle\u2014from film production to new media. Built across Ogilvy, NetEase, and E-CH\u00c9RIE. Delivering cross-disciplinary brand communication rooted in high-end minimalism.',
+  'Leading operations and creative strategy for Privacy-Preserving AI at FLock.io. Architect of the Cleo multi-agent system and RouteBox smart routing. Merging visual aesthetics with cutting-edge AI.',
+];
+
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
 export const defaultSelectedPills = ['Film', 'Code', 'Growth'];
 

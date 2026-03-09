@@ -69,6 +69,7 @@ const GlobalStyles = () => {
         #contact { padding: 48px 32px 32px !important; }
         .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
         .hero-info { padding: 40px 32px !important; }
+        .hero-bio p { font-size: 13px !important; }
       }
 
       /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
@@ -93,13 +94,14 @@ const GlobalStyles = () => {
         .hero-grid { min-height: calc(100dvh - 44px) !important; }
         .site-header { padding: 0 20px !important; height: 44px !important; }
         .site-header > div:first-child { font-size: 14px !important; }
+        .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: auto 1fr; }
         .hero-dark {
           padding: 32px 20px 24px !important;
           min-height: auto !important;
         }
         .hero-dark h1 { font-size: clamp(32px, 9vw, 44px) !important; margin-bottom: 12px !important; }
         .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 11px !important; }
-        .hero-info { padding: 24px 20px !important; }
+        .hero-info { padding: 24px 20px !important; overflow-y: auto; }
         .hero-info h2 { font-size: 28px !important; margin-bottom: 4px !important; }
         .hero-subtitle { font-size: 10px !important; margin-bottom: 16px !important; }
         .hero-bio { margin-bottom: 20px !important; }
@@ -113,12 +115,15 @@ const GlobalStyles = () => {
         .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
         .status-dot { width: 16px !important; height: 16px !important; }
         .hero-video { object-position: center 40% !important; }
+        .hero-bio p { font-size: 13px !important; margin-bottom: 8px !important; }
+        .hero-bio { margin-bottom: 20px !important; }
       }
 
       /* ─── Small mobile: iPhone SE / narrow Android ─── */
       @media (max-width: 375px) {
         .hero-grid { min-height: calc(100dvh - 40px) !important; }
         .site-header { padding: 0 16px !important; height: 40px !important; }
+        .hero-grid { min-height: calc(100dvh - 40px) !important; }
         .hero-dark { padding: 28px 16px 20px !important; }
         .hero-dark h1 { font-size: 28px !important; margin-bottom: 10px !important; }
         .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 12px !important; }
@@ -130,6 +135,7 @@ const GlobalStyles = () => {
         .hero-bio p:first-child { margin-bottom: 8px !important; }
         .hero-info .pill-item { padding: 6px 12px !important; font-size: 11px !important; }
         .hero-info > a { font-size: 13px !important; }
+        .hero-bio-secondary { display: none !important; }
       }
 
       /* ─── Foldable unfolded: OPPO Find N5 / Samsung Fold ─── */

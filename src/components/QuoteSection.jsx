@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import T from '../data/theme';
 import { personalInfo } from '../data/siteContent';
 import BlurReveal from './BlurReveal';

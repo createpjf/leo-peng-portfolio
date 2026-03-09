@@ -36,7 +36,7 @@ const GlobalStyles = () => {
       .nav-link:hover::after { width: 100%; }
 
       /* ─── Responsive ─── */
-      .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); }
+      .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px); min-height: calc(100dvh - 52px); }
       .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
       .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
       .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
@@ -50,8 +50,9 @@ const GlobalStyles = () => {
 
       /* ─── Tablet / small laptop ─── */
       @media (max-width: 768px) {
-        .hero-grid { grid-template-columns: 1fr; min-height: auto; }
-        .hero-dark { min-height: 60vh; }
+        .hero-grid { grid-template-columns: 1fr; min-height: calc(100dvh - 52px); grid-template-rows: auto 1fr; }
+        .hero-dark { min-height: 40vh; }
+        .hero-info { overflow-y: auto; }
         .desktop-nav { display: none !important; }
         .mobile-menu-btn { display: flex !important; }
         .services-grid { grid-template-columns: 1fr; }
@@ -65,8 +66,6 @@ const GlobalStyles = () => {
         .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
         .hero-info { padding: 40px 32px !important; }
         .hero-bio p { font-size: 13px !important; }
-        .hero-credential-tags { gap: 6px !important; }
-        .hero-credential-tag { font-size: 11px !important; padding: 5px 10px !important; }
       }
 
       /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
@@ -90,13 +89,14 @@ const GlobalStyles = () => {
       @media (max-width: 480px) {
         .site-header { padding: 0 20px !important; height: 44px !important; }
         .site-header > div:first-child { font-size: 14px !important; }
+        .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: auto 1fr; }
         .hero-dark {
           padding: 32px 20px 24px !important;
           min-height: auto !important;
         }
         .hero-dark h1 { font-size: clamp(32px, 9vw, 44px) !important; margin-bottom: 12px !important; }
         .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 11px !important; }
-        .hero-info { padding: 24px 20px !important; }
+        .hero-info { padding: 24px 20px !important; overflow-y: auto; }
         .hero-info h2 { font-size: 28px !important; margin-bottom: 4px !important; }
         .hero-info > p { font-size: 14px !important; margin-bottom: 24px !important; }
         .hero-info > div { margin-bottom: 16px !important; }
@@ -109,13 +109,12 @@ const GlobalStyles = () => {
         .hero-video { object-position: center 40% !important; }
         .hero-bio p { font-size: 13px !important; margin-bottom: 8px !important; }
         .hero-bio { margin-bottom: 20px !important; }
-        .hero-credential-tags { gap: 5px !important; }
-        .hero-credential-tag { font-size: 11px !important; padding: 4px 10px !important; }
       }
 
       /* ─── Small mobile: iPhone SE / narrow Android ─── */
       @media (max-width: 375px) {
         .site-header { padding: 0 16px !important; height: 40px !important; }
+        .hero-grid { min-height: calc(100dvh - 40px) !important; }
         .hero-dark { padding: 28px 16px 20px !important; }
         .hero-dark h1 { font-size: 28px !important; margin-bottom: 10px !important; }
         .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 12px !important; }
@@ -129,7 +128,7 @@ const GlobalStyles = () => {
 
       /* ─── Foldable unfolded: OPPO Find N5 / Samsung Fold ─── */
       @media (min-width: 600px) and (max-width: 768px) {
-        .hero-grid { grid-template-columns: 1fr 1fr; min-height: auto; }
+        .hero-grid { grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
         .hero-dark { min-height: auto; padding: 48px 24px 28px !important; justify-content: center !important; }
         .hero-dark h1 { font-size: clamp(24px, 4.5vw, 36px) !important; margin-bottom: 12px !important; }
         .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 20px !important; }

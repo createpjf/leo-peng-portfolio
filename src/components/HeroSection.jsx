@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import T from '../data/theme';
-import { personalInfo, expertisePills, credentialsLine, heroBio, credentialTags } from '../data/siteContent';
+import { personalInfo, expertisePills, credentialsLine, heroBio } from '../data/siteContent';
 
 const PillWithTooltip = ({ pill }) => {
   const [hover, setHover] = useState(false);
@@ -118,13 +118,6 @@ const HeroSection = () => {
 
       {/* Right — info panel */}
       <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 3 }}>
-        {/* Name label */}
-        <span style={{
-          display: 'block', textTransform: 'uppercase', letterSpacing: '0.08em',
-          fontSize: 11, fontWeight: 500, color: T.textSec, marginBottom: 8,
-          animation: 'fadeUp 0.7s ease forwards',
-        }}>{personalInfo.name}</span>
-
         <h2 style={{
           fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',
           lineHeight: 1.1, marginBottom: 12,
@@ -178,29 +171,6 @@ const HeroSection = () => {
           <div className="pill-row" style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
             {expertisePills.map(pill => (
               <PillWithTooltip key={pill.label} pill={pill} />
-            ))}
-          </div>
-        </div>
-
-        {/* Background credential tags */}
-        <div className="hero-credential-tags-section" style={{ marginBottom: 24, animation: 'fadeUp 0.7s ease 0.35s forwards', opacity: 0 }}>
-          <span style={{
-            display: 'block', marginBottom: 8, textTransform: 'uppercase',
-            letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
-          }}>Background</span>
-          <div className="hero-credential-tags" style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
-            {credentialTags.map(tag => (
-              <span
-                key={tag}
-                className="hero-credential-tag"
-                style={{
-                  fontSize: 12, padding: '6px 14px', borderRadius: 3,
-                  border: `1px solid ${T.border}`, color: T.textSec,
-                  transition: 'all 0.25s ease', cursor: 'default',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = T.text; e.currentTarget.style.color = T.bg; e.currentTarget.style.borderColor = T.text; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.textSec; e.currentTarget.style.borderColor = T.border; }}
-              >{tag}</span>
             ))}
           </div>
         </div>

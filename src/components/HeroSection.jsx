@@ -114,6 +114,15 @@ const HeroSection = () => {
         }}>
           {personalInfo.heroSubtags}
         </p>
+        <div style={{
+          position: 'relative', zIndex: 2, fontSize: 11, textTransform: 'uppercase',
+          letterSpacing: '0.12em', color: 'rgba(255,255,255,0.3)',
+          display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
+          animation: 'fadeUp 0.7s ease 0.2s forwards', opacity: 0,
+        }}>
+          <div className="scroll-line" style={{ height: 1, background: 'rgba(255,255,255,0.2)' }} />
+          Scroll to explore
+        </div>
       </div>
 
       {/* Right — info panel */}

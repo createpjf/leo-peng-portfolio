@@ -12,6 +12,11 @@ const GlobalStyles = () => {
         from { opacity: 0; transform: translateY(18px); }
         to   { opacity: 1; transform: translateY(0); }
       }
+      @keyframes expandLine {
+        0%,100% { width: 24px; opacity: 0.3; }
+        50%     { width: 48px; opacity: 0.7; }
+      }
+      .scroll-line { animation: expandLine 2s ease-in-out infinite; }
       .hero-video { object-position: center 30%; }
       .service-card::before {
         content: '';

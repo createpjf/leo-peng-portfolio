@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
 import { experienceData, extraExperience } from '../data/siteContent';
+import ScrollReveal from './ScrollReveal';
 
 const ExperienceSection = ({ showFull, setShowFull }) => {
   const items = showFull ? [...experienceData, ...extraExperience] : experienceData;
@@ -11,7 +12,8 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
       <h2 style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }}>Experience.</h2>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {items.map((item, i) => (
-          <div key={item.id}
+          <ScrollReveal key={item.id} delay={`${i * 0.08}s`}>
+          <div
             className="exp-row"
             onMouseEnter={() => setHoveredIdx(i)}
             onMouseLeave={() => setHoveredIdx(null)}
@@ -34,6 +36,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
               padding: '4px 12px', border: `1px solid ${T.border}`, borderRadius: 3, color: T.textSec,
             }}>{item.type}</span>
           </div>
+          </ScrollReveal>
         ))}
       </div>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>

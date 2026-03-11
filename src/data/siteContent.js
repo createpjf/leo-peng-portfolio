@@ -122,7 +122,7 @@ export const projects = [
     category: 'Code · Website Building',
     year: '2026',
     href: 'https://www.guizhou-fc.com/',
-    heroImg: '/guizhoufc-hero.webp',
+    heroImg: '/guizhoufc-hero.png',
   },
   {
     title: 'Brand Film',

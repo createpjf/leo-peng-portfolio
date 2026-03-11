@@ -123,13 +123,6 @@ export const projects = [
     heroImg: '/cleo-hero.webp',
   },
   {
-    title: 'Guizhou Athletic F.C.',
-    category: 'Code · Website Building',
-    year: '2026',
-    href: 'https://www.guizhou-fc.com/',
-    heroImg: '/guizhoufc-hero.png',
-  },
-  {
     title: 'Brand Film',
     category: 'Video · Brand',
     year: '2024',

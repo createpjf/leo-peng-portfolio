@@ -18,7 +18,9 @@ const QuoteSection = () => (
         justifyContent: 'center',
       }}
     />
-    {/* attribution removed per request */}
+    <p style={{
+      fontSize: 14, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
+    }}>{personalInfo.quoteAttribution}</p>
   </section>
 );
 

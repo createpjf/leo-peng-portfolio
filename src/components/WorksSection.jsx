@@ -4,6 +4,9 @@ import { projects } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 
+/* Only apply hover effects on devices with a fine pointer (not touch) */
+const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+
 const WorkCard = ({ title, category, year, children, idx, href }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
@@ -13,8 +16,8 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
       href={href || '#'}
       target={href ? '_blank' : undefined}
       rel={href ? 'noopener noreferrer' : undefined}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => canHover && setHover(true)}
+      onMouseLeave={() => canHover && setHover(false)}
       onClick={e => { if (!href) e.preventDefault(); }}
       style={{
         display: 'flex', flexDirection: 'column', cursor: 'pointer',

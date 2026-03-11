@@ -4,6 +4,7 @@ import { services } from '../data/siteContent';
 import ServiceIcons from './ServiceIcons';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
+import ScrollReveal from './ScrollReveal';
 
 const ServicesSection = () => {
   const [hovered, setHovered] = useState(null);
@@ -13,14 +14,14 @@ const ServicesSection = () => {
       <FadeWords text="What I Do." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
       <div ref={gridRef} className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
         {services.map((s, i) => (
-          <ScrollReveal key={s.num} delay={`${i * 0.1}s`}>
+          <ScrollReveal key={s.num} delay={`${i * 0.1}s`} style={{ height: '100%' }}>
           <div
             className="service-card"
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
             style={{
               background: hovered === i ? '#fafafa' : T.bg,
-              padding: '48px 24px', display: 'flex', flexDirection: 'column',
+              padding: '48px 24px', display: 'flex', flexDirection: 'column', height: '100%',
               transition: `background 0.3s ease, opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s`,
               cursor: 'default',
               position: 'relative', overflow: 'hidden',

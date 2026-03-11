@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import T from '../data/theme';
-import { personalInfo, expertisePills, credentialsLine, heroBio } from '../data/siteContent';
+import { personalInfo, expertisePills } from '../data/siteContent';
 
 const PillWithTooltip = ({ pill }) => {
   const [hover, setHover] = useState(false);
@@ -114,12 +114,13 @@ const HeroSection = () => {
         <h1 style={{
           fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
+          marginTop: 'auto',
         }}>
           {/* Line 1 — staggered word-by-word fadeUp */}
           {personalInfo.heroHeadline[0].split(' ').map((w, i) => (
             <span key={`l1-${i}`} style={{
               display: 'inline-block', opacity: 0,
-              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 0.12}s forwards`,
+              animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
           ))}
           <br />
@@ -127,19 +128,19 @@ const HeroSection = () => {
           {personalInfo.heroHeadline[1].trim().split(' ').map((w, i) => (
             <span key={`l2-${i}`} style={{
               display: 'inline-block', opacity: 0,
-              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${(i + 2) * 0.12}s forwards`,
+              animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${(i + 2) * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
           ))}
           <em style={{
             fontStyle: 'italic', display: 'inline-block', opacity: 0,
-            animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${4 * 0.12}s forwards`,
+            animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${4 * 0.08}s forwards`,
           }}>{personalInfo.heroHeadline[2]}</em>
           <br />
           {/* Line 3 */}
           {personalInfo.heroHeadline[3].split(' ').map((w, i) => (
             <span key={`l3-${i}`} style={{
               display: 'inline-block', opacity: 0,
-              animation: `fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) ${(i + 5) * 0.12}s forwards`,
+              animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${(i + 5) * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
           ))}
         </h1>
@@ -150,15 +151,6 @@ const HeroSection = () => {
         }}>
           {personalInfo.heroSubtags}
         </p>
-        <div style={{
-          position: 'relative', zIndex: 2, fontSize: 11, textTransform: 'uppercase',
-          letterSpacing: '0.12em', color: 'rgba(255,255,255,0.3)',
-          display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
-          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.7s forwards', opacity: 0,
-        }}>
-          <div className="scroll-line" style={{ height: 1, background: 'rgba(255,255,255,0.2)' }} />
-          Scroll to explore
-        </div>
       </div>
 
       {/* Right — info panel */}
@@ -187,19 +179,6 @@ const HeroSection = () => {
               marginBottom: i === 0 ? 12 : 0,
             }}>{text}</p>
           ))}
-        </div>
-
-        {/* Bio */}
-        <div className="hero-bio" style={{
-          marginBottom: 32,
-          animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.55s forwards', opacity: 0,
-        }}>
-          <p style={{ fontSize: 14, color: T.textSec, lineHeight: 1.7, marginBottom: 12 }}>
-            {heroBio[0]}
-          </p>
-          <p className="hero-bio-secondary" style={{ fontSize: 14, color: T.textSec, lineHeight: 1.7 }}>
-            {heroBio[1]}
-          </p>
         </div>
 
         {/* Status */}

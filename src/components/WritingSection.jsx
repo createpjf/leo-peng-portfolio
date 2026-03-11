@@ -4,6 +4,8 @@ import { writings } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 
+const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+
 /* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
 const fmtDate = (d) => {
   const parts = d.split('-');
@@ -25,15 +27,16 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
       target="_blank"
       rel="noopener noreferrer"
       className="writing-row"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => canHover && setHover(true)}
+      onMouseLeave={() => canHover && setHover(false)}
       style={{
         padding: '20px 0',
-        paddingLeft: hover ? 8 : 0,
         borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
-        transition: `padding-left 0.3s ease, opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
+        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
         opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
+        transform: inView
+          ? (hover ? 'translateX(8px)' : 'translateX(0)')
+          : 'translateY(20px)',
         textDecoration: 'none',
         color: 'inherit',
       }}

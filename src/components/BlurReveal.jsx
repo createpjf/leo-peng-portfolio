@@ -1,5 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import useInView from '../hooks/useInView';
+
+/* Skip expensive blur filter on mobile / touch devices */
+const useIsMobile = () => {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    setMobile(mq.matches);
+    const handler = (e) => setMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return mobile;
+};
 
 /**
  * BlurReveal — text reveals word-by-word from blurred+transparent to clear.
@@ -27,6 +40,7 @@ const BlurReveal = ({
   direction = 'up',
 }) => {
   const { ref, inView } = useInView({ threshold: 0.2 });
+  const isMobile = useIsMobile();
 
   const segments = animateBy === 'chars' ? text.split('') : text.split(' ');
   const yOffset = direction === 'up' ? 20 : -20;
@@ -38,11 +52,13 @@ const BlurReveal = ({
           key={i}
           style={{
             display: 'inline-block',
-            filter: inView ? 'blur(0px)' : `blur(${blurAmount}px)`,
+            filter: isMobile ? 'none' : (inView ? 'blur(0px)' : `blur(${blurAmount}px)`),
             opacity: inView ? 1 : 0,
             transform: inView ? 'translateY(0)' : `translateY(${yOffset}px)`,
-            transition: `filter ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`,
-            willChange: inView ? 'auto' : 'filter, opacity, transform',
+            transition: isMobile
+              ? `opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`
+              : `filter ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`,
+            willChange: inView ? 'auto' : (isMobile ? 'opacity, transform' : 'filter, opacity, transform'),
           }}
         >
           {segment}

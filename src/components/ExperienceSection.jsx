@@ -4,20 +4,24 @@ import { experienceData, extraExperience } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 
+const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+
 const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
   return (
   <div
     ref={ref}
     className="exp-row"
-    onMouseEnter={() => setHoveredIdx(idx)}
-    onMouseLeave={() => setHoveredIdx(null)}
+    onMouseEnter={() => canHover && setHoveredIdx(idx)}
+    onMouseLeave={() => canHover && setHoveredIdx(null)}
     style={{
-      padding: '24px 0', paddingLeft: hoveredIdx === idx ? 8 : 0,
+      padding: '24px 0',
       borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
-      transition: `padding-left 0.3s ease, opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
+      transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
       opacity: inView ? 1 : 0,
-      transform: inView ? 'translateY(0)' : 'translateY(20px)',
+      transform: inView
+        ? (hoveredIdx === idx ? 'translateX(8px)' : 'translateX(0)')
+        : 'translateY(20px)',
     }}
   >
     <span style={{ fontSize: 13, fontVariantNumeric: 'tabular-nums', color: T.textSec }}>{item.date}</span>

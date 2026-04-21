@@ -9,10 +9,12 @@ import WorksSection from './components/WorksSection';
 import WritingSection from './components/WritingSection';
 import QuoteSection from './components/QuoteSection';
 import Footer from './components/Footer';
+import useIntercom from './hooks/useIntercom';
 
 const App = () => {
   const [activeNav, setActiveNav] = useState('Services');
   const [showFull, setShowFull] = useState(false);
+  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID);
 
   return (
     <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>

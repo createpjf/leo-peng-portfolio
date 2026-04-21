@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-const ACTIVATOR_EVENTS = ['scroll', 'pointermove', 'touchstart', 'keydown'];
-const IDLE_FALLBACK_MS = 6000;
-
 const useIntercom = (appId) => {
   const bootedRef = useRef(false);
 
@@ -15,31 +12,17 @@ const useIntercom = (appId) => {
       return undefined;
     }
 
-    let timeoutId = null;
+    let cancelled = false;
 
-    const boot = async () => {
-      if (bootedRef.current) return;
-      bootedRef.current = true;
-      cleanup();
+    (async () => {
       const { default: Intercom } = await import('@intercom/messenger-js-sdk');
+      if (cancelled) return;
+      bootedRef.current = true;
       Intercom({ app_id: appId });
-    };
-
-    const cleanup = () => {
-      ACTIVATOR_EVENTS.forEach((evt) => window.removeEventListener(evt, boot));
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-    };
-
-    ACTIVATOR_EVENTS.forEach((evt) =>
-      window.addEventListener(evt, boot, { once: true, passive: true }),
-    );
-    timeoutId = setTimeout(boot, IDLE_FALLBACK_MS);
+    })();
 
     return () => {
-      cleanup();
+      cancelled = true;
       if (bootedRef.current && typeof window.Intercom === 'function') {
         window.Intercom('shutdown');
         bootedRef.current = false;

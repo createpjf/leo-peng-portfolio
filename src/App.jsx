@@ -14,7 +14,7 @@ import useIntercom from './hooks/useIntercom';
 const App = () => {
   const [activeNav, setActiveNav] = useState('Services');
   const [showFull, setShowFull] = useState(false);
-  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID);
+  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
 
   return (
     <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>

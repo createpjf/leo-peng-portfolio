@@ -88,7 +88,31 @@
       "Bash(npx wrangler pages project get createpjf)",
       "Bash(npx wrangler pages domains list --project-name=createpjf)",
       "WebFetch(domain:guizhou-fc.com)",
-      "Bash(npx --yes playwright --version)"
+      "Bash(npx --yes playwright --version)",
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npm run *)",
+      "Bash(git push *)",
+      "Bash(curl -s https://createpjf.com/)",
+      "Bash(curl -sI https://createpjf.com/)",
+      "Bash(curl -s https://createpjf.com/assets/index-Rb5gLHWm.js)",
+      "Bash(curl -s https://leo-peng-portfolio.createpjf.workers.dev/)",
+      "Bash(curl -s https://leo-peng-portfolio.createpjf.workers.dev/assets/index-BrX7tkh7.js)",
+      "Bash(curl -sI \"https://leo-peng-portfolio.createpjf.workers.dev/assets/index-CbMIAhH7.js\")",
+      "Bash(curl -s \"https://leo-peng-portfolio.createpjf.workers.dev/assets/index-CbMIAhH7.js\")",
+      "Bash(curl -s --compressed \"https://leo-peng-portfolio.createpjf.workers.dev/assets/index-CbMIAhH7.js\")",
+      "Bash(curl -s --compressed \"https://leo-peng-portfolio.createpjf.workers.dev/assets/index-BrX7tkh7.js\")",
+      "Bash(curl -sH \"Cache-Control: no-cache\" \"https://leo-peng-portfolio.createpjf.workers.dev/?bust=$\\(date +%s%N\\)\")",
+      "Bash(curl -sH \"Cache-Control: no-cache\" \"https://createpjf.com/?bust=$\\(date +%s%N\\)\")",
+      "Bash(curl -s --compressed \"https://createpjf.com/assets/index-Rb5gLHWm.js\")",
+      "Bash(dig +short createpjf.com CNAME)",
+      "Bash(dig +short createpjf.com A)",
+      "Bash(curl -sI \"https://createpjf.com/\")",
+      "Bash(npx wrangler *)",
+      "Read(//Users/leo/.wrangler/config/**)",
+      "Read(//Users/leo/.config/**)",
+      "Bash(curl -sH 'Cache-Control: no-cache' '__TRACKED_VAR__/?bust=__CMDSUB_OUTPUT__')"
     ]
   }
 }

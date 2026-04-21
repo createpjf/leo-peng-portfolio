@@ -10,5 +10,10 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "createpjf.com/*", "zone_name": "createpjf.com" },
+    { "pattern": "www.createpjf.com/*", "zone_name": "createpjf.com" }
   ]
 }

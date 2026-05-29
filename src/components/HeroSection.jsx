@@ -1,55 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import T from '../data/theme';
 import { personalInfo, expertisePills } from '../data/siteContent';
-
-const PillWithTooltip = ({ pill }) => {
-  const [hover, setHover] = useState(false);
-  const timer = useRef(null);
-  const enter = () => { clearTimeout(timer.current); setHover(true); };
-  const leave = () => { timer.current = setTimeout(() => setHover(false), 120); };
-  return (
-    <div
-      style={{ position: 'relative', display: 'inline-block' }}
-      onMouseEnter={enter}
-      onMouseLeave={leave}
-      onClick={() => setHover(h => !h)}
-    >
-      <div className="pill-tooltip" style={{
-        position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%',
-        transform: `translateX(-50%) translateY(${hover ? '0' : '4px'})`,
-        background: '#000', color: '#fff',
-        fontSize: 12, lineHeight: 1.55, padding: '10px 16px',
-        borderRadius: 10, pointerEvents: 'none',
-        width: 240, textAlign: 'center',
-        opacity: hover ? 1 : 0,
-        transition: 'opacity 0.2s ease, transform 0.2s ease',
-        letterSpacing: '-0.01em',
-        zIndex: 10,
-      }}>
-        {pill.desc}
-        <div style={{
-          position: 'absolute', top: '100%', left: '50%',
-          transform: 'translateX(-50%)',
-          width: 0, height: 0,
-          borderLeft: '7px solid transparent',
-          borderRight: '7px solid transparent',
-          borderTop: '7px solid #000',
-        }} />
-      </div>
-      <div
-        className="pill-item"
-        style={{
-          border: `1px solid ${T.border}`,
-          padding: '10px 24px', fontSize: 13, borderRadius: 3,
-          cursor: 'default', transition: 'all 0.25s ease',
-          background: hover ? '#000' : 'transparent',
-          color: hover ? '#fff' : T.text,
-          borderColor: hover ? '#000' : T.border,
-        }}
-      >{pill.label}</div>
-    </div>
-  );
-};
+import PillWithTooltip from './PillWithTooltip';
 
 const HeroSection = () => {
   const videoRef = useRef(null);
@@ -82,7 +34,8 @@ const HeroSection = () => {
         <img
           src="/hero-poster.jpg" alt="Leo Peng portfolio hero"
           className="hero-video"
-          fetchpriority="high"
+          fetchPriority="high"
+          decoding="async"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover', zIndex: 0,
@@ -94,7 +47,7 @@ const HeroSection = () => {
             ref={videoRef}
             className="hero-video"
             autoPlay muted playsInline
-            aria-label="Background video" role="presentation"
+            aria-hidden="true"
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover', zIndex: 0,
@@ -210,16 +163,14 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" style={{
-          marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 8,
+        <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" className="resume-link" style={{
+          marginTop: 24, display: 'inline-flex', alignItems: 'center',
           fontSize: 16, fontWeight: 500, padding: '12px 0',
           borderBottom: `1px solid ${T.text}`, background: 'none',
           color: T.text, width: 'fit-content',
           animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards', opacity: 0,
           transition: 'gap 0.35s cubic-bezier(0.4,0,0.2,1), color 0.3s ease',
         }}
-          onMouseEnter={e => { e.currentTarget.style.gap = '14px'; }}
-          onMouseLeave={e => { e.currentTarget.style.gap = '8px'; }}
         >
           View Resume <span style={{
             display: 'inline-block',

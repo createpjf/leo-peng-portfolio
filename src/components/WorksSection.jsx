@@ -3,13 +3,12 @@ import T from '../data/theme';
 import { projects } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
-
-/* Only apply hover effects on devices with a fine pointer (not touch) */
-const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+import useCanHover from '../hooks/useCanHover';
 
 const WorkCard = ({ title, category, year, children, idx, href }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
+  const canHover = useCanHover();
   return (
     <a
       ref={ref}
@@ -57,7 +56,7 @@ const WorksSection = () => (
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
-          <img src={p.heroImg} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={p.heroImg} alt={p.title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </WorkCard>
       ))}
     </div>

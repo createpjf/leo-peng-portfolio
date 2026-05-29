@@ -3,11 +3,11 @@ import T from '../data/theme';
 import { experienceData, extraExperience } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
-
-const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+import useCanHover from '../hooks/useCanHover';
 
 const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
+  const canHover = useCanHover();
   return (
   <div
     ref={ref}
@@ -28,7 +28,7 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
     <div>
       <h3 style={{ fontSize: 15, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</h3>
       <span style={{ fontSize: 13, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-        {item.logo && <img src={item.logo} alt={item.company} style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
+        {item.logo && <img src={item.logo} alt={item.company} loading="lazy" decoding="async" style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
         {item.company}
       </span>
     </div>
@@ -61,7 +61,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
         ))}
 
         {/* Extra items — animated expand/collapse */}
-        <div style={{
+        <div id="experience-extra" style={{
           display: 'grid',
           gridTemplateRows: showFull ? '1fr' : '0fr',
           opacity: showFull ? 1 : 0,
@@ -83,15 +83,15 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
       </div>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <button
+          className="exp-toggle"
           onClick={() => setShowFull(!showFull)}
-          onMouseEnter={e => { e.currentTarget.style.background = T.text; e.currentTarget.style.color = '#fff'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.text; }}
+          aria-expanded={showFull}
+          aria-controls="experience-extra"
           style={{
             display: 'block', width: '100%', textAlign: 'center',
             border: `1px solid ${T.text}`, padding: 14, fontSize: 13,
             textTransform: 'uppercase', letterSpacing: '0.05em',
-            background: 'transparent', color: T.text,
-            transition: 'all 0.2s', marginTop: 24, cursor: 'pointer', fontFamily: T.font,
+            marginTop: 24, cursor: 'pointer', fontFamily: T.font,
           }}
         >{showFull ? 'Show less' : 'See more'}</button>
       </div>

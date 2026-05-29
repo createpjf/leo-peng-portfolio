@@ -6,8 +6,21 @@ const GlobalStyles = () => {
     const style = document.createElement('style');
     style.textContent = `
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+      html { scroll-padding-top: 60px; }
       body { overflow-x: hidden; background: ${T.bg}; }
       a { text-decoration: none; color: inherit; cursor: pointer; }
+
+      /* ─── Accessibility: visible keyboard focus ─── */
+      :focus-visible { outline: 2px solid ${T.accent}; outline-offset: 3px; border-radius: 2px; }
+      :focus:not(:focus-visible) { outline: none; }
+
+      /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
+      .footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
+      .footer-link:hover { color: #fff; }
+      .exp-toggle { transition: all 0.2s; }
+      .exp-toggle:hover { background: ${T.text}; color: #fff; }
+      .resume-link { gap: 8px; }
+      .resume-link:hover { gap: 14px; }
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(20px); }
         to   { opacity: 1; transform: translateY(0); }

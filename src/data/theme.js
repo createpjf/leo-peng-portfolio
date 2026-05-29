@@ -11,7 +11,7 @@ const theme = {
   bgDark:   '#0a0a0a',
   text:     '#111111',
   textSec:  '#666666',
-  textLt:   '#999999',
+  textLt:   '#767676',
   accent:   '#000000',
   border:   '#e5e5e5',
   borderDk: '#222222',

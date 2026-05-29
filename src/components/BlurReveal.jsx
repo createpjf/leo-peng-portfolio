@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import useInView from '../hooks/useInView';
 
 /* Skip expensive blur filter on mobile / touch devices */
+const MOBILE_QUERY = '(max-width: 768px)';
 const useIsMobile = () => {
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
+  );
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 768px)');
-    setMobile(mq.matches);
+    const mq = window.matchMedia(MOBILE_QUERY);
     const handler = (e) => setMobile(e.matches);
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);

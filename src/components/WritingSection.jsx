@@ -3,8 +3,7 @@ import T from '../data/theme';
 import { writings } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
-
-const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+import useCanHover from '../hooks/useCanHover';
 
 /* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
 const fmtDate = (d) => {
@@ -19,6 +18,7 @@ const fmtDate = (d) => {
 const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
+  const canHover = useCanHover();
 
   return (
     <a

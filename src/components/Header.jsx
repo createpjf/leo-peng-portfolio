@@ -1,14 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import T from '../data/theme';
 import { navItems, personalInfo } from '../data/siteContent';
 
 const Header = ({ activeNav, setActiveNav }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+  const overlayRef = useRef(null);
 
   // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  // Close on Escape; move focus into the menu on open and back to the
+  // toggle on close so keyboard users aren't stranded.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const toggleButton = menuButtonRef.current;
+    const onKeyDown = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    document.addEventListener('keydown', onKeyDown);
+    const firstLink = overlayRef.current?.querySelector('a');
+    firstLink?.focus();
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      toggleButton?.focus();
+    };
   }, [menuOpen]);
 
   const handleNav = (e, item) => {
@@ -46,9 +63,12 @@ const Header = ({ activeNav, setActiveNav }) => {
 
         {/* Mobile hamburger button */}
         <button
+          ref={menuButtonRef}
           className="mobile-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
           style={{
             display: 'none', background: 'none', border: 'none', cursor: 'pointer',
             padding: 8, marginRight: -8, position: 'relative', zIndex: 200,
@@ -78,17 +98,27 @@ const Header = ({ activeNav, setActiveNav }) => {
       </header>
 
       {/* Mobile fullscreen overlay menu */}
-      <div className="mobile-menu-overlay" style={{
-        position: 'fixed', inset: 0, zIndex: 99,
-        background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: 0, opacity: menuOpen ? 1 : 0,
-        pointerEvents: menuOpen ? 'auto' : 'none',
-        transition: 'opacity 0.3s ease',
-      }}>
+      <div
+        ref={overlayRef}
+        id="mobile-menu"
+        className="mobile-menu-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        aria-hidden={!menuOpen}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 99,
+          background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: 0, opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          transition: 'opacity 0.3s ease',
+        }}>
         {navItems.map((item, i) => (
           <a key={item} href={`#${item.toLowerCase()}`}
             onClick={e => handleNav(e, item)}
+            tabIndex={menuOpen ? 0 : -1}
+            aria-current={activeNav === item ? 'true' : undefined}
             style={{
               fontSize: 28, fontWeight: 400, letterSpacing: '-0.02em',
               color: T.text,

@@ -17,7 +17,7 @@ const GlobalStyles = () => {
       /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
       .footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
       .footer-link:hover { color: #fff; }
-      .exp-toggle { transition: all 0.2s; }
+      .exp-toggle { background: transparent; color: ${T.text}; transition: all 0.2s; }
       .exp-toggle:hover { background: ${T.text}; color: #fff; }
       .resume-link { gap: 8px; }
       .resume-link:hover { gap: 14px; }
@@ -94,7 +94,7 @@ const GlobalStyles = () => {
           transform: translateY(0) !important;
           max-width: calc(100vw - 40px) !important;
         }
-        .pill-tooltip > div { left: 24px !important; }
+        .pill-tooltip > span { left: 24px !important; }
       }
 
       /* ─── Footer & quote mobile tweaks ─── */

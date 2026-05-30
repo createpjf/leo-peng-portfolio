@@ -26,20 +26,13 @@ const HeroSection = () => {
   return (
     <section className="hero-grid">
       {/* Left — dark panel */}
-      <div className="hero-dark" style={{
-        background: T.bgDark, color: '#fff', display: 'flex', flexDirection: 'column',
-        justifyContent: 'flex-end', padding: '96px 48px 48px', position: 'relative', overflow: 'hidden',
-      }}>
+      <div className="hero-dark">
         {/* Poster image (revealed when video fades out) */}
         <img
           src="/hero-poster.jpg" alt="Leo Peng portfolio hero"
           className="hero-video"
           fetchPriority="high"
           decoding="async"
-          style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover', zIndex: 0,
-          }}
         />
         {/* Background video — removed from DOM after fade-out to free GPU */}
         {!videoRemoved && (
@@ -49,8 +42,6 @@ const HeroSection = () => {
             autoPlay muted playsInline
             aria-hidden="true"
             style={{
-              position: 'absolute', inset: 0, width: '100%', height: '100%',
-              objectFit: 'cover', zIndex: 0,
               opacity: videoEnded ? 0 : 1,
               transition: 'opacity 2.5s ease',
             }}
@@ -59,10 +50,7 @@ const HeroSection = () => {
           </video>
         )}
         {/* Dark gradient overlay */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 1,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.8) 100%)',
-        }} />
+        <div className="hero-overlay" />
 
         <h1 style={{
           fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,

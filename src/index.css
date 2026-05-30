@@ -89,8 +89,27 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero-video { object-position: center 30%; backface-visibility: hidden; }
+.hero-video { object-position: center 30%; backface-visibility: hidden; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 .hero-grid { contain: layout style; }
+
+/* Hero dark panel — static structure (responsive padding overrides below) */
+.hero-dark {
+  background: var(--bg-dark);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 96px 48px 48px;
+  position: relative;
+  overflow: hidden;
+}
+/* Hero gradient overlay over the video/poster */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.8) 100%);
+}
 .service-card::before {
   content: '';
   position: absolute;

@@ -66,6 +66,18 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   margin-bottom: 4px;
 }
 
+/* Footer link column */
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+
+/* Hamburger icon bars (dynamic transform/opacity stays inline) */
+.hamburger-bar {
+  display: block;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
 /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
 .footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
 .footer-link:hover { color: #fff; }

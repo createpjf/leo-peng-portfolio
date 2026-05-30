@@ -23,7 +23,7 @@ const Footer = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="footer-col">
           <span className="footer-eyebrow">Socials</span>
           {socialLinks.map(item => (
             <a key={item.label} href={item.href}
@@ -35,7 +35,7 @@ const Footer = () => {
           ))}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="footer-col">
           <span className="footer-eyebrow">Say Hello</span>
           <a href={`mailto:${personalInfo.email}`}
             className="footer-link"

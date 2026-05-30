@@ -136,10 +136,7 @@ const HeroSection = () => {
 
         {/* Status */}
         <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards', opacity: 0 }}>
-          <span style={{
-            display: 'block', marginBottom: 8, textTransform: 'uppercase',
-            letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
-          }}>Status</span>
+          <span className="eyebrow" style={{ marginBottom: 8 }}>Status</span>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
             <span className="status-dot" style={{
               width: 20, height: 20, borderRadius: '50%',
@@ -152,10 +149,7 @@ const HeroSection = () => {
 
         {/* Expertise */}
         <div style={{ marginBottom: 24, animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s forwards', opacity: 0 }}>
-          <span style={{
-            display: 'block', marginBottom: 8, textTransform: 'uppercase',
-            letterSpacing: '0.05em', fontSize: 11, fontWeight: 500, color: T.textSec,
-          }}>Expertise</span>
+          <span className="eyebrow" style={{ marginBottom: 8 }}>Expertise</span>
           <div className="pill-row" style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
             {expertisePills.map(pill => (
               <PillWithTooltip key={pill.label} pill={pill} />

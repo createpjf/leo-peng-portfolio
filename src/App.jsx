@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import T from './data/theme';
-import GlobalStyles from './components/GlobalStyles';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
@@ -27,7 +26,6 @@ const App = () => {
 
   return (
     <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>
-      <GlobalStyles />
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
       <main>
         <HeroSection />

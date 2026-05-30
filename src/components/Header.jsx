@@ -38,16 +38,11 @@ const Header = ({ activeNav, setActiveNav }) => {
 
   return (
     <>
-      <header className="site-header" style={{
-        height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', position: 'sticky', top: 0,
-        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)',
-        zIndex: 100, borderBottom: `1px solid ${T.border}`,
-      }}>
-        <div style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>{personalInfo.name}</div>
+      <header className="site-header">
+        <div className="site-brand">{personalInfo.name}</div>
 
         {/* Desktop nav */}
-        <nav className="site-nav desktop-nav" role="navigation" aria-label="Main navigation" style={{ display: 'flex', gap: 24, fontSize: 13 }}>
+        <nav className="site-nav desktop-nav" role="navigation" aria-label="Main navigation">
           {navItems.map(item => (
             <a key={item} href={`#${item.toLowerCase()}`}
               className="nav-link"
@@ -69,15 +64,8 @@ const Header = ({ activeNav, setActiveNav }) => {
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
-          style={{
-            display: 'none', background: 'none', border: 'none', cursor: 'pointer',
-            padding: 8, marginRight: -8, position: 'relative', zIndex: 200,
-          }}
         >
-          <div style={{
-            width: 20, height: 14, position: 'relative',
-            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-          }}>
+          <div className="hamburger-icon">
             <span className="hamburger-bar" style={{
               transformOrigin: 'center',
               transform: menuOpen ? 'translateY(6.25px) rotate(45deg)' : 'none',
@@ -103,22 +91,16 @@ const Header = ({ activeNav, setActiveNav }) => {
         aria-label="Site navigation"
         aria-hidden={!menuOpen}
         style={{
-          position: 'fixed', inset: 0, zIndex: 99,
-          background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          gap: 0, opacity: menuOpen ? 1 : 0,
+          opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease',
         }}>
         {navItems.map((item, i) => (
           <a key={item} href={`#${item.toLowerCase()}`}
+            className="mobile-menu-link"
             onClick={e => handleNav(e, item)}
             tabIndex={menuOpen ? 0 : -1}
             aria-current={activeNav === item ? 'true' : undefined}
             style={{
-              fontSize: 28, fontWeight: 400, letterSpacing: '-0.02em',
-              color: T.text,
-              padding: '14px 0',
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
               opacity: menuOpen ? 1 : 0,
               transition: `all 0.3s ease ${i * 0.05}s`,

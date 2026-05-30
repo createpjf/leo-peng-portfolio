@@ -132,7 +132,6 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   color: var(--text);
   padding: 14px 0;
 }
-
 /* ─── Work card thumbnail (dynamic border-color / zoom stay inline) ─── */
 .work-thumb {
   background: var(--bg-sec);

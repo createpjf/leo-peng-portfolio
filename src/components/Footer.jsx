@@ -24,7 +24,7 @@ const Footer = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Socials</span>
+          <span className="footer-eyebrow">Socials</span>
           {socialLinks.map(item => (
             <a key={item.label} href={item.href}
               className="footer-link"
@@ -36,7 +36,7 @@ const Footer = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Say Hello</span>
+          <span className="footer-eyebrow">Say Hello</span>
           <a href={`mailto:${personalInfo.email}`}
             className="footer-link"
             style={{ fontSize: 13 }}

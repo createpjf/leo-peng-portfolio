@@ -52,7 +52,7 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
 
 const WorksSection = () => (
   <section id="work" className="section-pad" style={{ padding: '60px 40px', background: '#fafafa' }}>
-    <FadeWords text="Selected Work." style={{ fontSize: 20, fontWeight: 500, marginBottom: 32, letterSpacing: '-0.01em' }} />
+    <FadeWords text="Selected Work." className="section-title" style={{ marginBottom: 32 }} />
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>

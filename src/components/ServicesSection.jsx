@@ -11,7 +11,7 @@ const ServicesSection = () => {
   const { ref: gridRef, inView } = useInView({ threshold: 0.1 });
   return (
     <section id="services" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <FadeWords text="What I Do." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
+      <FadeWords text="What I Do." className="section-title" />
       <div ref={gridRef} className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
         {services.map((s, i) => (
           <ScrollReveal key={s.num} delay={`${i * 0.1}s`} style={{ height: '100%' }}>
@@ -38,10 +38,7 @@ const ServicesSection = () => {
             <p style={{ fontSize: 13, color: T.textSec, lineHeight: 1.65 }}>{s.desc}</p>
             <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {s.tags.map(t => (
-                <span key={t} style={{
-                  fontSize: 10, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em',
-                  padding: '4px 10px', border: `1px solid ${T.border}`, borderRadius: 3, color: T.textSec,
-                }}>{t}</span>
+                <span key={t} className="tag-chip tag-chip--sm">{t}</span>
               ))}
             </div>
           </div>

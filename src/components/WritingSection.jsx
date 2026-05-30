@@ -95,7 +95,7 @@ const WritingSection = () => (
       borderBottom: `1px solid ${T.border}`,
     }}
   >
-    <FadeWords text="Writing." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
+    <FadeWords text="Writing." className="section-title" />
     <div>
       {writings.map((w, i) => (
         <WritingRow

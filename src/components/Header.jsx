@@ -78,19 +78,15 @@ const Header = ({ activeNav, setActiveNav }) => {
             width: 20, height: 14, position: 'relative',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
           }}>
-            <span style={{
-              display: 'block', height: 1.5, background: T.text, borderRadius: 1,
-              transition: 'all 0.3s ease', transformOrigin: 'center',
+            <span className="hamburger-bar" style={{
+              transformOrigin: 'center',
               transform: menuOpen ? 'translateY(6.25px) rotate(45deg)' : 'none',
             }} />
-            <span style={{
-              display: 'block', height: 1.5, background: T.text, borderRadius: 1,
-              transition: 'all 0.3s ease',
+            <span className="hamburger-bar" style={{
               opacity: menuOpen ? 0 : 1,
             }} />
-            <span style={{
-              display: 'block', height: 1.5, background: T.text, borderRadius: 1,
-              transition: 'all 0.3s ease', transformOrigin: 'center',
+            <span className="hamburger-bar" style={{
+              transformOrigin: 'center',
               transform: menuOpen ? 'translateY(-6.25px) rotate(-45deg)' : 'none',
             }} />
           </div>

@@ -37,6 +37,47 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   color: var(--text-sec);
 }
 
+/* Section heading rendered by FadeWords (light theme sections) */
+.section-title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 40px;
+}
+
+/* Small bordered uppercase tag/badge */
+.tag-chip {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-sec);
+}
+.tag-chip--sm { font-size: 10px; font-weight: 500; padding: 4px 10px; }
+
+/* Footer column label (white-on-dark) */
+.footer-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4px;
+}
+
+/* Footer link column */
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+
+/* Hamburger icon bars (dynamic transform/opacity stays inline) */
+.hamburger-bar {
+  display: block;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
 /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
 .footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
 .footer-link:hover { color: #fff; }

@@ -32,10 +32,7 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
         {item.company}
       </span>
     </div>
-    <span className="exp-type-badge" style={{
-      fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em',
-      padding: '4px 12px', border: `1px solid ${T.border}`, borderRadius: 3, color: T.textSec,
-    }}>{item.type}</span>
+    <span className="exp-type-badge tag-chip">{item.type}</span>
   </div>
   );
 };
@@ -46,7 +43,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
 
   return (
     <section id="experience" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <FadeWords text="Experience." style={{ fontSize: 20, fontWeight: 500, marginBottom: 40, letterSpacing: '-0.01em' }} />
+      <FadeWords text="Experience." className="section-title" />
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {/* Base items — always visible */}
         {experienceData.map((item, i) => (

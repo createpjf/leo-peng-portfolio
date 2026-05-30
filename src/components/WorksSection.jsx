@@ -26,18 +26,8 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
         textDecoration: 'none', color: 'inherit',
       }}
     >
-      <div style={{
-        background: T.bgSec, aspectRatio: '16/9', marginBottom: 12,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        overflow: 'hidden', position: 'relative',
-        border: `1px solid ${hover ? T.accent : T.border}`,
-        transition: 'border-color 0.3s',
-      }}>
-        <div style={{
-          width: '100%', height: '100%',
-          transition: 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-          transform: hover ? 'scale(1.06)' : 'scale(1)',
-        }}>{children}</div>
+      <div className="work-thumb" style={{ borderColor: hover ? T.accent : T.border }}>
+        <div className="work-thumb-img" style={{ transform: hover ? 'scale(1.06)' : 'scale(1)' }}>{children}</div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 14 }}>
         <div>

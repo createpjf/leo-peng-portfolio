@@ -2,6 +2,10 @@
 # CSP is Report-Only for now: watch the browser console / CSP reports on
 # production, then promote to enforcing Content-Security-Policy once the
 # Intercom messenger is confirmed unaffected.
+# Before promoting (and after any Vite major upgrade), confirm
+# dist/index.html still has no inline executable <script> — script-src
+# deliberately omits 'unsafe-inline'. (The JSON-LD block is data, not
+# executable, and is exempt from script-src.)
 
 /*
   X-Content-Type-Options: nosniff

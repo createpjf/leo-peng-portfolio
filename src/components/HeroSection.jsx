@@ -46,6 +46,7 @@ const HeroSection = () => {
               transition: 'opacity 2.5s ease',
             }}
           >
+            <source src="/hero.webm" type="video/webm" />
             <source src="/hero.mp4" type="video/mp4" />
           </video>
         )}

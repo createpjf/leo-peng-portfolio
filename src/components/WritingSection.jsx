@@ -69,7 +69,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
       <span style={{
         fontSize: F.xs,
         textTransform: 'uppercase',
-        letterSpacing: '0.05em',
+        letterSpacing: '0.08em',
         color: T.textLt,
         whiteSpace: 'nowrap',
       }}>

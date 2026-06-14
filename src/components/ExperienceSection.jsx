@@ -88,7 +88,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
           style={{
             display: 'block', width: '100%', textAlign: 'center',
             border: `1px solid ${T.text}`, padding: 14, fontSize: F.base,
-            textTransform: 'uppercase', letterSpacing: '0.05em',
+            textTransform: 'uppercase', letterSpacing: '0.08em',
             marginTop: 24, cursor: 'pointer', fontFamily: T.font,
           }}
         >{showFull ? 'Show less' : 'See more'}</button>

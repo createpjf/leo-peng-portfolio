@@ -118,7 +118,7 @@ const HeroSection = () => {
         }}>
           {personalInfo.heroBio.map((text, i) => (
             <p key={i} style={{
-              fontSize: F.lg, color: T.textSec, lineHeight: 1.65,
+              fontSize: F.lg, color: T.textSec, lineHeight: 1.6,
               marginBottom: i === 0 ? 12 : 0,
             }}>{text}</p>
           ))}

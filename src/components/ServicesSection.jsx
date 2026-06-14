@@ -36,7 +36,7 @@ const ServicesSection = () => {
               background: T.bgSec, borderRadius: 3,
             }}>{ServiceIcons[s.iconType]}</div>
             <h3 style={{ fontSize: F.lg, fontWeight: 500, marginBottom: 8 }}>{s.title}</h3>
-            <p style={{ fontSize: F.base, color: T.textSec, lineHeight: 1.65 }}>{s.desc}</p>
+            <p style={{ fontSize: F.base, color: T.textSec, lineHeight: 1.6 }}>{s.desc}</p>
             <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {s.tags.map(t => (
                 <span key={t} className="tag-chip tag-chip--sm">{t}</span>

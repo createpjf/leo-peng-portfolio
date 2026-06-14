@@ -13,8 +13,7 @@
  */
 
 const fontSize = {
-  '2xs': '0.6875rem', // 11px — smallest label
-  xs: '0.6875rem', // 11px — eyebrow / tag labels
+  xs: '0.6875rem', // 11px — smallest label (eyebrows, tags)
   sm: '0.75rem', // 12px — secondary meta
   base: '0.8125rem', // 13px — body / UI default
   md: '0.875rem', // 14px — emphasised body / card meta

@@ -13,7 +13,7 @@ const QuoteSection = () => (
       duration={700}
       animateBy="words"
       style={{
-        fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 400, fontStyle: 'italic',
+        fontSize: 'clamp(1.375rem, 3vw, 2.25rem)', fontWeight: 400, fontStyle: 'italic',
         lineHeight: 1.4, maxWidth: 680, margin: '0 auto 20px', letterSpacing: '-0.02em', color: T.text,
         justifyContent: 'center',
       }}

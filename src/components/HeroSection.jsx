@@ -55,7 +55,7 @@ const HeroSection = () => {
         <div className="hero-overlay" />
 
         <h1 style={{
-          fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,
+          fontSize: 'clamp(3rem, 6vw, 4.75rem)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
           marginTop: 'auto',
         }}>

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import T from '../data/theme';
 import { personalInfo, expertisePills } from '../data/siteContent';
 import PillWithTooltip from './PillWithTooltip';
+import F from '../data/typography';
 
 const HeroSection = () => {
   const videoRef = useRef(null);
@@ -54,7 +55,7 @@ const HeroSection = () => {
         <div className="hero-overlay" />
 
         <h1 style={{
-          fontSize: 'clamp(48px, 6vw, 76px)', fontWeight: 600, lineHeight: 1.08,
+          fontSize: 'clamp(3rem, 6vw, 4.75rem)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
           marginTop: 'auto',
         }}>
@@ -87,7 +88,7 @@ const HeroSection = () => {
           ))}
         </h1>
         <p className="hero-subtags" style={{
-          fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em',
+          fontSize: F.base, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em',
           fontWeight: 400, position: 'relative', zIndex: 2, textTransform: 'uppercase',
           animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards', opacity: 0,
         }}>
@@ -98,14 +99,14 @@ const HeroSection = () => {
       {/* Right — info panel */}
       <div className="hero-info" style={{ padding: '80px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 3 }}>
         <h2 style={{
-          fontSize: 42, fontWeight: 500, letterSpacing: '-0.03em',
+          fontSize: F['5xl'], fontWeight: 500, letterSpacing: '-0.03em',
           lineHeight: 1.1, marginBottom: 6,
           animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) forwards',
         }}>{personalInfo.title}</h2>
 
         {/* Subtitle — 经历背景线 */}
         <p className="hero-subtitle" style={{
-          fontSize: 12, color: T.textLt, letterSpacing: '0.04em',
+          fontSize: F.sm, color: T.textLt, letterSpacing: '0.04em',
           textTransform: 'uppercase', marginBottom: 24, lineHeight: 1.5,
           animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards', opacity: 0,
         }}>{personalInfo.heroSubtitle}</p>
@@ -117,7 +118,7 @@ const HeroSection = () => {
         }}>
           {personalInfo.heroBio.map((text, i) => (
             <p key={i} style={{
-              fontSize: 15, color: T.textSec, lineHeight: 1.65,
+              fontSize: F.lg, color: T.textSec, lineHeight: 1.65,
               marginBottom: i === 0 ? 12 : 0,
             }}>{text}</p>
           ))}
@@ -132,7 +133,7 @@ const HeroSection = () => {
               backgroundColor: T.accent, border: `1px solid ${T.accent}`,
               display: 'inline-block', marginRight: 8, flexShrink: 0,
             }} />
-            <span style={{ fontSize: 13 }}>{personalInfo.currentStatus}</span>
+            <span style={{ fontSize: F.base }}>{personalInfo.currentStatus}</span>
           </div>
         </div>
 
@@ -148,7 +149,7 @@ const HeroSection = () => {
 
         <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" className="resume-link" style={{
           marginTop: 24, display: 'inline-flex', alignItems: 'center',
-          fontSize: 16, fontWeight: 500, padding: '12px 0',
+          fontSize: F.xl, fontWeight: 500, padding: '12px 0',
           borderBottom: `1px solid ${T.text}`, background: 'none',
           color: T.text, width: 'fit-content',
           animation: 'fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards', opacity: 0,

@@ -16,6 +16,22 @@
   --accent: #000000;
   --border: #e5e5e5;
   --border-dk: #222222;
+
+  /* Typography scale (rem so text honours browser font-size — WCAG 1.4.4).
+     1:1 with the previous px values at the default 16px root.
+     Mirrors src/data/typography.js. */
+  --fs-3xs: 0.5625rem; /*  9px */
+  --fs-2xs: 0.625rem;  /* 10px */
+  --fs-xs:  0.6875rem; /* 11px */
+  --fs-sm:  0.75rem;   /* 12px */
+  --fs-base: 0.8125rem;/* 13px */
+  --fs-md:  0.875rem;  /* 14px */
+  --fs-lg:  0.9375rem; /* 15px */
+  --fs-xl:  1rem;      /* 16px */
+  --fs-2xl: 1.125rem;  /* 18px */
+  --fs-3xl: 1.25rem;   /* 20px */
+  --fs-4xl: 2rem;      /* 32px */
+  --fs-5xl: 2.625rem;  /* 42px */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -32,14 +48,14 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   display: block;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-sec);
 }
 
 /* Section heading rendered by FadeWords (light theme sections) */
 .section-title {
-  font-size: 20px;
+  font-size: var(--fs-3xl);
   font-weight: 500;
   letter-spacing: -0.01em;
   margin-bottom: 40px;
@@ -47,7 +63,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
 
 /* Small bordered uppercase tag/badge */
 .tag-chip {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 4px 12px;
@@ -55,11 +71,11 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   border-radius: 3px;
   color: var(--text-sec);
 }
-.tag-chip--sm { font-size: 10px; font-weight: 500; padding: 4px 10px; }
+.tag-chip--sm { font-size: var(--fs-2xs); font-weight: 500; padding: 4px 10px; }
 
 /* Footer column label (white-on-dark) */
 .footer-eyebrow {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.5);
@@ -83,8 +99,8 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   z-index: 100;
   border-bottom: 1px solid var(--border);
 }
-.site-brand { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
-.desktop-nav { display: flex; gap: 24px; font-size: 13px; }
+.site-brand { font-size: var(--fs-lg); font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
+.desktop-nav { display: flex; gap: 24px; font-size: var(--fs-base); }
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -126,7 +142,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   transition: opacity 0.3s ease;
 }
 .mobile-menu-link {
-  font-size: 28px;
+  font-size: 1.75rem; /* 28px */
   font-weight: 400;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -240,7 +256,7 @@ a:hover .resume-arrow { transform: translateX(4px); }
   #contact { padding: 48px 32px 32px !important; }
   .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
   .hero-info { padding: 40px 32px !important; }
-  .hero-bio p { font-size: 13px !important; }
+  .hero-bio p { font-size: 0.8125rem !important; }
 }
 
 /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
@@ -264,28 +280,28 @@ a:hover .resume-arrow { transform: translateX(4px); }
 @media (max-width: 480px) {
   .hero-grid { min-height: calc(100dvh - 44px) !important; }
   .site-header { padding: 0 20px !important; height: 44px !important; }
-  .site-header > div:first-child { font-size: 14px !important; }
+  .site-header > div:first-child { font-size: 0.875rem !important; }
   .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: minmax(40vh, auto) 1fr; }
   .hero-dark {
     padding: 32px 20px 24px !important;
   }
-  .hero-dark h1 { font-size: clamp(32px, 9vw, 44px) !important; margin-bottom: 12px !important; }
-  .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 11px !important; }
+  .hero-dark h1 { font-size: clamp(2rem, 9vw, 2.75rem) !important; margin-bottom: 12px !important; }
+  .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 0.6875rem !important; }
   .hero-info { padding: 24px 20px !important; overflow-y: auto; }
-  .hero-info h2 { font-size: 28px !important; margin-bottom: 4px !important; }
-  .hero-subtitle { font-size: 10px !important; margin-bottom: 16px !important; }
+  .hero-info h2 { font-size: 1.75rem !important; margin-bottom: 4px !important; }
+  .hero-subtitle { font-size: 0.625rem !important; margin-bottom: 16px !important; }
   .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 14px !important; }
+  .hero-bio p { font-size: 0.875rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info > div span:first-child { font-size: 10px !important; margin-bottom: 4px !important; }
+  .hero-info > div span:first-child { font-size: 0.625rem !important; margin-bottom: 4px !important; }
   .hero-info .pill-row { gap: 6px !important; margin-top: 4px !important; }
-  .hero-info .pill-item { padding: 7px 14px !important; font-size: 12px !important; }
-  .hero-info > a { margin-top: 12px !important; font-size: 14px !important; padding: 8px 0 !important; }
+  .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.75rem !important; }
+  .hero-info > a { margin-top: 12px !important; font-size: 0.875rem !important; padding: 8px 0 !important; }
   .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
   .status-dot { width: 16px !important; height: 16px !important; }
   .hero-video { object-position: center 40% !important; }
-  .hero-bio p { font-size: 13px !important; margin-bottom: 8px !important; }
+  .hero-bio p { font-size: 0.8125rem !important; margin-bottom: 8px !important; }
   .hero-bio { margin-bottom: 20px !important; }
 }
 
@@ -295,16 +311,16 @@ a:hover .resume-arrow { transform: translateX(4px); }
   .site-header { padding: 0 16px !important; height: 40px !important; }
   .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .hero-dark { padding: 28px 16px 20px !important; }
-  .hero-dark h1 { font-size: 28px !important; margin-bottom: 10px !important; }
-  .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 12px !important; }
+  .hero-dark h1 { font-size: 1.75rem !important; margin-bottom: 10px !important; }
+  .hero-dark .hero-subtags { font-size: 0.625rem !important; margin-bottom: 12px !important; }
   .hero-info { padding: 20px 16px !important; }
-  .hero-info h2 { font-size: 24px !important; }
-  .hero-subtitle { font-size: 9px !important; margin-bottom: 14px !important; }
+  .hero-info h2 { font-size: 1.5rem !important; }
+  .hero-subtitle { font-size: 0.5625rem !important; margin-bottom: 14px !important; }
   .hero-bio { margin-bottom: 16px !important; }
-  .hero-bio p { font-size: 13px !important; }
+  .hero-bio p { font-size: 0.8125rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
-  .hero-info .pill-item { padding: 6px 12px !important; font-size: 11px !important; }
-  .hero-info > a { font-size: 13px !important; }
+  .hero-info .pill-item { padding: 6px 12px !important; font-size: 0.6875rem !important; }
+  .hero-info > a { font-size: 0.8125rem !important; }
   .hero-bio-secondary { display: none !important; }
 }
 
@@ -312,17 +328,17 @@ a:hover .resume-arrow { transform: translateX(4px); }
 @media (min-width: 600px) and (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
   .hero-dark { min-height: auto; padding: 48px 24px 28px !important; justify-content: center !important; }
-  .hero-dark h1 { font-size: clamp(24px, 4.5vw, 36px) !important; margin-bottom: 12px !important; }
-  .hero-dark .hero-subtags { font-size: 10px !important; margin-bottom: 20px !important; }
+  .hero-dark h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem) !important; margin-bottom: 12px !important; }
+  .hero-dark .hero-subtags { font-size: 0.625rem !important; margin-bottom: 20px !important; }
   .hero-info { padding: 32px 20px !important; }
-  .hero-info h2 { font-size: 26px !important; margin-bottom: 4px !important; }
-  .hero-subtitle { font-size: 11px !important; margin-bottom: 16px !important; }
+  .hero-info h2 { font-size: 1.625rem !important; margin-bottom: 4px !important; }
+  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
   .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 13px !important; }
+  .hero-bio p { font-size: 0.8125rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info .pill-item { padding: 7px 14px !important; font-size: 11px !important; }
-  .hero-info > a { font-size: 14px !important; margin-top: 12px !important; }
+  .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.6875rem !important; }
+  .hero-info > a { font-size: 0.875rem !important; margin-top: 12px !important; }
   .works-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-video { object-position: center 35% !important; }
@@ -330,18 +346,18 @@ a:hover .resume-arrow { transform: translateX(4px); }
 
 /* ─── Large desktop: 21-23" FHD monitors ─── */
 @media (min-width: 1920px) {
-  .hero-dark h1 { font-size: clamp(64px, 5vw, 88px) !important; }
-  .hero-dark .hero-subtags { font-size: 14px !important; }
+  .hero-dark h1 { font-size: clamp(4rem, 5vw, 5.5rem) !important; }
+  .hero-dark .hero-subtags { font-size: 0.875rem !important; }
   .hero-dark { padding: 108px 56px 56px !important; }
   .hero-info { padding: 80px 64px !important; }
-  .hero-info h2 { font-size: 50px !important; }
-  .hero-subtitle { font-size: 13px !important; margin-bottom: 24px !important; }
+  .hero-info h2 { font-size: 3.125rem !important; }
+  .hero-subtitle { font-size: 0.8125rem !important; margin-bottom: 24px !important; }
   .hero-bio { margin-bottom: 36px !important; }
-  .hero-bio p { font-size: 17px !important; }
+  .hero-bio p { font-size: 1.0625rem !important; }
   .hero-bio p:first-child { margin-bottom: 12px !important; }
   .hero-info > div { margin-bottom: 28px !important; }
-  .hero-info .pill-item { font-size: 14px !important; padding: 12px 28px !important; }
-  .hero-info > a { font-size: 17px !important; }
+  .hero-info .pill-item { font-size: 0.875rem !important; padding: 12px 28px !important; }
+  .hero-info > a { font-size: 1.0625rem !important; }
   .section-pad { padding: 96px 64px !important; }
   .works-grid { gap: 24px !important; }
   .exp-row { grid-template-columns: 180px 1fr auto !important; }
@@ -352,19 +368,19 @@ a:hover .resume-arrow { transform: translateX(4px); }
 @media (min-width: 2560px) {
   .site-header { height: 64px !important; padding: 0 48px !important; }
   .hero-grid { min-height: calc(100dvh - 64px) !important; }
-  .hero-dark h1 { font-size: clamp(80px, 4.5vw, 112px) !important; }
-  .hero-dark .hero-subtags { font-size: 16px !important; letter-spacing: 0.2em !important; }
+  .hero-dark h1 { font-size: clamp(5rem, 4.5vw, 7rem) !important; }
+  .hero-dark .hero-subtags { font-size: 1rem !important; letter-spacing: 0.2em !important; }
   .hero-dark { padding: 128px 80px 80px !important; }
   .hero-info { padding: 96px 88px !important; }
-  .hero-info h2 { font-size: 60px !important; }
-  .hero-subtitle { font-size: 14px !important; margin-bottom: 28px !important; }
+  .hero-info h2 { font-size: 3.75rem !important; }
+  .hero-subtitle { font-size: 0.875rem !important; margin-bottom: 28px !important; }
   .hero-bio { margin-bottom: 40px !important; }
-  .hero-bio p { font-size: 19px !important; line-height: 1.7 !important; }
+  .hero-bio p { font-size: 1.1875rem !important; line-height: 1.7 !important; }
   .hero-bio p:first-child { margin-bottom: 14px !important; }
   .hero-info > div { margin-bottom: 32px !important; }
-  .hero-info > div span:first-child { font-size: 13px !important; }
-  .hero-info .pill-item { font-size: 15px !important; padding: 14px 32px !important; }
-  .hero-info > a { font-size: 19px !important; padding: 16px 0 !important; }
+  .hero-info > div span:first-child { font-size: 0.8125rem !important; }
+  .hero-info .pill-item { font-size: 0.9375rem !important; padding: 14px 32px !important; }
+  .hero-info > a { font-size: 1.1875rem !important; padding: 16px 0 !important; }
   .status-dot { width: 24px !important; height: 24px !important; }
   .section-pad { padding: 120px 96px !important; }
   .works-grid { gap: 32px !important; }

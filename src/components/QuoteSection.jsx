@@ -1,5 +1,6 @@
 import T from '../data/theme';
 import { personalInfo } from '../data/siteContent';
+import F from '../data/typography';
 import BlurReveal from './BlurReveal';
 
 const QuoteSection = () => (
@@ -12,13 +13,13 @@ const QuoteSection = () => (
       duration={700}
       animateBy="words"
       style={{
-        fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 400, fontStyle: 'italic',
+        fontSize: 'clamp(1.375rem, 3vw, 2.25rem)', fontWeight: 400, fontStyle: 'italic',
         lineHeight: 1.4, maxWidth: 680, margin: '0 auto 20px', letterSpacing: '-0.02em', color: T.text,
         justifyContent: 'center',
       }}
     />
     <p style={{
-      fontSize: 14, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
+      fontSize: F.md, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
     }}>{personalInfo.quoteAttribution}</p>
   </section>
 );

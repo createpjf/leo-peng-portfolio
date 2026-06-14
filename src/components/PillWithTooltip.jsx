@@ -1,5 +1,6 @@
 import React, { useId, useRef, useState } from 'react';
 import T from '../data/theme';
+import F from '../data/typography';
 
 /**
  * Expertise pill with a hover/focus/tap tooltip describing the skill.
@@ -32,7 +33,7 @@ const PillWithTooltip = ({ pill }) => {
         position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%',
         transform: `translateX(-50%) translateY(${hover ? '0' : '4px'})`,
         background: '#000', color: '#fff',
-        fontSize: 12, lineHeight: 1.55, padding: '10px 16px',
+        fontSize: F.sm, lineHeight: 1.55, padding: '10px 16px',
         borderRadius: 10, pointerEvents: 'none',
         width: 240, textAlign: 'center',
         opacity: hover ? 1 : 0,
@@ -55,7 +56,7 @@ const PillWithTooltip = ({ pill }) => {
         style={{
           display: 'block',
           border: `1px solid ${T.border}`,
-          padding: '10px 24px', fontSize: 13, borderRadius: 3,
+          padding: '10px 24px', fontSize: F.base, borderRadius: 3,
           transition: 'all 0.25s ease',
           background: hover ? '#000' : 'transparent',
           color: hover ? '#fff' : T.text,

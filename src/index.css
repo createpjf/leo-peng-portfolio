@@ -16,6 +16,22 @@
   --accent: #000000;
   --border: #e5e5e5;
   --border-dk: #222222;
+
+  /* Typography scale (rem so text honours browser font-size — WCAG 1.4.4).
+     1:1 with the previous px values at the default 16px root.
+     Mirrors src/data/typography.js. */
+  --fs-3xs: 0.5625rem; /*  9px */
+  --fs-2xs: 0.625rem;  /* 10px */
+  --fs-xs:  0.6875rem; /* 11px */
+  --fs-sm:  0.75rem;   /* 12px */
+  --fs-base: 0.8125rem;/* 13px */
+  --fs-md:  0.875rem;  /* 14px */
+  --fs-lg:  0.9375rem; /* 15px */
+  --fs-xl:  1rem;      /* 16px */
+  --fs-2xl: 1.125rem;  /* 18px */
+  --fs-3xl: 1.25rem;   /* 20px */
+  --fs-4xl: 2rem;      /* 32px */
+  --fs-5xl: 2.625rem;  /* 42px */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -32,14 +48,14 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   display: block;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-sec);
 }
 
 /* Section heading rendered by FadeWords (light theme sections) */
 .section-title {
-  font-size: 20px;
+  font-size: var(--fs-3xl);
   font-weight: 500;
   letter-spacing: -0.01em;
   margin-bottom: 40px;
@@ -47,7 +63,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
 
 /* Small bordered uppercase tag/badge */
 .tag-chip {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 4px 12px;
@@ -55,11 +71,11 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   border-radius: 3px;
   color: var(--text-sec);
 }
-.tag-chip--sm { font-size: 10px; font-weight: 500; padding: 4px 10px; }
+.tag-chip--sm { font-size: var(--fs-2xs); font-weight: 500; padding: 4px 10px; }
 
 /* Footer column label (white-on-dark) */
 .footer-eyebrow {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.5);
@@ -83,8 +99,8 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   z-index: 100;
   border-bottom: 1px solid var(--border);
 }
-.site-brand { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
-.desktop-nav { display: flex; gap: 24px; font-size: 13px; }
+.site-brand { font-size: var(--fs-lg); font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; }
+.desktop-nav { display: flex; gap: 24px; font-size: var(--fs-base); }
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -126,7 +142,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   transition: opacity 0.3s ease;
 }
 .mobile-menu-link {
-  font-size: 28px;
+  font-size: 1.75rem; /* 28px */
   font-weight: 400;
   letter-spacing: -0.02em;
   color: var(--text);

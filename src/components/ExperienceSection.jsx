@@ -4,6 +4,7 @@ import { experienceData, extraExperience } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
+import F from '../data/typography';
 
 const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
@@ -24,10 +25,10 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
         : 'translateY(20px)',
     }}
   >
-    <span style={{ fontSize: 13, fontVariantNumeric: 'tabular-nums', color: T.textSec }}>{item.date}</span>
+    <span style={{ fontSize: F.base, fontVariantNumeric: 'tabular-nums', color: T.textSec }}>{item.date}</span>
     <div>
-      <h3 style={{ fontSize: 15, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</h3>
-      <span style={{ fontSize: 13, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+      <h3 style={{ fontSize: F.lg, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</h3>
+      <span style={{ fontSize: F.base, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
         {item.logo && <img src={item.logo} alt={item.company} loading="lazy" decoding="async" style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
         {item.company}
       </span>
@@ -86,7 +87,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
           aria-controls="experience-extra"
           style={{
             display: 'block', width: '100%', textAlign: 'center',
-            border: `1px solid ${T.text}`, padding: 14, fontSize: 13,
+            border: `1px solid ${T.text}`, padding: 14, fontSize: F.base,
             textTransform: 'uppercase', letterSpacing: '0.05em',
             marginTop: 24, cursor: 'pointer', fontFamily: T.font,
           }}

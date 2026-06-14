@@ -1,6 +1,7 @@
 import React from 'react';
 import T from '../data/theme';
 import { personalInfo, socialLinks } from '../data/siteContent';
+import F from '../data/typography';
 import useInView from '../hooks/useInView';
 
 const Footer = () => {
@@ -17,8 +18,8 @@ const Footer = () => {
         paddingBottom: 48, borderBottom: `1px solid ${T.borderDk}`, marginBottom: 24,
       }}>
         <div>
-          <div style={{ fontSize: 18, fontWeight: 500, color: '#fff', marginBottom: 16 }}>{personalInfo.name}</div>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, maxWidth: 300 }}>
+          <div style={{ fontSize: F['2xl'], fontWeight: 500, color: '#fff', marginBottom: 16 }}>{personalInfo.name}</div>
+          <p style={{ fontSize: F.base, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, maxWidth: 300 }}>
             {personalInfo.footerBio}
           </p>
         </div>
@@ -30,7 +31,7 @@ const Footer = () => {
               className="footer-link"
               target="_blank" rel="noopener noreferrer"
               onClick={e => { if (item.href === '#') e.preventDefault(); }}
-              style={{ fontSize: 13 }}
+              style={{ fontSize: F.base }}
             >{item.label}</a>
           ))}
         </div>
@@ -39,12 +40,12 @@ const Footer = () => {
           <span className="footer-eyebrow">Say Hello</span>
           <a href={`mailto:${personalInfo.email}`}
             className="footer-link"
-            style={{ fontSize: 13 }}
+            style={{ fontSize: F.base }}
           >{personalInfo.email}</a>
         </div>
       </div>
 
-      <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
+      <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', fontSize: F.sm, color: 'rgba(255,255,255,0.5)' }}>
         <span>&copy; {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</span>
         <span>{personalInfo.locations}</span>
       </div>

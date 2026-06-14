@@ -4,6 +4,7 @@ import { writings } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
+import F from '../data/typography';
 
 /* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
 const fmtDate = (d) => {
@@ -42,7 +43,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
       }}
     >
       <span style={{
-        fontSize: 13,
+        fontSize: F.base,
         fontVariantNumeric: 'tabular-nums',
         color: T.textSec,
       }}>
@@ -50,7 +51,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
       </span>
 
       <span style={{
-        fontSize: 15,
+        fontSize: F.lg,
         fontWeight: 500,
         color: hover ? T.accent : T.text,
         transition: 'color 0.2s',
@@ -58,7 +59,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
         {title}
         {desc && (
           <span style={{
-            fontSize: 12, fontWeight: 400, color: T.textLt, marginLeft: 10, fontStyle: 'italic',
+            fontSize: F.sm, fontWeight: 400, color: T.textLt, marginLeft: 10, fontStyle: 'italic',
           }}>
             —&nbsp;&nbsp;{desc}
           </span>
@@ -66,7 +67,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
       </span>
 
       <span style={{
-        fontSize: 11,
+        fontSize: F.xs,
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
         color: T.textLt,

@@ -4,6 +4,7 @@ import { projects } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
+import F from '../data/typography';
 
 const WorkCard = ({ title, category, year, children, idx, href }) => {
   const [hover, setHover] = useState(false);
@@ -29,12 +30,12 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
       <div className="work-thumb" style={{ borderColor: hover ? T.accent : T.border }}>
         <div className="work-thumb-img" style={{ transform: hover ? 'scale(1.06)' : 'scale(1)' }}>{children}</div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 14 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: F.md }}>
         <div>
           <h3 style={{ fontWeight: 500, marginBottom: 4, display: 'block', fontSize: 'inherit' }}>{title}</h3>
-          <span style={{ color: T.textSec, fontSize: 12 }}>{category}</span>
+          <span style={{ color: T.textSec, fontSize: F.sm }}>{category}</span>
         </div>
-        <span style={{ fontVariantNumeric: 'tabular-nums', fontSize: 13, color: T.textLt }}>{year}</span>
+        <span style={{ fontVariantNumeric: 'tabular-nums', fontSize: F.base, color: T.textLt }}>{year}</span>
       </div>
     </a>
   );

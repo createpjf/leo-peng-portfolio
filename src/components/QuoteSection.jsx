@@ -1,5 +1,6 @@
 import T from '../data/theme';
 import { personalInfo } from '../data/siteContent';
+import F from '../data/typography';
 import BlurReveal from './BlurReveal';
 
 const QuoteSection = () => (
@@ -18,7 +19,7 @@ const QuoteSection = () => (
       }}
     />
     <p style={{
-      fontSize: 14, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
+      fontSize: F.md, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
     }}>{personalInfo.quoteAttribution}</p>
   </section>
 );

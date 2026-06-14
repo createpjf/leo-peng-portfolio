@@ -5,6 +5,7 @@ import ServiceIcons from './ServiceIcons';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import ScrollReveal from './ScrollReveal';
+import F from '../data/typography';
 
 const ServicesSection = () => {
   const [hovered, setHovered] = useState(null);
@@ -29,13 +30,13 @@ const ServicesSection = () => {
               transform: inView ? 'translateY(0)' : 'translateY(20px)',
             }}
           >
-            <span style={{ fontSize: 32, fontWeight: 300, color: T.textLt, marginBottom: 24, lineHeight: 1 }}>{s.num}</span>
+            <span style={{ fontSize: F['4xl'], fontWeight: 300, color: T.textLt, marginBottom: 24, lineHeight: 1 }}>{s.num}</span>
             <div style={{
               width: 48, height: 48, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
               background: T.bgSec, borderRadius: 3,
             }}>{ServiceIcons[s.iconType]}</div>
-            <h3 style={{ fontSize: 15, fontWeight: 500, marginBottom: 8 }}>{s.title}</h3>
-            <p style={{ fontSize: 13, color: T.textSec, lineHeight: 1.65 }}>{s.desc}</p>
+            <h3 style={{ fontSize: F.lg, fontWeight: 500, marginBottom: 8 }}>{s.title}</h3>
+            <p style={{ fontSize: F.base, color: T.textSec, lineHeight: 1.65 }}>{s.desc}</p>
             <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {s.tags.map(t => (
                 <span key={t} className="tag-chip tag-chip--sm">{t}</span>

@@ -18,20 +18,23 @@
   --border-dk: #222222;
 
   /* Typography scale (rem so text honours browser font-size — WCAG 1.4.4).
-     1:1 with the previous px values at the default 16px root.
-     Mirrors src/data/typography.js. */
-  --fs-3xs: 0.5625rem; /*  9px */
-  --fs-2xs: 0.625rem;  /* 10px */
-  --fs-xs:  0.6875rem; /* 11px */
+     Mirrors src/data/typography.js. Label sizes floor at 11px for
+     legibility; section titles sit at 24px (one step above item titles). */
+  --fs-xs:  0.6875rem; /* 11px — smallest label (eyebrows, tags) */
   --fs-sm:  0.75rem;   /* 12px */
   --fs-base: 0.8125rem;/* 13px */
   --fs-md:  0.875rem;  /* 14px */
   --fs-lg:  0.9375rem; /* 15px */
   --fs-xl:  1rem;      /* 16px */
   --fs-2xl: 1.125rem;  /* 18px */
-  --fs-3xl: 1.25rem;   /* 20px */
+  --fs-3xl: 1.5rem;    /* 24px — section titles (was 20px) */
   --fs-4xl: 2rem;      /* 32px */
   --fs-5xl: 2.625rem;  /* 42px */
+
+  /* Shared tracking for small uppercase labels (eyebrows, chips, badges) */
+  --tracking-label: 0.08em;
+  /* Body copy line-height */
+  --leading-body: 1.6;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -44,10 +47,11 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
 :focus:not(:focus-visible) { outline: none; }
 
 /* ─── Reusable eyebrow / section label ─── */
+/* --tracking-label: shared letter-spacing for small uppercase labels */
 .eyebrow {
   display: block;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-label);
   font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-sec);
@@ -65,19 +69,20 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
 .tag-chip {
   font-size: var(--fs-xs);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-label);
   padding: 4px 12px;
   border: 1px solid var(--border);
   border-radius: 3px;
   color: var(--text-sec);
 }
-.tag-chip--sm { font-size: var(--fs-2xs); font-weight: 500; padding: 4px 10px; }
+/* --sm: same 11px label size as .tag-chip, tighter padding + heavier weight */
+.tag-chip--sm { font-size: var(--fs-xs); font-weight: 500; padding: 4px 10px; }
 
 /* Footer column label (white-on-dark) */
 .footer-eyebrow {
   font-size: var(--fs-xs);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   color: rgba(255,255,255,0.5);
   margin-bottom: 4px;
 }
@@ -289,12 +294,12 @@ a:hover .resume-arrow { transform: translateX(4px); }
   .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 0.6875rem !important; }
   .hero-info { padding: 24px 20px !important; overflow-y: auto; }
   .hero-info h2 { font-size: 1.75rem !important; margin-bottom: 4px !important; }
-  .hero-subtitle { font-size: 0.625rem !important; margin-bottom: 16px !important; }
+  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
   .hero-bio { margin-bottom: 20px !important; }
   .hero-bio p { font-size: 0.875rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info > div span:first-child { font-size: 0.625rem !important; margin-bottom: 4px !important; }
+  .hero-info > div span:first-child { font-size: 0.6875rem !important; margin-bottom: 4px !important; }
   .hero-info .pill-row { gap: 6px !important; margin-top: 4px !important; }
   .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.75rem !important; }
   .hero-info > a { margin-top: 12px !important; font-size: 0.875rem !important; padding: 8px 0 !important; }
@@ -312,10 +317,10 @@ a:hover .resume-arrow { transform: translateX(4px); }
   .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .hero-dark { padding: 28px 16px 20px !important; }
   .hero-dark h1 { font-size: 1.75rem !important; margin-bottom: 10px !important; }
-  .hero-dark .hero-subtags { font-size: 0.625rem !important; margin-bottom: 12px !important; }
+  .hero-dark .hero-subtags { font-size: 0.6875rem !important; margin-bottom: 12px !important; }
   .hero-info { padding: 20px 16px !important; }
   .hero-info h2 { font-size: 1.5rem !important; }
-  .hero-subtitle { font-size: 0.5625rem !important; margin-bottom: 14px !important; }
+  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 14px !important; }
   .hero-bio { margin-bottom: 16px !important; }
   .hero-bio p { font-size: 0.8125rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
@@ -329,7 +334,7 @@ a:hover .resume-arrow { transform: translateX(4px); }
   .hero-grid { grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
   .hero-dark { min-height: auto; padding: 48px 24px 28px !important; justify-content: center !important; }
   .hero-dark h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem) !important; margin-bottom: 12px !important; }
-  .hero-dark .hero-subtags { font-size: 0.625rem !important; margin-bottom: 20px !important; }
+  .hero-dark .hero-subtags { font-size: 0.6875rem !important; margin-bottom: 20px !important; }
   .hero-info { padding: 32px 20px !important; }
   .hero-info h2 { font-size: 1.625rem !important; margin-bottom: 4px !important; }
   .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }

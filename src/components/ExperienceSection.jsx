@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
-import { experienceData, extraExperience } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
 import F from '../data/typography';
+import { useLocale } from '../i18n/LocaleContext';
 
 const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
@@ -39,12 +39,14 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
 };
 
 const ExperienceSection = ({ showFull, setShowFull }) => {
+  const { content } = useLocale();
+  const { experienceData, extraExperience, ui } = content;
   const [hoveredIdx, setHoveredIdx] = useState(null);
   const baseCount = experienceData.length;
 
   return (
     <section id="experience" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <FadeWords text="Experience." className="section-title" />
+      <FadeWords text={ui.sections.experience} className="section-title" />
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         {/* Base items — always visible */}
         {experienceData.map((item, i) => (
@@ -91,7 +93,7 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
             textTransform: 'uppercase', letterSpacing: '0.08em',
             marginTop: 24, cursor: 'pointer', fontFamily: T.font,
           }}
-        >{showFull ? 'Show less' : 'See more'}</button>
+        >{showFull ? ui.showLess : ui.seeMore}</button>
       </div>
     </section>
   );

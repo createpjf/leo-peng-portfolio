@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import T from '../data/theme';
-import { navItems, personalInfo } from '../data/siteContent';
+import { useLocale } from '../i18n/LocaleContext';
+import LanguageSwitch from './LanguageSwitch';
 
 const Header = ({ activeNav, setActiveNav }) => {
+  const { content } = useLocale();
+  const { navItems, personalInfo, ui } = content;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const overlayRef = useRef(null);
@@ -30,9 +33,9 @@ const Header = ({ activeNav, setActiveNav }) => {
 
   const handleNav = (e, item) => {
     e.preventDefault();
-    setActiveNav(item);
+    setActiveNav(item.id);
     setMenuOpen(false);
-    const el = document.getElementById(item.toLowerCase());
+    const el = document.getElementById(item.id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -42,26 +45,29 @@ const Header = ({ activeNav, setActiveNav }) => {
         <div className="site-brand">{personalInfo.name}</div>
 
         {/* Desktop nav */}
-        <nav className="site-nav desktop-nav" role="navigation" aria-label="Main navigation">
+        <div className="header-actions">
+        <nav className="site-nav desktop-nav" role="navigation" aria-label={ui.mainNavigation}>
           {navItems.map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`}
+            <a key={item.id} href={`#${item.id}`}
               className="nav-link"
               onClick={e => handleNav(e, item)}
-              aria-current={activeNav === item ? 'true' : undefined}
+              aria-current={activeNav === item.id ? 'true' : undefined}
               style={{
-                color: activeNav === item ? T.text : T.textSec,
-                fontWeight: activeNav === item ? 500 : 400,
+                color: activeNav === item.id ? T.text : T.textSec,
+                fontWeight: activeNav === item.id ? 500 : 400,
               }}
-            >{item}</a>
+            >{item.label}</a>
           ))}
         </nav>
+        <LanguageSwitch className="desktop-language-switch" />
+        </div>
 
         {/* Mobile hamburger button */}
         <button
           ref={menuButtonRef}
           className="mobile-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          aria-label={ui.toggleMenu}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
         >
@@ -88,24 +94,25 @@ const Header = ({ activeNav, setActiveNav }) => {
         className="mobile-menu-overlay"
         role="dialog"
         aria-modal="true"
-        aria-label="Site navigation"
+        aria-label={ui.siteNavigation}
         aria-hidden={!menuOpen}
         style={{
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}>
+        <LanguageSwitch className="mobile-language-switch" tabIndex={menuOpen ? 0 : -1} />
         {navItems.map((item, i) => (
-          <a key={item} href={`#${item.toLowerCase()}`}
+          <a key={item.id} href={`#${item.id}`}
             className="mobile-menu-link"
             onClick={e => handleNav(e, item)}
             tabIndex={menuOpen ? 0 : -1}
-            aria-current={activeNav === item ? 'true' : undefined}
+            aria-current={activeNav === item.id ? 'true' : undefined}
             style={{
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
               opacity: menuOpen ? 1 : 0,
               transition: `all 0.3s ease ${i * 0.05}s`,
             }}
-          >{item}</a>
+          >{item.label}</a>
         ))}
       </div>
     </>

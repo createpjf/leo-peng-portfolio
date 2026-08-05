@@ -13,14 +13,13 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
   return (
     <a
       ref={ref}
-      href={href || '#'}
+      href={href || undefined}
       target={href ? '_blank' : undefined}
       rel={href ? 'noopener noreferrer' : undefined}
       onMouseEnter={() => canHover && setHover(true)}
       onMouseLeave={() => canHover && setHover(false)}
-      onClick={e => { if (!href) e.preventDefault(); }}
       style={{
-        display: 'flex', flexDirection: 'column', cursor: 'pointer',
+        display: 'flex', flexDirection: 'column', cursor: href ? 'pointer' : 'default',
         opacity: inView ? 1 : 0,
         transform: inView ? 'translateY(0)' : 'translateY(20px)',
         transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,

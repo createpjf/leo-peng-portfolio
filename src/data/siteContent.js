@@ -8,12 +8,12 @@
 /* ─── 个人信息 / Personal Info ─── */
 export const personalInfo = {
   name: 'Leo Peng',
-  title: 'Creative Technologist',
+  title: 'Forward Deployed Engineer · Creative Technologist',
   tagline: 'I turn ideas into products. Storytelling meets engineering, across cultures and platforms.',
-  heroSubtitle: 'UCI Film & Media · Ogilvy & NetEase Alumni · Head of Ops & Creative at FLock.io',
+  heroSubtitle: 'UCI Film & Media · Ogilvy & NetEase Alumni · FDE at FLock.io',
   heroBio: [
     'Directing the full creative lifecycle\u2014from film production to new media. Built across Ogilvy, NetEase, and E-CH\u00c9RIE. Delivering cross-disciplinary brand communication rooted in high-end minimalism.',
-    'Leading operations and creative strategy for Privacy-Preserving AI at FLock.io. Architect of the Cleo multi-agent system and RouteBox smart routing. Merging visual aesthetics with cutting-edge AI.',
+    'Working as a Forward Deployed Engineer (FDE) at FLock.io, translating complex industry needs into production-ready AI systems. I take projects from discovery and solution design through prototyping, integration, and delivery\u2014across retail, health, creative production, developer tooling, and privacy-preserving AI.',
   ],
   heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],  // 第二行的斜体词用第3个元素
   heroSubtags: 'Video · Code · Marketing',
@@ -27,16 +27,16 @@ export const personalInfo = {
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
 export const expertisePills = [
-  { label: 'Film', desc: 'Cinematic storytelling with 4A precision—from lens to high-end VFX.' },
-  { label: 'Code', desc: 'Building enterprise-grade tools and developer experiences through "Vibe Coding."' },
-  { label: 'Growth', desc: 'Scaling AI ecosystems and developer communities through strategic, accelerator-led growth.' },
+  { label: 'FDE', desc: 'Embedded product discovery, solution architecture, integration, and production delivery.' },
+  { label: 'AI Systems', desc: 'Agent workflows, model routing, full-stack prototyping, and local-first tooling.' },
+  { label: 'Industry Delivery', desc: 'Tailored products for retail, health, creative production, and enterprise operations.' },
 ];
 
 /* ─── Hero 核心背景 / Credentials Line ─── */
-export const credentialsLine = 'UCI Film & Media · Ogilvy & NetEase Alumni · Head of Ops & Creative at FLock.io';
+export const credentialsLine = 'UCI Film & Media · Ogilvy & NetEase Alumni · FDE at FLock.io';
 
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
-export const defaultSelectedPills = ['Film', 'Code', 'Growth'];
+export const defaultSelectedPills = ['FDE', 'AI Systems', 'Industry Delivery'];
 
 /* ─── 导航项 / Navigation Items ─── */
 export const navItems = ['Services', 'Writing', 'Work', 'Experience', 'Contact'];
@@ -52,9 +52,9 @@ export const services = [
   },
   {
     num: '02',
-    title: 'Code & AI',
-    desc: 'Full-stack prototyping, multi-agent systems, and tools that think with you.',
-    tags: ['React', 'Python', 'AI Agents'],
+    title: 'FDE & AI Systems',
+    desc: 'Turning complex industry needs into production-ready AI products—from discovery and architecture to integration and delivery.',
+    tags: ['AI Agents', 'Solution Architecture', 'Full-Stack'],
     iconType: 'code',
   },
   {
@@ -75,7 +75,7 @@ export const services = [
 
 /* ─── 工作经历 / Experience ─── */
 export const experienceData = [
-  { id: 1, date: '2023 — Present', role: 'Head of Operations & Creative', company: 'FLock.io — Decentralized AI', type: 'Full-time', logo: '/logo-flock.png' },
+  { id: 1, date: '2023 — Present', role: 'Forward Deployed Engineer (FDE)', company: 'FLock.io — Privacy-Preserving AI', type: 'Full-time', logo: '/logo-flock.png' },
   { id: 2, date: '2023', role: 'Game Product Operation', company: 'NetEase', type: 'Internship', logo: '/logo-netease.png' },
   { id: 3, date: '2022 — 2024', role: 'Community Manager', company: 'BuidlerDAO & SpringX Accelerator', type: 'Full-time', logo: '/logo-buidlerdao.png' },
   { id: 4, date: '2021 — 2022', role: 'Advertising Strategist', company: 'Ogilvy', type: 'Agency', logo: '/logo-ogilvy.svg' },
@@ -88,6 +88,31 @@ export const extraExperience = [
 
 /* ─── 精选项目 / Selected Projects ─── */
 export const projects = [
+  {
+    title: '电商零售营销 AIGC Agent',
+    category: 'Botanic Canvas · Code · AI',
+    year: '2026',
+    href: 'https://botanic-canvas.vercel.app/',
+    heroImg: '/botanic-agent-hero.webp',
+  },
+  {
+    title: '个人健康管理 Agent',
+    category: 'Six Health OS · Health · AI',
+    year: '2026',
+    heroImg: '/six-health-agent-hero.webp',
+  },
+  {
+    title: 'Goleta Coding Agent',
+    category: 'Code · AI · Local-first',
+    year: '2026',
+    heroImg: '/goleta-agent-hero.webp',
+  },
+  {
+    title: '零售行业三端系统',
+    category: 'Retail · ERP · Mini Program',
+    year: '2026',
+    heroImg: '/retail-system-hero.webp',
+  },
   {
     title: 'RouteBox',
     category: 'Code · AI · API',

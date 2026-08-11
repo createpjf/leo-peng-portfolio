@@ -67,8 +67,8 @@ const HeroSection = () => {
             }}>{w}&nbsp;</span>
           ))}
           <br />
-          {/* Line 2 — "Things that " + italic "move" */}
-          {personalInfo.heroHeadline[1].trim().split(' ').map((w, i) => (
+          {/* Line 2 — optional prefix + italic word */}
+          {personalInfo.heroHeadline[1].trim().split(' ').filter(Boolean).map((w, i) => (
             <span key={`l2-${i}`} style={{
               display: 'inline-block', opacity: 0,
               animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${(i + 2) * 0.08}s forwards`,

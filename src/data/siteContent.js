@@ -8,35 +8,36 @@
 /* ─── 个人信息 / Personal Info ─── */
 export const personalInfo = {
   name: 'Leo Peng',
-  title: 'Forward Deployed Engineer · Creative Technologist',
-  tagline: 'I turn ideas into products. Storytelling meets engineering, across cultures and platforms.',
+  title: 'Creative Technologist · AI Customer Success',
+  tagline: 'Helping customers succeed with AI — in an FDE model, from discovery to delivery.',
   heroSubtitle: 'UCI Film & Media · Ogilvy & NetEase Alumni · FDE at FLock.io',
   heroBio: [
-    'Directing the full creative lifecycle\u2014from film production to new media. Built across Ogilvy, NetEase, and E-CH\u00c9RIE. Delivering cross-disciplinary brand communication rooted in high-end minimalism.',
-    'Working as a Forward Deployed Engineer (FDE) at FLock.io, translating complex industry needs into production-ready AI systems. I take projects from discovery and solution design through prototyping, integration, and delivery\u2014across retail, health, creative production, developer tooling, and privacy-preserving AI.',
+    'I help customers succeed in the age of AI through an FDE model\u2014embedded with the team, turning real business needs into production-ready systems.',
+    'Not by selling tools. By building what works\u2014and staying until it does. From discovery and solution design to integration and delivery, across retail, health, creative production, and privacy-preserving AI.',
   ],
-  heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],  // 第二行的斜体词用第3个元素
-  heroSubtags: 'Video · Code · Marketing',
+  // [line1, line2 prefix, italic word, line3]
+  heroHeadline: ['Help customers', '', 'succeed', 'in the age of AI.'],
+  heroSubtags: 'AI · FDE · Customer Success',
   quote: '"The best work happens when you stop separating the art from the system."',
   quoteAttribution: '— Leo Peng',
   currentStatus: 'Open to new projects.',
   email: 'leo@flock.io',
   locations: 'Shanghai · Hong Kong · Remote',
-  footerBio: 'Storytelling meets engineering. Shanghai, working globally.',
+  footerBio: 'Customer success in the age of AI. Shanghai, working globally.',
 };
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
 export const expertisePills = [
-  { label: 'FDE', desc: 'Embedded product discovery, solution architecture, integration, and production delivery.' },
+  { label: 'FDE', desc: 'Embedded with the customer — discovery, solution architecture, integration, and production delivery.' },
+  { label: 'AI Customer Success', desc: 'Helping customers succeed with AI: adoption, outcomes, and systems that last beyond the demo.' },
   { label: 'AI Systems', desc: 'Agent workflows, model routing, full-stack prototyping, and local-first tooling.' },
-  { label: 'Industry Delivery', desc: 'Tailored products for retail, health, creative production, and enterprise operations.' },
 ];
 
 /* ─── Hero 核心背景 / Credentials Line ─── */
 export const credentialsLine = 'UCI Film & Media · Ogilvy & NetEase Alumni · FDE at FLock.io';
 
 /* ─── 默认选中的标签 / Default Selected Pills ─── */
-export const defaultSelectedPills = ['FDE', 'AI Systems', 'Industry Delivery'];
+export const defaultSelectedPills = ['FDE', 'AI Customer Success', 'AI Systems'];
 
 /* ─── 导航项 / Navigation Items ─── */
 export const navItems = ['Services', 'Writing', 'Work', 'Experience', 'Contact'];

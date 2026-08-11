@@ -28,8 +28,8 @@ export const personalInfo = {
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
 export const expertisePills = [
-  { label: 'FDE', desc: 'Embedded with the customer: discovery, architecture, integration, and delivery.' },
-  { label: 'AI Customer Success', desc: 'Help customers get AI working in their business, past the pilot stage.' },
+  { label: 'FDE', desc: 'I join the customer\'s team, build on their real systems and data, and stay until it runs in production.' },
+  { label: 'AI Customer Success', desc: 'Help them go from "we tried AI" to "we use it every day and it pays off."' },
   { label: 'AI Systems', desc: 'Agent workflows, model routing, full-stack prototyping, and local-first tooling.' },
 ];
 

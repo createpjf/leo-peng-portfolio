@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
-import { services } from '../data/siteContent';
 import ServiceIcons from './ServiceIcons';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import ScrollReveal from './ScrollReveal';
 import F from '../data/typography';
+import { useLocale } from '../i18n/LocaleContext';
 
 const ServicesSection = () => {
+  const { locale, content } = useLocale();
+  const { services, ui } = content;
   const [hovered, setHovered] = useState(null);
   const { ref: gridRef, inView } = useInView({ threshold: 0.1 });
   return (
     <section id="services" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
-      <FadeWords text="What I Do." className="section-title" />
+      <FadeWords key={locale} text={ui.sections.services} className="section-title" />
       <div ref={gridRef} className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
         {services.map((s, i) => (
           <ScrollReveal key={s.num} delay={`${i * 0.1}s`} style={{ height: '100%' }}>

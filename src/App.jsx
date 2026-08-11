@@ -10,17 +10,18 @@ import QuoteSection from './components/QuoteSection';
 import Footer from './components/Footer';
 import useIntercom from './hooks/useIntercom';
 import useScrollSpy from './hooks/useScrollSpy';
-import { navItems } from './data/siteContent';
+import { useLocale } from './i18n/LocaleContext';
 
 const App = () => {
-  const [activeNav, setActiveNav] = useState('Services');
+  const { content } = useLocale();
+  const [activeNav, setActiveNav] = useState('services');
   const [showFull, setShowFull] = useState(false);
   useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
 
   // Highlight the nav item for whichever section is in view while scrolling.
   const spySections = useMemo(
-    () => navItems.map((label) => ({ id: label.toLowerCase(), label })),
-    [],
+    () => content.navItems.map(({ id }) => ({ id, label: id })),
+    [content.navItems],
   );
   useScrollSpy(spySections, setActiveNav);
 

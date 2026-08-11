@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
-import { projects } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
 import F from '../data/typography';
+import { useLocale } from '../i18n/LocaleContext';
 
 const WorkCard = ({ title, category, year, children, idx, href }) => {
   const [hover, setHover] = useState(false);
@@ -40,9 +40,13 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
   );
 };
 
-const WorksSection = () => (
+const WorksSection = () => {
+  const { content } = useLocale();
+  const { projects, ui } = content;
+
+  return (
   <section id="work" className="section-pad" style={{ padding: '60px 40px', background: '#fafafa' }}>
-    <FadeWords text="Selected Work." className="section-title" style={{ marginBottom: 32 }} />
+    <FadeWords key={ui.sections.work} text={ui.sections.work} className="section-title" style={{ marginBottom: 32 }} />
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
@@ -51,6 +55,7 @@ const WorksSection = () => (
       ))}
     </div>
   </section>
-);
+  );
+};
 
 export default WorksSection;

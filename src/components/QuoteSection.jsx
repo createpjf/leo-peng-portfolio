@@ -1,11 +1,16 @@
 import T from '../data/theme';
-import { personalInfo } from '../data/siteContent';
 import F from '../data/typography';
 import BlurReveal from './BlurReveal';
+import { useLocale } from '../i18n/LocaleContext';
 
-const QuoteSection = () => (
+const QuoteSection = () => {
+  const { locale, content } = useLocale();
+  const { personalInfo } = content;
+
+  return (
   <section className="quote-section" style={{ padding: '80px 40px', textAlign: 'center', borderBottom: `1px solid ${T.border}` }}>
     <BlurReveal
+      key={locale}
       text={personalInfo.quote}
       tag="p"
       delay={60}
@@ -22,6 +27,7 @@ const QuoteSection = () => (
       fontSize: F.md, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
     }}>{personalInfo.quoteAttribution}</p>
   </section>
-);
+  );
+};
 
 export default QuoteSection;

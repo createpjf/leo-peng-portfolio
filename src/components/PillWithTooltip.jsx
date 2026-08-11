@@ -37,9 +37,10 @@ const PillWithTooltip = ({ pill }) => {
         borderRadius: 10, pointerEvents: 'none',
         width: 240, textAlign: 'center',
         opacity: hover ? 1 : 0,
-        transition: 'opacity 0.2s ease, transform 0.2s ease',
+        visibility: hover ? 'visible' : 'hidden',
+        transition: 'opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease',
         letterSpacing: '-0.01em',
-        zIndex: 10,
+        zIndex: 20,
       }}>
         {pill.desc}
         <span style={{

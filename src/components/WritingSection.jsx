@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import T from '../data/theme';
-import { writings } from '../data/siteContent';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
 import useCanHover from '../hooks/useCanHover';
 import F from '../data/typography';
+import { useLocale } from '../i18n/LocaleContext';
 
-/* ─── 日期格式化: "2026-02-16" → "Feb 2026", "2025-03" → "Mar 2025" ─── */
-const fmtDate = (d) => {
+const fmtDate = (d, locale) => {
   const parts = d.split('-');
   const year = parts[0];
-  const month = parts[1]
-    ? new Date(parts[0], parts[1] - 1).toLocaleString('en', { month: 'short' })
-    : '';
-  return month ? `${month} ${year}` : year;
+  if (!parts[1]) return year;
+
+  return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+    year: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(new Date(Date.UTC(Number(year), Number(parts[1]) - 1, 1)));
 };
 
-const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
+const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
   const canHover = useCanHover();
@@ -47,7 +49,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
         fontVariantNumeric: 'tabular-nums',
         color: T.textSec,
       }}>
-        {fmtDate(date)}
+        {fmtDate(date, locale)}
       </span>
 
       <span style={{
@@ -87,7 +89,11 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast }) => {
   );
 };
 
-const WritingSection = () => (
+const WritingSection = () => {
+  const { locale, content } = useLocale();
+  const { writings, ui } = content;
+
+  return (
   <section
     id="writing"
     className="section-pad"
@@ -96,7 +102,7 @@ const WritingSection = () => (
       borderBottom: `1px solid ${T.border}`,
     }}
   >
-    <FadeWords text="Writing." className="section-title" />
+    <FadeWords key={ui.sections.writing} text={ui.sections.writing} className="section-title" />
     <div>
       {writings.map((w, i) => (
         <WritingRow
@@ -107,11 +113,13 @@ const WritingSection = () => (
           href={w.href}
           source={w.source}
           idx={i}
+          locale={locale}
           isLast={i === writings.length - 1}
         />
       ))}
     </div>
   </section>
-);
+  );
+};
 
 export default WritingSection;

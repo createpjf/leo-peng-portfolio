@@ -1,11 +1,16 @@
 import React from 'react';
 import T from '../data/theme';
-import { personalInfo, socialLinks } from '../data/siteContent';
 import F from '../data/typography';
 import useInView from '../hooks/useInView';
+import { useLocale } from '../i18n/LocaleContext';
 
 const Footer = () => {
+  const { content } = useLocale();
+  const { personalInfo, socialLinks, ui } = content;
   const { ref, inView } = useInView({ threshold: 0.1 });
+  const copyright = ui.copyright
+    .replace('{year}', new Date().getFullYear())
+    .replace('{name}', personalInfo.name);
 
   return (
     <footer ref={ref} id="contact" className="section-pad" style={{
@@ -25,7 +30,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-col">
-          <span className="footer-eyebrow">Socials</span>
+          <span className="footer-eyebrow">{ui.socials}</span>
           {socialLinks.map(item => (
             <a key={item.label} href={item.href}
               className="footer-link"
@@ -37,7 +42,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-col">
-          <span className="footer-eyebrow">Say Hello</span>
+          <span className="footer-eyebrow">{ui.sayHello}</span>
           <a href={`mailto:${personalInfo.email}`}
             className="footer-link"
             style={{ fontSize: F.base }}
@@ -46,7 +51,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', fontSize: F.sm, color: 'rgba(255,255,255,0.5)' }}>
-        <span>&copy; {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</span>
+        <span>{copyright}</span>
         <span>{personalInfo.locations}</span>
       </div>
     </footer>

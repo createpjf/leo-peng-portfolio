@@ -9,27 +9,27 @@
 export const personalInfo = {
   name: 'Leo Peng',
   title: 'Creative Technologist · AI Customer Success',
-  tagline: 'Helping customers succeed with AI — in an FDE model, from discovery to delivery.',
+  tagline: 'I help customers succeed with AI, working in an FDE model from discovery to delivery.',
   heroSubtitle: 'UCI Film & Media · Ogilvy & NetEase Alumni · FDE at FLock.io',
   heroBio: [
-    'I help customers succeed in the age of AI through an FDE model\u2014embedded with the team, turning real business needs into production-ready systems.',
-    'Not by selling tools. By building what works\u2014and staying until it does. From discovery and solution design to integration and delivery, across retail, health, creative production, and privacy-preserving AI.',
+    'I help customers succeed with AI in an FDE model. Sit with the team, figure out what they need, then build and ship it with them.',
+    'Less pilots that stall. More systems that get used. Across retail, health, creative production, and privacy-preserving AI.',
   ],
   // [line1, line2 prefix, italic word, line3]
-  heroHeadline: ['Help customers', '', 'succeed', 'in the age of AI.'],
+  heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],
   heroSubtags: 'AI · FDE · Customer Success',
   quote: '"The best work happens when you stop separating the art from the system."',
-  quoteAttribution: '— Leo Peng',
+  quoteAttribution: '- Leo Peng',
   currentStatus: 'Open to new projects.',
   email: 'leo@flock.io',
   locations: 'Shanghai · Hong Kong · Remote',
-  footerBio: 'Customer success in the age of AI. Shanghai, working globally.',
+  footerBio: 'Storytelling meets engineering. Shanghai, working globally.',
 };
 
 /* ─── 专业领域标签 / Expertise Pills ─── */
 export const expertisePills = [
-  { label: 'FDE', desc: 'Embedded with the customer — discovery, solution architecture, integration, and production delivery.' },
-  { label: 'AI Customer Success', desc: 'Helping customers succeed with AI: adoption, outcomes, and systems that last beyond the demo.' },
+  { label: 'FDE', desc: 'Embedded with the customer: discovery, architecture, integration, and delivery.' },
+  { label: 'AI Customer Success', desc: 'Help customers get AI working in their business, past the pilot stage.' },
   { label: 'AI Systems', desc: 'Agent workflows, model routing, full-stack prototyping, and local-first tooling.' },
 ];
 
@@ -54,7 +54,7 @@ export const services = [
   {
     num: '02',
     title: 'FDE & AI Systems',
-    desc: 'Turning complex industry needs into production-ready AI products—from discovery and architecture to integration and delivery.',
+    desc: 'Work inside the business to build AI systems that ship, from discovery and architecture to integration and delivery.',
     tags: ['AI Agents', 'Solution Architecture', 'Full-Stack'],
     iconType: 'code',
   },

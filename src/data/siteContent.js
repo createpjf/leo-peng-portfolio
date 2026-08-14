@@ -161,8 +161,8 @@ const copy = {
       title: '创意技术人 · AI 客户成功',
       heroSubtitle: 'UCI 电影与媒体 · 奥美与网易 · FLock.io FDE',
       heroBio: [
-        '我以 FDE 模式帮助客户把 AI 真正做成。跟团队坐在一起，弄清他们要什么，然后一起做出来、上线。',
-        '少一点停在试点的项目。多一点真的被用起来的系统。覆盖零售、健康、创意生产与隐私保护 AI。',
+        '我驻场帮客户把 AI 做成能用的系统。进到他们的团队里，把问题想清楚，一起做，上线了再走。',
+        '不把试点当交付。零售、健康、内容生产、隐私 AI，都是对着真实业务做出来的。',
       ],
       heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],
       heroSubtags: 'AI · FDE · 客户成功',

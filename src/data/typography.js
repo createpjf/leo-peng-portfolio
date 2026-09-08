@@ -7,22 +7,21 @@
  *  Label sizes floor at 11px for legibility; section titles sit at
  *  24px, one step above the 15px item titles.
  *
- *  Mirrors the --fs-* custom properties in src/index.css; edit both
- *  when changing the scale.
+ *  References --fs-* in src/index.css; edit the scale there only.
  * ============================================================
  */
 
 const fontSize = {
-  xs: '0.6875rem', // 11px — smallest label (eyebrows, tags)
-  sm: '0.75rem', // 12px — secondary meta
-  base: '0.8125rem', // 13px — body / UI default
-  md: '0.875rem', // 14px — emphasised body / card meta
-  lg: '0.9375rem', // 15px — item titles, lead body
-  xl: '1rem', // 16px — resume link
-  '2xl': '1.125rem', // 18px — footer brand
-  '3xl': '1.5rem', // 24px — section titles
-  '4xl': '2rem', // 32px — service numerals
-  '5xl': '2.625rem', // 42px — hero name
+  xs: 'var(--fs-xs)',
+  sm: 'var(--fs-sm)',
+  base: 'var(--fs-base)',
+  md: 'var(--fs-md)',
+  lg: 'var(--fs-lg)',
+  xl: 'var(--fs-xl)',
+  '2xl': 'var(--fs-2xl)',
+  '3xl': 'var(--fs-3xl)',
+  '4xl': 'var(--fs-4xl)',
+  '5xl': 'var(--fs-5xl)',
 };
 
 export default fontSize;

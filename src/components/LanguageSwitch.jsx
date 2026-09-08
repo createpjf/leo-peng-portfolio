@@ -11,17 +11,17 @@ const LanguageSwitch = ({ className = '', tabIndex }) => {
   return (
     <div className={`language-switch ${className}`.trim()} role="group" aria-label={content.ui.languageSwitcher}>
       {options.map((option) => (
-        <button
+        <a
           key={option.value}
-          type="button"
+          href={`/${option.value}/`}
           className={`language-option${locale === option.value ? ' is-active' : ''}`}
-          onClick={() => setLocale(option.value)}
+          onClick={(event) => { event.preventDefault(); setLocale(option.value); }}
           aria-label={option.ariaLabel}
-          aria-pressed={locale === option.value}
+          aria-current={locale === option.value ? 'page' : undefined}
           tabIndex={tabIndex}
         >
           {option.label}
-        </button>
+        </a>
       ))}
     </div>
   );

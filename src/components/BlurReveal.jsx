@@ -1,20 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useInView from '../hooks/useInView';
-
-/* Skip expensive blur filter on mobile / touch devices */
-const MOBILE_QUERY = '(max-width: 768px)';
-const useIsMobile = () => {
-  const [mobile, setMobile] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
-  );
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const handler = (e) => setMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-  return mobile;
-};
 
 /**
  * BlurReveal — text reveals word-by-word from blurred+transparent to clear.
@@ -42,25 +27,23 @@ const BlurReveal = ({
   direction = 'up',
 }) => {
   const { ref, inView } = useInView({ threshold: 0.2 });
-  const isMobile = useIsMobile();
 
   const segments = animateBy === 'chars' ? text.split('') : text.split(' ');
   const yOffset = direction === 'up' ? 20 : -20;
 
   return (
-    <Tag ref={ref} className={className} style={{ ...style, display: 'flex', flexWrap: 'wrap' }}>
+    <Tag ref={ref} className={`blur-reveal ${className}`} style={{ ...style, display: 'flex', flexWrap: 'wrap' }}>
       {segments.map((segment, i) => (
         <span
           key={i}
           style={{
             display: 'inline-block',
-            filter: isMobile ? 'none' : (inView ? 'blur(0px)' : `blur(${blurAmount}px)`),
+            filter: inView ? 'blur(0px)' : `blur(${blurAmount}px)`,
             opacity: inView ? 1 : 0,
             transform: inView ? 'translateY(0)' : `translateY(${yOffset}px)`,
-            transition: isMobile
-              ? `opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`
-              : `filter ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`,
-            willChange: inView ? 'auto' : (isMobile ? 'opacity, transform' : 'filter, opacity, transform'),
+            transition: `filter ${duration}ms ease, opacity ${duration}ms ease, transform ${duration}ms ease`,
+            transitionDelay: `${i * delay}ms`,
+            willChange: inView ? 'auto' : 'filter, opacity, transform',
           }}
         >
           {segment}

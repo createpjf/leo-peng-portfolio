@@ -13,10 +13,11 @@ import useScrollSpy from './hooks/useScrollSpy';
 import { useLocale } from './i18n/LocaleContext';
 
 const App = () => {
-  const { content } = useLocale();
+  const { content, locale } = useLocale();
   const [activeNav, setActiveNav] = useState('services');
   const [showFull, setShowFull] = useState(false);
-  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
+  const [chatEnabled, setChatEnabled] = useState(false);
+  const chatFailed = useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw', chatEnabled, locale);
 
   // Highlight the nav item for whichever section is in view while scrolling.
   const spySections = useMemo(
@@ -26,17 +27,21 @@ const App = () => {
   useScrollSpy(spySections, setActiveNav);
 
   return (
-    <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>
+    <div className="editorial-page" style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5 }}>
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
       <main>
         <HeroSection />
         <ServicesSection />
-        <WritingSection />
         <WorksSection />
+        <WritingSection />
         <ExperienceSection showFull={showFull} setShowFull={setShowFull} />
         <QuoteSection />
       </main>
       <Footer />
+      {chatFailed ? <a className="chat-launcher" href={`mailto:${content.personalInfo.email}`}>{content.ui.emailMe}</a> : <button className="chat-launcher" onClick={() => {
+        setChatEnabled(true);
+        if (typeof window.Intercom === 'function') window.Intercom('show');
+      }}>{content.ui.chat}</button>}
     </div>
   );
 };

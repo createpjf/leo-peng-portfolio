@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * Shared IntersectionObserver pool.
  * Elements with the same threshold + rootMargin share one observer,
- * and callbacks are batched via requestAnimationFrame to avoid
- * multiple setState calls in a single frame during fast scrolling.
+ * Every delivered entry is processed; React batches state updates.
  */
 const observerPool = new Map();
 
@@ -12,17 +11,11 @@ const getSharedObserver = (threshold, rootMargin) => {
   const key = `${threshold}_${rootMargin}`;
   if (!observerPool.has(key)) {
     const callbacks = new Map();
-    let rafId = null;
     const observer = new IntersectionObserver(
       (entries) => {
-        // Cancel any pending rAF to coalesce rapid-fire batches
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => {
-          rafId = null;
-          entries.forEach((entry) => {
-            const cb = callbacks.get(entry.target);
-            if (cb) cb(entry);
-          });
+        entries.forEach((entry) => {
+          const cb = callbacks.get(entry.target);
+          if (cb) cb(entry);
         });
       },
       { threshold, rootMargin },
@@ -33,7 +26,7 @@ const getSharedObserver = (threshold, rootMargin) => {
 };
 
 /**
- * Lightweight IntersectionObserver hook (shared observer + rAF batching).
+ * Shared IntersectionObserver hook; prerendered content starts visible.
  * Returns { ref, inView } — once the element enters the viewport, inView stays true.
  * @param {Object} options
  * @param {number} options.threshold - visibility ratio to trigger (0-1)
@@ -42,7 +35,7 @@ const getSharedObserver = (threshold, rootMargin) => {
  */
 const useInView = ({ threshold = 0.15, rootMargin = '0px', once = true } = {}) => {
   const ref = useRef(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(() => typeof document === 'undefined' || Boolean(document.getElementById('root')?.dataset.locale));
 
   useEffect(() => {
     const el = ref.current;

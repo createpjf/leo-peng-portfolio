@@ -1,33 +1,38 @@
 /**
  * ============================================================
  *  Global stylesheet
- *  Palette mirrors src/data/theme.js (kept in sync for JS inline
- *  styles); edit colours in both places.
+ *  Palette and type scale are defined here; JS references these variables.
  * ============================================================
  */
 
 :root {
-  --bg: #ffffff;
-  --bg-sec: #f0f0f0;
-  --bg-dark: #0a0a0a;
-  --text: #111111;
-  --text-sec: #666666;
-  --text-lt: #767676;
-  --accent: #000000;
-  --border: #e5e5e5;
-  --border-dk: #222222;
+  --bg: #f4f4f5;
+  --bg-sec: #ececee;
+  --bg-dark: #18181b;
+  --text: #09090b;
+  --text-sec: #52525b;
+  --text-lt: #71717a;
+  --accent: #ff5a00;
+  --border: #ececee;
+  --border-dk: #3f3f46;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --surface-card: #fff;
+  --radius-card: 24px;
+  --radius-button: 12px;
+  --radius-tag: 8px;
+  --content-width: 1240px;
 
   /* Typography scale (rem so text honours browser font-size — WCAG 1.4.4).
      Mirrors src/data/typography.js. Label sizes floor at 11px for
      legibility; section titles sit at 24px (one step above item titles). */
-  --fs-xs:  0.6875rem; /* 11px — smallest label (eyebrows, tags) */
-  --fs-sm:  0.75rem;   /* 12px */
-  --fs-base: 0.8125rem;/* 13px */
-  --fs-md:  0.875rem;  /* 14px */
-  --fs-lg:  0.9375rem; /* 15px */
+  --fs-xs:  0.8125rem;
+  --fs-sm:  0.875rem;
+  --fs-base: 1rem;
+  --fs-md:  1rem;
+  --fs-lg:  1.375rem;
   --fs-xl:  1rem;      /* 16px */
   --fs-2xl: 1.125rem;  /* 18px */
-  --fs-3xl: 1.5rem;    /* 24px — section titles (was 20px) */
+  --fs-3xl: 2.5rem;
   --fs-4xl: 2rem;      /* 32px */
   --fs-5xl: 2.625rem;  /* 42px */
 
@@ -39,11 +44,17 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 html { scroll-padding-top: 60px; }
-body { overflow-x: hidden; background: var(--bg); }
+body { overflow-x: clip; background: var(--bg); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+.primary-action, .secondary-action { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--text); font-size: 1rem; }
+.primary-action { color: white; background: var(--text); }
+.project-action { margin-top: 10px; font-size: var(--fs-sm); text-decoration: underline; text-underline-offset: 4px; }
+.chat-launcher { position: fixed; right: 20px; bottom: 20px; z-index: 90; min-height: 44px; padding: 10px 18px; background: var(--text); color: white; border: 1px solid white; border-radius: 24px; font: inherit; cursor: pointer; }
 a { text-decoration: none; color: inherit; cursor: pointer; }
 
 /* ─── Accessibility: visible keyboard focus ─── */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+footer :focus-visible { outline-color: #fff; }
 :focus:not(:focus-visible) { outline: none; }
 
 /* ─── Reusable eyebrow / section label ─── */
@@ -116,8 +127,11 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   background: rgba(255,255,255,0.76);
 }
 .language-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 30px;
-  height: 26px;
+  min-height: 32px;
   padding: 0 8px;
   border: 0;
   border-radius: 2px;
@@ -198,7 +212,15 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   height: 100%;
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
+.project-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.project-cover { container-type: inline-size; position: relative; height: 100%; overflow: hidden; background: #080b10; color: white; }
+.project-cover-visual { position: absolute; left: 49%; top: 16%; width: 63%; height: 70%; overflow: hidden; border-radius: 5px; transform: rotate(-2deg); }
+.project-cover-art { position: absolute; width: 185%; height: 143%; left: -85%; top: -23%; object-fit: fill; }
+.project-cover-screen { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; }
+.project-cover-copy { position: absolute; inset: 0 auto 0 0; width: 46%; padding: 5%; background: linear-gradient(90deg, #080b10 90%, #080b1000); }
+.project-cover-year { display: block; font-size: 2.2cqw; color: #b9bdc5; margin-bottom: 22%; }
+.project-cover-copy > div { display: grid; gap: 0.2em; font-size: clamp(0.875rem, 4.3cqw, 2rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.035em; }
+.project-cover-accent { color: var(--cover-accent); }
 /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
 .footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
 .footer-link:hover { color: #fff; }
@@ -274,6 +296,7 @@ a:hover .resume-arrow { transform: translateX(4px); }
 
 /* ─── Tablet / small laptop ─── */
 @media (max-width: 768px) {
+  .blur-reveal > span { filter: none !important; }
   .hero-grid { grid-template-columns: 1fr; min-height: calc(100dvh - 52px); grid-template-rows: 1fr auto; }
   .hero-dark { min-height: 0; }
   .desktop-nav { display: none !important; }
@@ -296,10 +319,11 @@ a:hover .resume-arrow { transform: translateX(4px); }
   #contact { padding: 48px 32px 32px !important; }
   .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
   .hero-info { padding: 40px 32px !important; }
-  .hero-bio p { font-size: 0.8125rem !important; }
+  .hero-bio p { font-size: 0.9375rem !important; }
 }
 
-html[lang="zh-CN"] .hero-bio,
+.hero-bio p, .service-card p { line-height: var(--leading-body); }
+html[lang="zh-CN"] .hero-bio p,
 html[lang="zh-CN"] .service-card p { line-height: 1.75; }
 
 /* ─── Tooltip: prevent left-overflow on narrow screens ─── */
@@ -321,7 +345,6 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
 
 /* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */
 @media (max-width: 480px) {
-  .hero-grid { min-height: calc(100dvh - 44px) !important; }
   .site-header { padding: 0 20px !important; height: 44px !important; }
   .site-header > div:first-child { font-size: 0.875rem !important; }
   .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: minmax(40vh, auto) 1fr; }
@@ -334,7 +357,7 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
   .hero-info h2 { font-size: 1.75rem !important; margin-bottom: 4px !important; }
   .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
   .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 0.875rem !important; }
+  .hero-bio p { font-size: 0.9375rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info > div { margin-bottom: 16px !important; }
   .hero-info > div span:first-child { font-size: 0.6875rem !important; margin-bottom: 4px !important; }
@@ -344,13 +367,10 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
   .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
   .status-dot { width: 16px !important; height: 16px !important; }
   .hero-video { object-position: center 40% !important; }
-  .hero-bio p { font-size: 0.8125rem !important; margin-bottom: 8px !important; }
-  .hero-bio { margin-bottom: 20px !important; }
 }
 
 /* ─── Small mobile: iPhone SE / narrow Android ─── */
 @media (max-width: 375px) {
-  .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .site-header { padding: 0 16px !important; height: 40px !important; }
   .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .hero-dark { padding: 28px 16px 20px !important; }
@@ -360,7 +380,7 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
   .hero-info h2 { font-size: 1.5rem !important; }
   .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 14px !important; }
   .hero-bio { margin-bottom: 16px !important; }
-  .hero-bio p { font-size: 0.8125rem !important; }
+  .hero-bio p { font-size: 0.9375rem !important; }
   .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info .pill-item { padding: 6px 12px !important; font-size: 0.6875rem !important; }
   .hero-info > a { font-size: 0.8125rem !important; }
@@ -435,7 +455,9 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }

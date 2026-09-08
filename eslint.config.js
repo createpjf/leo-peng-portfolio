@@ -6,7 +6,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-config-prettier';
 
 export default [
-  { ignores: ['dist', 'node_modules'] },
+  { ignores: ['dist', 'node_modules', '.wrangler/**'] },
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
@@ -32,7 +32,7 @@ export default [
   },
   // Node-context config files
   {
-    files: ['*.config.js'],
+    files: ['*.config.js', 'scripts/*.mjs'],
     languageOptions: { globals: { ...globals.node } },
   },
   prettier,

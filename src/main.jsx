@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import { LocaleProvider } from './i18n/LocaleContext';
+import './editorial.css';
+import { LocaleProvider, getInitialLocale } from './i18n/LocaleContext';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root');
+const locale = getInitialLocale();
+const app = (
   <React.StrictMode>
-    <LocaleProvider>
+    <LocaleProvider initialLocale={locale}>
       <App />
     </LocaleProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+if (root.dataset.locale === locale) ReactDOM.hydrateRoot(root, app);
+else ReactDOM.createRoot(root).render(app);

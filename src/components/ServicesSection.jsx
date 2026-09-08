@@ -1,52 +1,32 @@
-import React, { useState } from 'react';
-import T from '../data/theme';
+import React from 'react';
 import ServiceIcons from './ServiceIcons';
 import FadeWords from './FadeWords';
-import useInView from '../hooks/useInView';
-import ScrollReveal from './ScrollReveal';
-import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 
 const ServicesSection = () => {
   const { content } = useLocale();
-  const { services, ui } = content;
-  const [hovered, setHovered] = useState(null);
-  const { ref: gridRef, inView } = useInView({ threshold: 0.1 });
+  const { services, ui, projects } = content;
+  const serviceProjects = { film: 'brand-film', fde: 'goleta', commerce: 'retail-os' };
   return (
-    <section id="services" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
+    <section id="services" className="section-pad">
       <FadeWords text={ui.sections.services} className="section-title" />
-      <div ref={gridRef} className="services-grid" style={{ background: T.border, border: `1px solid ${T.border}` }}>
-        {services.map((s, i) => (
-          <ScrollReveal key={s.num} delay={`${i * 0.1}s`} style={{ height: '100%' }}>
-          <div
-            className="service-card"
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
-            style={{
-              background: hovered === i ? '#fafafa' : T.bg,
-              padding: '48px 24px', display: 'flex', flexDirection: 'column', height: '100%',
-              transition: `background 0.3s ease, opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s`,
-              cursor: 'default',
-              position: 'relative', overflow: 'hidden',
-              opacity: inView ? 1 : 0,
-              transform: inView ? 'translateY(0)' : 'translateY(20px)',
-            }}
-          >
-            <span style={{ fontSize: F['4xl'], fontWeight: 300, color: T.textLt, marginBottom: 24, lineHeight: 1 }}>{s.num}</span>
-            <div style={{
-              width: 48, height: 48, marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: T.bgSec, borderRadius: 3,
-            }}>{ServiceIcons[s.iconType]}</div>
-            <h3 style={{ fontSize: F.lg, fontWeight: 500, marginBottom: 8 }}>{s.title}</h3>
-            <p style={{ fontSize: F.base, color: T.textSec, lineHeight: 1.6 }}>{s.desc}</p>
-            <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-              {s.tags.map(t => (
-                <span key={t} className="tag-chip tag-chip--sm">{t}</span>
-              ))}
+      <div className="services-grid">
+        {services.map(s => {
+          const project = projects.find(p => p.id === serviceProjects[s.id]);
+          return <article key={s.id} className={`service-card service-card--${s.id}`}>
+            <div className="service-card-top">
+              <span className="service-number">{s.num}</span>
+              <span className="service-icon" aria-hidden="true">{ServiceIcons[s.iconType]}</span>
             </div>
-          </div>
-          </ScrollReveal>
-        ))}
+            {project && <div className="service-media"><img src={project.heroImg} alt={project.title} loading="lazy" decoding="async" /></div>}
+            {s.id === 'growth' && <div className="service-media"><img src="/growth-strategy.webp" alt="" width="1983" height="793" loading="lazy" decoding="async" /></div>}
+            <div className="service-card-body">
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+              <div className="service-tags">{s.tags.slice(0, 2).map(tag => <span key={tag} className="tag-chip">{tag}</span>)}</div>
+            </div>
+          </article>;
+        })}
       </div>
     </section>
   );

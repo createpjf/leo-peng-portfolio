@@ -10,6 +10,15 @@ const HeroSection = () => {
   const videoRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
   const [videoRemoved, setVideoRemoved] = useState(false);
+  const [allowVideo, setAllowVideo] = useState(false);
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setAllowVideo(!preference.matches && !window.navigator.connection?.saveData);
+    sync();
+    preference.addEventListener('change', sync);
+    return () => preference.removeEventListener('change', sync);
+  }, []);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -17,7 +26,7 @@ const HeroSection = () => {
     const onEnd = () => setVideoEnded(true);
     v.addEventListener('ended', onEnd);
     return () => v.removeEventListener('ended', onEnd);
-  }, []);
+  }, [allowVideo]);
 
   // Remove video element from DOM after fade-out completes (frees GPU layer)
   useEffect(() => {
@@ -34,11 +43,10 @@ const HeroSection = () => {
         <img
           src="/hero-poster.jpg" alt={ui.heroImageAlt}
           className="hero-video"
-          fetchPriority="high"
           decoding="async"
         />
         {/* Background video — removed from DOM after fade-out to free GPU */}
-        {!videoRemoved && (
+        {allowVideo && !videoRemoved && (
           <video
             ref={videoRef}
             className="hero-video"
@@ -120,10 +128,15 @@ const HeroSection = () => {
         }}>
           {personalInfo.heroBio.map((text, i) => (
             <p key={i} style={{
-              fontSize: F.lg, color: T.textSec, lineHeight: 1.6,
+              fontSize: F.lg, color: T.textSec,
               marginBottom: i === 0 ? 12 : 0,
             }}>{text}</p>
           ))}
+        </div>
+
+        <div className="hero-cta">
+          <a className="primary-action" href={`mailto:${personalInfo.email}`}>{ui.contactMe} ↗</a>
+          <a className="secondary-action" href="#work">{ui.viewWork} ↓</a>
         </div>
 
         {/* Status */}

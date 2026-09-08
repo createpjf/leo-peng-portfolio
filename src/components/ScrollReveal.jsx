@@ -9,7 +9,7 @@ const ScrollReveal = ({ children, delay = '0s', style = {}, className = '' }) =>
       className={className}
       style={{
         ...style,
-        opacity: 0,
+        opacity: inView ? 1 : 0,
         animation: inView ? `fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} both` : 'none',
       }}
     >

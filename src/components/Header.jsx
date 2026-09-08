@@ -21,13 +21,26 @@ const Header = ({ activeNav, setActiveNav }) => {
   useEffect(() => {
     if (!menuOpen) return;
     const toggleButton = menuButtonRef.current;
-    const onKeyDown = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    const background = [...document.querySelectorAll('main, footer, .chat-launcher')];
+    background.forEach(el => { el.inert = true; });
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+      if (e.key !== 'Tab') return;
+      const targets = [toggleButton, ...overlayRef.current.querySelectorAll('button, a')];
+      const current = targets.indexOf(document.activeElement);
+      e.preventDefault();
+      targets[(current + (e.shiftKey ? -1 : 1) + targets.length) % targets.length]?.focus({ preventScroll: true });
+    };
+    const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
+    window.addEventListener('resize', onResize);
     document.addEventListener('keydown', onKeyDown);
     const firstLink = overlayRef.current?.querySelector('a');
-    firstLink?.focus();
+    firstLink?.focus({ preventScroll: true });
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      toggleButton?.focus();
+      window.removeEventListener('resize', onResize);
+      background.forEach(el => { el.inert = false; });
+      toggleButton?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
 
@@ -36,7 +49,10 @@ const Header = ({ activeNav, setActiveNav }) => {
     setActiveNav(item.id);
     setMenuOpen(false);
     const el = document.getElementById(item.id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      window.history.pushState(null, '', `#${item.id}`);
+      el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -49,7 +65,7 @@ const Header = ({ activeNav, setActiveNav }) => {
         <nav className="site-nav desktop-nav" role="navigation" aria-label={ui.mainNavigation}>
           {navItems.map(item => (
             <a key={item.id} href={`#${item.id}`}
-              className="nav-link"
+              className={item.id === 'contact' ? 'nav-link nav-contact' : 'nav-link'}
               onClick={e => handleNav(e, item)}
               aria-current={activeNav === item.id ? 'true' : undefined}
               style={{

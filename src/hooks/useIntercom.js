@@ -1,16 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const useIntercom = (appId) => {
+const useIntercom = (appId, enabled, locale) => {
   const bootedRef = useRef(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    if (!appId) {
-      if (import.meta.env.DEV) {
-        console.warn('[useIntercom] VITE_INTERCOM_APP_ID is not set; Intercom disabled.');
-      }
-      return undefined;
-    }
+    if (!enabled || !appId) return undefined;
 
     let cancelled = false;
 
@@ -18,8 +14,9 @@ const useIntercom = (appId) => {
       const { default: Intercom } = await import('@intercom/messenger-js-sdk');
       if (cancelled) return;
       bootedRef.current = true;
-      Intercom({ app_id: appId });
-    })();
+      Intercom({ app_id: appId, language_override: locale === 'zh' ? 'zh-CN' : 'en', hide_default_launcher: true });
+      window.Intercom('show');
+    })().catch(() => { if (!cancelled) setFailed(true); });
 
     return () => {
       cancelled = true;
@@ -28,7 +25,8 @@ const useIntercom = (appId) => {
         bootedRef.current = false;
       }
     };
-  }, [appId]);
+  }, [appId, enabled, locale]);
+  return failed;
 };
 
 export default useIntercom;

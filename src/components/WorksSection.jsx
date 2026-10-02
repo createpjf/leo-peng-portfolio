@@ -6,18 +6,21 @@ import useCanHover from '../hooks/useCanHover';
 import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 
-const WorkCard = ({ title, category, year, children, idx, href }) => {
+const WorkCard = ({ title, category, year, children, idx, href, newTabLabel }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
   const canHover = useCanHover();
+  // Projects without a link render as a plain block (not an <a> with no href)
+  // and skip the hover zoom/border, so they don't look clickable.
+  const Tag = href ? 'a' : 'div';
+  const linkProps = href ? { href, target: '_blank', rel: 'noopener noreferrer' } : {};
+  const hoverable = Boolean(href) && canHover;
   return (
-    <a
+    <Tag
       ref={ref}
-      href={href || undefined}
-      target={href ? '_blank' : undefined}
-      rel={href ? 'noopener noreferrer' : undefined}
-      onMouseEnter={() => canHover && setHover(true)}
-      onMouseLeave={() => canHover && setHover(false)}
+      {...linkProps}
+      onMouseEnter={() => hoverable && setHover(true)}
+      onMouseLeave={() => hoverable && setHover(false)}
       style={{
         display: 'flex', flexDirection: 'column', cursor: href ? 'pointer' : 'default',
         opacity: inView ? 1 : 0,
@@ -36,7 +39,8 @@ const WorkCard = ({ title, category, year, children, idx, href }) => {
         </div>
         <span style={{ fontVariantNumeric: 'tabular-nums', fontSize: F.base, color: T.textLt }}>{year}</span>
       </div>
-    </a>
+      {href && <span className="sr-only">{newTabLabel}</span>}
+    </Tag>
   );
 };
 
@@ -49,7 +53,7 @@ const WorksSection = () => {
     <FadeWords key={ui.sections.work} text={ui.sections.work} className="section-title" style={{ marginBottom: 32 }} />
     <div className="works-grid">
       {projects.map((p, i) => (
-        <WorkCard key={p.id} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
+        <WorkCard key={p.id} title={p.title} category={p.category} year={p.year} idx={i} href={p.href} newTabLabel={ui.opensInNewTab}>
           <img src={p.heroImg} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </WorkCard>
       ))}

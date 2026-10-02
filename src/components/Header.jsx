@@ -3,6 +3,7 @@ import T from '../data/theme';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
 import prefersReducedMotion from '../utils/prefersReducedMotion';
+import focusTarget from '../utils/focusTarget';
 
 const Header = ({ activeNav, onNavigate }) => {
   const { content } = useLocale();
@@ -10,6 +11,9 @@ const Header = ({ activeNav, onNavigate }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const overlayRef = useRef(null);
+  // Section to focus once the mobile menu has closed (and the page is no
+  // longer inert); otherwise focus returns to the menu toggle.
+  const pendingFocusRef = useRef(null);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -23,7 +27,7 @@ const Header = ({ activeNav, onNavigate }) => {
   useEffect(() => {
     if (!menuOpen) return;
     const toggleButton = menuButtonRef.current;
-    const background = document.querySelectorAll('main, footer');
+    const background = document.querySelectorAll('.skip-link, main, footer');
     background.forEach((el) => el.setAttribute('inert', ''));
     const onKeyDown = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     document.addEventListener('keydown', onKeyDown);
@@ -32,16 +36,25 @@ const Header = ({ activeNav, onNavigate }) => {
     return () => {
       background.forEach((el) => el.removeAttribute('inert'));
       document.removeEventListener('keydown', onKeyDown);
-      toggleButton?.focus({ preventScroll: true });
+      const target = pendingFocusRef.current;
+      pendingFocusRef.current = null;
+      if (target) focusTarget(target);
+      else toggleButton?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
 
+  // Scroll to the section and move focus there, so keyboard and screen-reader
+  // users continue from the section rather than from the nav link.
   const handleNav = (e, item) => {
     e.preventDefault();
     onNavigate(item.id);
-    setMenuOpen(false);
     const el = document.getElementById(item.id);
-    if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    if (el) {
+      el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+      if (menuOpen) pendingFocusRef.current = el;
+      else focusTarget(el);
+    }
+    setMenuOpen(false);
   };
 
   return (
@@ -56,7 +69,7 @@ const Header = ({ activeNav, onNavigate }) => {
             <a key={item.id} href={`#${item.id}`}
               className="nav-link"
               onClick={e => handleNav(e, item)}
-              aria-current={activeNav === item.id ? 'true' : undefined}
+              aria-current={activeNav === item.id ? 'location' : undefined}
               style={{
                 color: activeNav === item.id ? T.text : T.textSec,
                 fontWeight: activeNav === item.id ? 500 : 400,
@@ -111,7 +124,7 @@ const Header = ({ activeNav, onNavigate }) => {
             className="mobile-menu-link"
             onClick={e => handleNav(e, item)}
             tabIndex={menuOpen ? 0 : -1}
-            aria-current={activeNav === item.id ? 'true' : undefined}
+            aria-current={activeNav === item.id ? 'location' : undefined}
             style={{
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
               opacity: menuOpen ? 1 : 0,

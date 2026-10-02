@@ -24,11 +24,15 @@ const FadeWords = ({
 
   const words = text.split(' ');
 
+  // Each word is a flex item (block-level), which some screen readers read
+  // one per line — expose the whole text once and hide the animated words.
   return (
     <Tag ref={ref} className={className} style={{ ...style, display: 'flex', flexWrap: 'wrap' }}>
+      <span className="sr-only">{text}</span>
       {words.map((word, i) => (
         <span
           key={i}
+          aria-hidden="true"
           style={{
             display: 'inline-block',
             opacity: inView ? 1 : 0,

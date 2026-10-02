@@ -47,11 +47,15 @@ const BlurReveal = ({
   const segments = animateBy === 'chars' ? text.split('') : text.split(' ');
   const yOffset = direction === 'up' ? 20 : -20;
 
+  // Segments are flex items (block-level), which some screen readers read one
+  // per line — expose the whole text once and hide the animated segments.
   return (
     <Tag ref={ref} className={className} style={{ ...style, display: 'flex', flexWrap: 'wrap' }}>
+      <span className="sr-only">{text}</span>
       {segments.map((segment, i) => (
         <span
           key={i}
+          aria-hidden="true"
           style={{
             display: 'inline-block',
             filter: isMobile ? 'none' : (inView ? 'blur(0px)' : `blur(${blurAmount}px)`),

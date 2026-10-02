@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import useIntercom from './hooks/useIntercom';
 import useScrollSpy from './hooks/useScrollSpy';
 import { useLocale } from './i18n/LocaleContext';
+import focusTarget from './utils/focusTarget';
 
 const App = () => {
   const { content } = useLocale();
@@ -38,8 +39,18 @@ const App = () => {
     // overflow-x: clip (not hidden) — hidden turns this div into a scroll
     // container, which stops the sticky header from sticking to the viewport.
     <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'clip' }}>
+      <a
+        href="#main"
+        className="skip-link"
+        onClick={(e) => {
+          e.preventDefault();
+          const main = document.getElementById('main');
+          main?.scrollIntoView({ block: 'start' });
+          focusTarget(main);
+        }}
+      >{content.ui.skipToContent}</a>
       <Header activeNav={activeNav} onNavigate={navigateTo} />
-      <main>
+      <main id="main">
         <HeroSection />
         <ServicesSection />
         <WritingSection />

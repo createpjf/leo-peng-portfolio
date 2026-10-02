@@ -144,6 +144,7 @@ const copy = {
       mainNavigation: 'Main navigation', siteNavigation: 'Site navigation', toggleMenu: 'Toggle menu',
       languageSwitcher: 'Language', switchToChinese: 'Switch to Chinese', switchToEnglish: 'Switch to English',
       heroImageAlt: 'Leo Peng portfolio hero',
+      skipToContent: 'Skip to content', opensInNewTab: '(opens in new tab)',
     },
   },
   zh: {
@@ -224,6 +225,7 @@ const copy = {
       mainNavigation: '主导航', siteNavigation: '网站导航', toggleMenu: '打开或关闭菜单',
       languageSwitcher: '语言切换', switchToChinese: '切换为中文', switchToEnglish: '切换为英文',
       heroImageAlt: 'Leo Peng 个人作品集主视觉',
+      skipToContent: '跳到主要内容', opensInNewTab: '（在新标签页打开）',
     },
   },
 };

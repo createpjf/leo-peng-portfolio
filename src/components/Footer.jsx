@@ -36,7 +36,7 @@ const Footer = () => {
               className="footer-link"
               target="_blank" rel="noopener noreferrer"
               style={{ fontSize: F.base }}
-            >{item.label}</a>
+            >{item.label}<span className="sr-only"> {ui.opensInNewTab}</span></a>
           ))}
         </div>
 

@@ -18,7 +18,7 @@ const fmtDate = (d, locale) => {
   }).format(new Date(Date.UTC(Number(year), Number(parts[1]) - 1, 1)));
 };
 
-const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale }) => {
+const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale, newTabLabel }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
   const canHover = useCanHover();
@@ -85,6 +85,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale }) =>
           &#8599;
         </span>
       </span>
+      <span className="sr-only">{newTabLabel}</span>
     </a>
   );
 };
@@ -114,6 +115,7 @@ const WritingSection = () => {
           source={w.source}
           idx={i}
           locale={locale}
+          newTabLabel={ui.opensInNewTab}
           isLast={i === writings.length - 1}
         />
       ))}

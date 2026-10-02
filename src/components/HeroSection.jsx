@@ -66,14 +66,20 @@ const HeroSection = () => {
         {/* Dark gradient overlay */}
         <div className="hero-overlay" />
 
-        <h1 key={content.meta.ogLocale} style={{
+        {/* Headline copy is English in both locales. Screen readers get the
+            whole phrase once; the per-word animation spans are hidden. */}
+        <h1 key={content.meta.ogLocale} lang="en" style={{
           fontSize: 'clamp(3rem, 6vw, 4.75rem)', fontWeight: 600, lineHeight: 1.08,
           letterSpacing: '-0.04em', marginBottom: 20, position: 'relative', zIndex: 2,
           marginTop: 'auto',
         }}>
+          <span className="sr-only">
+            {[personalInfo.heroHeadline[0], `${personalInfo.heroHeadline[1]}${personalInfo.heroHeadline[2]}`, personalInfo.heroHeadline[3]]
+              .map((line) => line.trim()).join(' ')}
+          </span>
           {/* Line 1 — staggered word-by-word fadeUp */}
           {personalInfo.heroHeadline[0].split(' ').map((w, i) => (
-            <span key={`l1-${i}`} style={{
+            <span key={`l1-${i}`} aria-hidden="true" style={{
               display: 'inline-block', opacity: 0,
               animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
@@ -81,19 +87,19 @@ const HeroSection = () => {
           <br />
           {/* Line 2 — optional prefix + italic word */}
           {personalInfo.heroHeadline[1].trim().split(' ').filter(Boolean).map((w, i) => (
-            <span key={`l2-${i}`} style={{
+            <span key={`l2-${i}`} aria-hidden="true" style={{
               display: 'inline-block', opacity: 0,
               animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${(i + 2) * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
           ))}
-          <em style={{
+          <em aria-hidden="true" style={{
             fontStyle: 'italic', display: 'inline-block', opacity: 0,
             animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${4 * 0.08}s forwards`,
           }}>{personalInfo.heroHeadline[2]}</em>
           <br />
           {/* Line 3 */}
           {personalInfo.heroHeadline[3].split(' ').map((w, i) => (
-            <span key={`l3-${i}`} style={{
+            <span key={`l3-${i}`} aria-hidden="true" style={{
               display: 'inline-block', opacity: 0,
               animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${(i + 5) * 0.08}s forwards`,
             }}>{w}&nbsp;</span>
@@ -175,6 +181,7 @@ const HeroSection = () => {
             className="resume-arrow"
             aria-hidden="true"
           >&rarr;</span>
+          <span className="sr-only">{ui.opensInNewTab}</span>
         </a>
       </div>
     </section>

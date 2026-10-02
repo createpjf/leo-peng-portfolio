@@ -76,7 +76,7 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale }) =>
         whiteSpace: 'nowrap',
       }}>
         {source || ''}
-        <span style={{
+        <span aria-hidden="true" style={{
           display: 'inline-block',
           marginLeft: 8,
           transition: 'transform 0.2s',

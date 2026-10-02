@@ -11,11 +11,10 @@ const theme = {
   bgDark:   '#0a0a0a',
   text:     '#111111',
   textSec:  '#666666',
-  textLt:   '#767676',
+  textLt:   '#707070',
   accent:   '#000000',
   border:   '#e5e5e5',
   borderDk: '#222222',
-  white:    '#ffffff',
   font:     "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif",
 };
 

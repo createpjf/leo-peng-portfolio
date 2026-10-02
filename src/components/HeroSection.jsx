@@ -3,13 +3,15 @@ import T from '../data/theme';
 import PillWithTooltip from './PillWithTooltip';
 import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
+import prefersReducedMotion from '../utils/prefersReducedMotion';
 
 const HeroSection = () => {
   const { content } = useLocale();
   const { personalInfo, expertisePills, ui } = content;
   const videoRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
-  const [videoRemoved, setVideoRemoved] = useState(false);
+  // Reduced-motion users get the static poster only (no autoplaying video).
+  const [videoRemoved, setVideoRemoved] = useState(prefersReducedMotion);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -27,7 +29,7 @@ const HeroSection = () => {
   }, [videoEnded]);
 
   return (
-    <section className="hero-grid">
+    <section id="intro" className="hero-grid">
       {/* Left — dark panel */}
       <div className="hero-dark">
         {/* Poster image (revealed when video fades out) */}
@@ -163,6 +165,7 @@ const HeroSection = () => {
             transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
           }}
             className="resume-arrow"
+            aria-hidden="true"
           >&rarr;</span>
         </a>
       </div>

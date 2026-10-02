@@ -49,8 +49,8 @@ const WorksSection = () => {
     <FadeWords key={ui.sections.work} text={ui.sections.work} className="section-title" style={{ marginBottom: 32 }} />
     <div className="works-grid">
       {projects.map((p, i) => (
-        <WorkCard key={p.title} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
-          <img src={p.heroImg} alt={p.title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <WorkCard key={p.id} title={p.title} category={p.category} year={p.year} idx={i} href={p.href}>
+          <img src={p.heroImg} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </WorkCard>
       ))}
     </div>

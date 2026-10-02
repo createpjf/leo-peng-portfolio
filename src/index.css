@@ -12,7 +12,7 @@
   --bg-dark: #0a0a0a;
   --text: #111111;
   --text-sec: #666666;
-  --text-lt: #767676;
+  --text-lt: #707070;
   --accent: #000000;
   --border: #e5e5e5;
   --border-dk: #222222;
@@ -268,7 +268,6 @@ a:hover .resume-arrow { transform: translateX(4px); }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
 
 @media (max-width: 1024px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
   .works-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -302,31 +301,11 @@ a:hover .resume-arrow { transform: translateX(4px); }
 html[lang="zh-CN"] .hero-bio,
 html[lang="zh-CN"] .service-card p { line-height: 1.75; }
 
-/* ─── Tooltip: keep bubble on-screen on narrow viewports ─── */
-@media (max-width: 768px) {
-  .pill-row {
-    overflow: visible;
-  }
-  .pill-tooltip {
-    left: 0 !important;
-    right: auto !important;
-    transform: translateY(0) !important;
-    width: min(240px, calc(100vw - 40px)) !important;
-    max-width: calc(100vw - 40px) !important;
-  }
-  .pill-tooltip > span { left: 24px !important; }
-}
-
-/* ─── Footer & quote mobile tweaks ─── */
+/* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */
 @media (max-width: 480px) {
   #contact { padding: 40px 20px 28px !important; }
   .footer-grid { gap: 20px !important; }
   .quote-section { padding: 48px 20px !important; }
-}
-
-/* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */
-@media (max-width: 480px) {
-  .hero-grid { min-height: calc(100dvh - 44px) !important; }
   .site-header { padding: 0 20px !important; height: 44px !important; }
   .site-header > div:first-child { font-size: 0.875rem !important; }
   .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: minmax(40vh, auto) 1fr; }
@@ -339,24 +318,20 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
   .hero-info { padding: 24px 20px !important; overflow: visible; }
   .hero-info h2 { font-size: 1.75rem !important; margin-bottom: 4px !important; }
   .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
-  .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 0.875rem !important; }
-  .hero-bio p:first-child { margin-bottom: 8px !important; }
   .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info > div span:first-child { font-size: 0.6875rem !important; margin-bottom: 4px !important; }
+  .hero-info .eyebrow { font-size: 0.6875rem !important; margin-bottom: 4px !important; }
   .hero-info .pill-row { gap: 6px !important; margin-top: 4px !important; }
   .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.75rem !important; }
   .hero-info > a { margin-top: 12px !important; font-size: 0.875rem !important; padding: 8px 0 !important; }
   .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
   .status-dot { width: 16px !important; height: 16px !important; }
   .hero-video { object-position: center 40% !important; }
-  .hero-bio p { font-size: 0.8125rem !important; margin-bottom: 8px !important; }
   .hero-bio { margin-bottom: 20px !important; }
+  .hero-bio p { font-size: 0.8125rem !important; margin-bottom: 8px !important; }
 }
 
 /* ─── Small mobile: iPhone SE / narrow Android ─── */
 @media (max-width: 375px) {
-  .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .site-header { padding: 0 16px !important; height: 40px !important; }
   .hero-grid { min-height: calc(100dvh - 40px) !important; }
   .hero-dark { padding: 28px 16px 20px !important; }
@@ -427,7 +402,7 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
   .hero-bio p { font-size: 1.1875rem !important; line-height: 1.7 !important; }
   .hero-bio p:first-child { margin-bottom: 14px !important; }
   .hero-info > div { margin-bottom: 32px !important; }
-  .hero-info > div span:first-child { font-size: 0.8125rem !important; }
+  .hero-info .eyebrow, .hero-info .pill-tooltip { font-size: 0.8125rem !important; }
   .hero-info .pill-item { font-size: 0.9375rem !important; padding: 14px 32px !important; }
   .hero-info > a { font-size: 1.1875rem !important; padding: 16px 0 !important; }
   .status-dot { width: 24px !important; height: 24px !important; }
@@ -441,7 +416,9 @@ html[lang="zh-CN"] .service-card p { line-height: 1.75; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }

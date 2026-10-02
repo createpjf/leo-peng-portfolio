@@ -14,19 +14,23 @@ import { useLocale } from './i18n/LocaleContext';
 
 const App = () => {
   const { content } = useLocale();
-  const [activeNav, setActiveNav] = useState('services');
+  // null while the hero is in view so no nav item is highlighted.
+  const [activeNav, setActiveNav] = useState(null);
   const [showFull, setShowFull] = useState(false);
   useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
 
   // Highlight the nav item for whichever section is in view while scrolling.
+  // The hero ('intro') maps to null so scrolling back to the top clears it.
   const spySections = useMemo(
-    () => content.navItems.map(({ id }) => ({ id, label: id })),
+    () => [{ id: 'intro', label: null }, ...content.navItems.map(({ id }) => ({ id, label: id }))],
     [content.navItems],
   );
   useScrollSpy(spySections, setActiveNav);
 
   return (
-    <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>
+    // overflow-x: clip (not hidden) — hidden turns this div into a scroll
+    // container, which stops the sticky header from sticking to the viewport.
+    <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'clip' }}>
       <Header activeNav={activeNav} setActiveNav={setActiveNav} />
       <main>
         <HeroSection />

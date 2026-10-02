@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import T from '../data/theme';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
+import prefersReducedMotion from '../utils/prefersReducedMotion';
 
 const Header = ({ activeNav, setActiveNav }) => {
   const { content } = useLocale();
@@ -17,17 +18,21 @@ const Header = ({ activeNav, setActiveNav }) => {
   }, [menuOpen]);
 
   // Close on Escape; move focus into the menu on open and back to the
-  // toggle on close so keyboard users aren't stranded.
+  // toggle on close so keyboard users aren't stranded. The page behind the
+  // menu is made inert so Tab can't wander into hidden content.
   useEffect(() => {
     if (!menuOpen) return;
     const toggleButton = menuButtonRef.current;
+    const background = document.querySelectorAll('main, footer');
+    background.forEach((el) => el.setAttribute('inert', ''));
     const onKeyDown = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     document.addEventListener('keydown', onKeyDown);
     const firstLink = overlayRef.current?.querySelector('a');
     firstLink?.focus();
     return () => {
+      background.forEach((el) => el.removeAttribute('inert'));
       document.removeEventListener('keydown', onKeyDown);
-      toggleButton?.focus();
+      toggleButton?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
 
@@ -36,7 +41,7 @@ const Header = ({ activeNav, setActiveNav }) => {
     setActiveNav(item.id);
     setMenuOpen(false);
     const el = document.getElementById(item.id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
   };
 
   return (

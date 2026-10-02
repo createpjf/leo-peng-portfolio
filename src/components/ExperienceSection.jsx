@@ -29,7 +29,7 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
     <div>
       <h3 style={{ fontSize: F.lg, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</h3>
       <span style={{ fontSize: F.base, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-        {item.logo && <img src={item.logo} alt={item.company} loading="lazy" decoding="async" style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
+        {item.logo && <img src={item.logo} alt="" loading="lazy" decoding="async" style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
         {item.company}
       </span>
     </div>
@@ -60,13 +60,19 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
           />
         ))}
 
-        {/* Extra items — animated expand/collapse */}
-        <div id="experience-extra" style={{
-          display: 'grid',
-          gridTemplateRows: showFull ? '1fr' : '0fr',
-          opacity: showFull ? 1 : 0,
-          transition: 'grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease',
-        }}>
+        {/* Extra items — animated expand/collapse; inert while collapsed so
+            screen readers and Tab skip the visually hidden rows */}
+        <div
+          id="experience-extra"
+          inert={showFull ? undefined : ''}
+          aria-hidden={showFull ? undefined : true}
+          style={{
+            display: 'grid',
+            gridTemplateRows: showFull ? '1fr' : '0fr',
+            opacity: showFull ? 1 : 0,
+            transition: 'grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease',
+          }}
+        >
           <div style={{ overflow: 'hidden' }}>
             {extraExperience.map((item, i) => (
               <ExpRow

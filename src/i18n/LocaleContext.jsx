@@ -6,13 +6,31 @@ const LocaleContext = createContext(null);
 
 const normalizeLocale = (value) => (value?.toLowerCase().startsWith('zh') ? 'zh' : 'en');
 
+// localStorage throws (SecurityError) when site data is blocked, e.g. Chrome's
+// "Block all cookies" — treat it as unavailable instead of crashing the app.
+const readSavedLocale = () => {
+  try {
+    return window.localStorage.getItem(LOCALE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const saveLocale = (value) => {
+  try {
+    window.localStorage.setItem(LOCALE_KEY, value);
+  } catch {
+    // Storage unavailable; the ?lang= URL param still carries the choice.
+  }
+};
+
 const getInitialLocale = () => {
   if (typeof window === 'undefined') return 'en';
 
   const urlLocale = new URL(window.location.href).searchParams.get('lang');
   if (urlLocale === 'zh' || urlLocale === 'en') return urlLocale;
 
-  const savedLocale = window.localStorage.getItem(LOCALE_KEY);
+  const savedLocale = readSavedLocale();
   if (savedLocale === 'zh' || savedLocale === 'en') return savedLocale;
 
   // Default to English for a stable first paint; users can switch and we remember it.
@@ -46,7 +64,7 @@ export const LocaleProvider = ({ children }) => {
   const setLocale = useCallback((nextLocale) => {
     const normalized = normalizeLocale(nextLocale);
     setLocaleState(normalized);
-    window.localStorage.setItem(LOCALE_KEY, normalized);
+    saveLocale(normalized);
 
     const url = new URL(window.location.href);
     url.searchParams.set('lang', normalized);

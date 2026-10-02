@@ -35,7 +35,6 @@ const Footer = () => {
             <a key={item.label} href={item.href}
               className="footer-link"
               target="_blank" rel="noopener noreferrer"
-              onClick={e => { if (item.href === '#') e.preventDefault(); }}
               style={{ fontSize: F.base }}
             >{item.label}</a>
           ))}

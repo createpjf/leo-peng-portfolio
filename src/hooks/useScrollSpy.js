@@ -7,8 +7,11 @@ import { useEffect } from 'react';
  * Driven by an IntersectionObserver callback (an external system), so it does
  * not synchronously setState inside the effect body.
  *
- * @param {{ id: string, label: string }[]} sections - section ids + nav labels
- * @param {(label: string) => void} onActive - called with the active label
+ * The last section (the footer) is usually too short to ever reach the
+ * observed band, so reaching the bottom of the page activates it explicitly.
+ *
+ * @param {{ id: string, label: string | null }[]} sections - section ids + nav labels
+ * @param {(label: string | null) => void} onActive - called with the active label
  * @param {string} rootMargin - shrinks the viewport so a section counts as
  *   "active" once it reaches the upper portion of the screen
  */
@@ -25,8 +28,16 @@ const useScrollSpy = (sections, onActive, rootMargin = '-45% 0px -50% 0px') => {
 
     if (!elements.length) return;
 
+    const last = elements[elements.length - 1];
+    const isAtBottom = () =>
+      Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 2;
+
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isAtBottom()) {
+          onActive(last.label);
+          return;
+        }
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const match = elements.find((e) => e.el === entry.target);
@@ -37,8 +48,16 @@ const useScrollSpy = (sections, onActive, rootMargin = '-45% 0px -50% 0px') => {
       { rootMargin, threshold: 0 },
     );
 
+    const onScroll = () => {
+      if (isAtBottom()) onActive(last.label);
+    };
+
     elements.forEach(({ el }) => observer.observe(el));
-    return () => observer.disconnect();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [sections, onActive, rootMargin]);
 };
 

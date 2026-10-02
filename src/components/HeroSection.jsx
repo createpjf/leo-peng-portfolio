@@ -3,7 +3,7 @@ import T from '../data/theme';
 import PillWithTooltip from './PillWithTooltip';
 import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
-import prefersReducedMotion from '../utils/prefersReducedMotion';
+import prefersReducedMotion, { REDUCED_MOTION_QUERY } from '../utils/prefersReducedMotion';
 
 const HeroSection = () => {
   const { content } = useLocale();
@@ -19,6 +19,14 @@ const HeroSection = () => {
     const onEnd = () => setVideoEnded(true);
     v.addEventListener('ended', onEnd);
     return () => v.removeEventListener('ended', onEnd);
+  }, []);
+
+  // Turning reduced motion on mid-playback swaps straight to the poster.
+  useEffect(() => {
+    const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+    const onChange = (e) => { if (e.matches) setVideoRemoved(true); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
   }, []);
 
   // Remove video element from DOM after fade-out completes (frees GPU layer)

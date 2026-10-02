@@ -4,7 +4,7 @@ import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
 import prefersReducedMotion from '../utils/prefersReducedMotion';
 
-const Header = ({ activeNav, setActiveNav }) => {
+const Header = ({ activeNav, onNavigate }) => {
   const { content } = useLocale();
   const { navItems, personalInfo, ui } = content;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,7 +38,7 @@ const Header = ({ activeNav, setActiveNav }) => {
 
   const handleNav = (e, item) => {
     e.preventDefault();
-    setActiveNav(item.id);
+    onNavigate(item.id);
     setMenuOpen(false);
     const el = document.getElementById(item.id);
     if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });

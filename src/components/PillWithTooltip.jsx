@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import T from '../data/theme';
 import F from '../data/typography';
 
@@ -26,7 +26,7 @@ const isFocusVisible = (el) => {
  * - Keyboard: opens on focus, Escape closes it.
  *
  * The bubble is centred on the pill, then shifted horizontally so it never
- * runs off the edge of the viewport.
+ * runs off the edge of the viewport (re-measured on resize / rotation).
  */
 const PillWithTooltip = ({ pill }) => {
   const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ const PillWithTooltip = ({ pill }) => {
   const tipRef = useRef(null);
   const tooltipId = useId();
 
-  const place = () => {
+  const place = useCallback(() => {
     const button = buttonRef.current;
     const tip = tipRef.current;
     if (!button || !tip) return;
@@ -48,7 +48,7 @@ const PillWithTooltip = ({ pill }) => {
     const left = rect.left + rect.width / 2 - width / 2;
     const maxLeft = Math.max(GUTTER, viewport - GUTTER - width);
     setShift(Math.min(Math.max(left, GUTTER), maxLeft) - left);
-  };
+  }, []);
 
   const show = () => {
     clearTimeout(timer.current);
@@ -60,7 +60,8 @@ const PillWithTooltip = ({ pill }) => {
     timer.current = setTimeout(() => setOpen(false), 120);
   };
 
-  // While open, close on Escape or on a tap/click outside the pill.
+  // While open, close on Escape or on a tap/click outside the pill, and keep
+  // the bubble on-screen if the viewport resizes (e.g. device rotation).
   useEffect(() => {
     if (!open) return undefined;
     const onPointerDown = (e) => {
@@ -71,11 +72,13 @@ const PillWithTooltip = ({ pill }) => {
     };
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('keydown', onKeyDown);
+    window.addEventListener('resize', place);
     return () => {
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('resize', place);
     };
-  }, [open]);
+  }, [open, place]);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 

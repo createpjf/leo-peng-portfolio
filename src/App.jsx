@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import T from './data/theme';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -25,13 +25,20 @@ const App = () => {
     () => [{ id: 'intro', label: null }, ...content.navItems.map(({ id }) => ({ id, label: id }))],
     [content.navItems],
   );
-  useScrollSpy(spySections, setActiveNav);
+  const holdActive = useScrollSpy(spySections, setActiveNav);
+
+  // A nav click highlights its target right away and keeps it while the page
+  // scrolls there.
+  const navigateTo = useCallback((id) => {
+    setActiveNav(id);
+    holdActive();
+  }, [holdActive]);
 
   return (
     // overflow-x: clip (not hidden) — hidden turns this div into a scroll
     // container, which stops the sticky header from sticking to the viewport.
     <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'clip' }}>
-      <Header activeNav={activeNav} setActiveNav={setActiveNav} />
+      <Header activeNav={activeNav} onNavigate={navigateTo} />
       <main>
         <HeroSection />
         <ServicesSection />

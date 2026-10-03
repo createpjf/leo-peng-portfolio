@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
-import scrollToSection from '../utils/scrollToSection';
+import scrollToSection, { setSectionHash } from '../utils/scrollToSection';
 import focusTarget from '../utils/focusTarget';
 
 const Header = ({ activeNav, onNavigate }) => {
@@ -50,6 +50,7 @@ const Header = ({ activeNav, onNavigate }) => {
     const el = document.getElementById(item.id);
     if (el) {
       scrollToSection(el);
+      setSectionHash(item.id);
       if (menuOpen) pendingFocusRef.current = el;
       else focusTarget(el);
     }

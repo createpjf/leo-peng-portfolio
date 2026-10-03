@@ -1,7 +1,20 @@
 import { useEffect, useRef } from 'react';
 
-const useIntercom = (appId) => {
+/**
+ * Boots the Intercom messenger once the page is idle and keeps its UI
+ * language in sync with the site's (language_override, e.g. 'en', 'zh-CN').
+ */
+const useIntercom = (appId, language) => {
   const bootedRef = useRef(false);
+  const languageRef = useRef(language);
+
+  // Declared before the boot effect so the ref is current when it runs.
+  useEffect(() => {
+    languageRef.current = language;
+    if (bootedRef.current && typeof window.Intercom === 'function') {
+      window.Intercom('update', { language_override: language });
+    }
+  }, [language]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
@@ -20,7 +33,7 @@ const useIntercom = (appId) => {
       const { default: Intercom } = await import('@intercom/messenger-js-sdk');
       if (cancelled) return;
       bootedRef.current = true;
-      Intercom({ app_id: appId });
+      Intercom({ app_id: appId, language_override: languageRef.current });
     };
 
     // The messenger pulls in a large third-party bundle; load it once the

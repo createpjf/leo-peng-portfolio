@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PillWithTooltip from './PillWithTooltip';
 import { useLocale } from '../i18n/LocaleContext';
 import prefersReducedMotion, { REDUCED_MOTION_QUERY } from '../utils/prefersReducedMotion';
-import scrollToSection from '../utils/scrollToSection';
+import scrollToSection, { setSectionHash } from '../utils/scrollToSection';
 import focusTarget from '../utils/focusTarget';
 
 // Visitors with Data Saver on skip the ~1.2 MB intro video (poster only).
@@ -42,13 +42,15 @@ const HeroSection = ({ onNavigate }) => {
     return () => clearTimeout(timer);
   }, [videoEnded]);
 
-  // Primary CTA: jump to the contact details in the footer, the same way the
-  // header's "Contact" link does (highlight it, scroll, move focus there).
+  // Primary CTA (and the status line): jump to the contact details in the
+  // footer, the same way the header's "Contact" link does (highlight it,
+  // scroll, update the URL hash, move focus there).
   const goToContact = (e) => {
     e.preventDefault();
     const contact = document.getElementById('contact');
     onNavigate?.('contact');
     scrollToSection(contact);
+    setSectionHash('contact');
     focusTarget(contact);
   };
 
@@ -60,7 +62,10 @@ const HeroSection = ({ onNavigate }) => {
         <img
           src="/hero-poster.jpg" alt={ui.heroImageAlt}
           className="hero-video"
-          fetchPriority="high"
+          // React 18 only passes the lowercase attribute through (fetchPriority
+          // logs an "unknown prop" warning); switch back on React 19.
+          // eslint-disable-next-line react/no-unknown-property
+          fetchpriority="high"
           decoding="async"
         />
         {/* Background video — removed from DOM after fade-out to free GPU */}
@@ -127,7 +132,9 @@ const HeroSection = ({ onNavigate }) => {
           <span className="eyebrow">{ui.status}</span>
           <div className="hero-status-row">
             <span className="status-dot" />
-            <span className="hero-status-text">{personalInfo.currentStatus}</span>
+            <a href="#contact" className="hero-status-text hero-status-link" onClick={goToContact}>
+              {personalInfo.currentStatus}
+            </a>
           </div>
         </div>
 

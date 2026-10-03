@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
@@ -13,10 +13,10 @@ import { useLocale } from './i18n/LocaleContext';
 import focusTarget from './utils/focusTarget';
 
 const App = () => {
-  const { content } = useLocale();
+  const { locale, content } = useLocale();
   // null while the hero is in view so no nav item is highlighted.
   const [activeNav, setActiveNav] = useState(null);
-  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
+  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw', locale === 'zh' ? 'zh-CN' : 'en');
 
   // Highlight the nav item for whichever section is in view while scrolling.
   // The hero ('intro') maps to null so scrolling back to the top clears it.
@@ -32,6 +32,13 @@ const App = () => {
     setActiveNav(id);
     holdActive();
   }, [holdActive]);
+
+  // Opening a shared link like /#work: the browser tries to jump before React
+  // has rendered the section, so scroll there once on mount.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView({ block: 'start' });
+  }, []);
 
   return (
     <div className="app">

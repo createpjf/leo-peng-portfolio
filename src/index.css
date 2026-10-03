@@ -355,6 +355,7 @@ footer :focus-visible { outline-color: #fff; }
   z-index: 3;
 }
 :where(.hero-info h2) {
+  text-wrap: balance;
   font-size: var(--fs-5xl);
   font-weight: 500;
   letter-spacing: -0.03em;
@@ -444,6 +445,13 @@ footer :focus-visible { outline-color: #fff; }
 }
 .hero-status-row { display: flex; align-items: center; margin-top: 8px; }
 .hero-status-text { font-size: var(--fs-base); }
+.hero-status-link {
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.hero-status-link:hover { text-decoration-color: currentColor; }
 /* Last block in the panel: no trailing margin (beats .hero-info > div rules) */
 .hero-info > .hero-actions { margin-bottom: 0; }
 /* Primary CTA — scrolls to the contact details in the footer */

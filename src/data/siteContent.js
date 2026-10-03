@@ -37,23 +37,21 @@ const projectShared = [
     id: 'retail-os', year: '2026',
     heroImg: { en: '/retail-system-hero-en.webp', zh: '/retail-system-hero.webp' },
   },
-  { id: 'routebox', year: '2026', href: 'https://api.routebox.dev/', heroImg: '/routebox-hero.webp' },
-  { id: 'suber', year: '2026', href: 'https://github.com/createpjf/suber-macos', heroImg: '/suber-hero.webp' },
+  { id: 'routebox', year: '2026', href: 'https://api.routebox.dev/', heroImg: '/routebox-hero.webp', heroWidth: 1376 },
+  { id: 'suber', year: '2026', href: 'https://github.com/createpjf/suber-macos', heroImg: '/suber-hero.webp', heroWidth: 1376 },
   {
     id: 'openclaw', year: '2026', href: 'https://github.com/createpjf/openclaw-flock-api-platform',
-    heroImg: '/openclaw-hero.webp',
+    heroImg: '/openclaw-hero.webp', heroWidth: 1376,
   },
-  { id: 'cleo', year: '2026', href: 'https://github.com/createpjf/cleo-dev', heroImg: '/cleo-hero.webp' },
+  { id: 'cleo', year: '2026', href: 'https://github.com/createpjf/cleo-dev', heroImg: '/cleo-hero.webp', heroWidth: 1376 },
   { id: 'guizhou-fc', year: '2026', href: 'https://www.guizhou-fc.com/', heroImg: '/guizhoufc-hero.webp' },
   {
     id: 'brand-film', year: '2024', href: 'https://www.youtube.com/watch?v=ntZSYRKRlbg',
-    heroImg: '/film-hero.webp',
-  },
-  {
-    id: 'agent-worlds', year: '2025',
-    href: 'https://mp.weixin.qq.com/s/D6x7-5p8Inb_acqhCSp4CA?scene=1', heroImg: '/article-hero.webp',
+    heroImg: '/film-hero.webp', heroWidth: 1376,
   },
 ];
+// Every hero image also has "-960.webp" and "-1200.webp" (px wide) variants
+// for srcset; heroWidth is the original's width (1600 unless noted).
 
 const writingShared = [
   { id: 'crypto-ai', date: '2026-02-16', href: 'https://x.com/createpjf/status/2023264735240630697', source: 'X' },
@@ -72,6 +70,7 @@ const copy = {
       description: 'Leo Peng is a Creative Technologist and AI Customer Success partner. He helps customers succeed with AI in an FDE model, from discovery to delivery.',
       socialDescription: 'Creative Technologist · AI Customer Success. Help customers succeed with AI in an FDE model.',
       ogLocale: 'en_US',
+      canonicalUrl: 'https://createpjf.com/',
       jobTitle: 'Creative Technologist · AI Customer Success',
       knowsAbout: ['AI Customer Success', 'Forward Deployed Engineering', 'Creative Technology', 'AI Systems', 'Solution Architecture'],
       workLocation: 'Shanghai',
@@ -86,8 +85,8 @@ const copy = {
       ],
       heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],
       heroSubtags: 'AI · FDE · Customer Success',
-      quote: '"The best work happens when you stop separating the art from the system."',
-      quoteAttribution: '- Leo Peng',
+      quote: '“The best work happens when you stop separating the art from the system.”',
+      quoteAttribution: '— Leo Peng',
       currentStatus: 'Open to new projects.',
       email: 'leo@flock.io',
       locations: 'Shanghai · Hong Kong · Remote',
@@ -100,8 +99,8 @@ const copy = {
     ],
     navItems: [
       { id: 'services', label: 'Services' },
-      { id: 'writing', label: 'Writing' },
       { id: 'work', label: 'Work' },
+      { id: 'writing', label: 'Writing' },
       { id: 'experience', label: 'Experience' },
       { id: 'contact', label: 'Contact' },
     ],
@@ -129,7 +128,6 @@ const copy = {
       cleo: { title: 'Cleo Multi-Agent System', category: 'AI · Orchestration · Multi-Agent' },
       'guizhou-fc': { title: 'Guizhou Athletic F.C.', category: 'Website · Sports · Brand' },
       'brand-film': { title: 'Brand Film', category: 'Film · Direction · Brand' },
-      'agent-worlds': { title: 'Building Agent Worlds from Communication Theory', category: 'Writing · Research · Multi-Agent' },
     },
     writings: {
       'crypto-ai': { title: 'The Cryptoeconomics of Open-Source AI', desc: 'How token incentives can coordinate and govern open-source AI.' },
@@ -139,11 +137,12 @@ const copy = {
     },
     ui: {
       sections: { services: 'How I Help Businesses.', writing: 'Writing.', work: 'Selected Work.', experience: 'Experience.' },
-      status: 'Status', expertise: 'Expertise', viewResume: 'View résumé', seeMore: 'See more', showLess: 'Show less',
+      status: 'Status', expertise: 'Expertise', getInTouch: 'Get in touch', linkedin: 'LinkedIn', seeMore: 'See more', showLess: 'Show less',
       socials: 'Socials', sayHello: 'Say hello', copyright: '© {year} {name}. All rights reserved.',
       mainNavigation: 'Main navigation', siteNavigation: 'Site navigation', toggleMenu: 'Toggle menu',
       languageSwitcher: 'Language', switchToChinese: 'Switch to Chinese', switchToEnglish: 'Switch to English',
       heroImageAlt: 'Leo Peng portfolio hero',
+      skipToContent: 'Skip to content', opensInNewTab: '(opens in new tab)',
     },
   },
   zh: {
@@ -152,6 +151,7 @@ const copy = {
       description: 'Leo Peng 是创意技术人与 AI 客户成功伙伴。以 FDE 模式帮助客户把 AI 真正用起来，从需求梳理到上线交付。',
       socialDescription: '创意技术人 · AI 客户成功。以 FDE 模式帮助客户在 AI 上获得成功。',
       ogLocale: 'zh_CN',
+      canonicalUrl: 'https://createpjf.com/?lang=zh',
       jobTitle: '创意技术人 · AI 客户成功',
       knowsAbout: ['AI 客户成功', 'Forward Deployed Engineering', '创意技术', 'AI 系统', '方案架构'],
       workLocation: '上海',
@@ -167,7 +167,7 @@ const copy = {
       heroHeadline: ['Stories. Code.', 'Things that ', 'move', 'people.'],
       heroSubtags: 'AI · FDE · 客户成功',
       quote: '“最好的作品，生长在直觉与秩序交汇的地方。”',
-      quoteAttribution: '- Leo Peng',
+      quoteAttribution: '— Leo Peng',
       currentStatus: '开放新的合作。',
       email: 'leo@flock.io',
       locations: '上海 · 香港 · 远程',
@@ -180,8 +180,8 @@ const copy = {
     ],
     navItems: [
       { id: 'services', label: '服务' },
-      { id: 'writing', label: '写作' },
       { id: 'work', label: '项目' },
+      { id: 'writing', label: '写作' },
       { id: 'experience', label: '经历' },
       { id: 'contact', label: '联系' },
     ],
@@ -209,7 +209,6 @@ const copy = {
       cleo: { title: 'Cleo 多智能体系统', category: 'AI · 编排 · 多智能体' },
       'guizhou-fc': { title: '贵州竞技足球俱乐部官网', category: '网站 · 体育 · 品牌' },
       'brand-film': { title: '品牌影片', category: '影像 · 导演 · 品牌' },
-      'agent-worlds': { title: '从传播学构建 Agent 世界', category: '写作 · 研究 · 多智能体' },
     },
     writings: {
       'crypto-ai': { title: '开源 AI 的加密经济学', desc: '用代币激励协调开源 AI 的协作与治理。' },
@@ -219,11 +218,12 @@ const copy = {
     },
     ui: {
       sections: { services: '我能帮企业做什么。', writing: '思考与写作。', work: '精选项目。', experience: '工作经历。' },
-      status: '当前状态', expertise: '专业能力', viewResume: '查看履历', seeMore: '查看更多', showLess: '收起经历',
+      status: '当前状态', expertise: '专业能力', getInTouch: '联系我', linkedin: 'LinkedIn', seeMore: '查看更多', showLess: '收起经历',
       socials: '社交平台', sayHello: '联系我', copyright: '© {year} {name}。保留所有权利。',
       mainNavigation: '主导航', siteNavigation: '网站导航', toggleMenu: '打开或关闭菜单',
       languageSwitcher: '语言切换', switchToChinese: '切换为中文', switchToEnglish: '切换为英文',
       heroImageAlt: 'Leo Peng 个人作品集主视觉',
+      skipToContent: '跳到主要内容', opensInNewTab: '（在新标签页打开）',
     },
   },
 };

@@ -1,7 +1,20 @@
 import { useEffect, useRef } from 'react';
 
-const useIntercom = (appId) => {
+/**
+ * Boots the Intercom messenger once the page is idle and keeps its UI
+ * language in sync with the site's (language_override, e.g. 'en', 'zh-CN').
+ */
+const useIntercom = (appId, language) => {
   const bootedRef = useRef(false);
+  const languageRef = useRef(language);
+
+  // Declared before the boot effect so the ref is current when it runs.
+  useEffect(() => {
+    languageRef.current = language;
+    if (bootedRef.current && typeof window.Intercom === 'function') {
+      window.Intercom('update', { language_override: language });
+    }
+  }, [language]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
@@ -13,16 +26,31 @@ const useIntercom = (appId) => {
     }
 
     let cancelled = false;
+    let idleId = null;
+    let timerId = null;
 
-    (async () => {
+    const boot = async () => {
       const { default: Intercom } = await import('@intercom/messenger-js-sdk');
       if (cancelled) return;
       bootedRef.current = true;
-      Intercom({ app_id: appId });
-    })();
+      Intercom({ app_id: appId, language_override: languageRef.current });
+    };
+
+    // The messenger pulls in a large third-party bundle; load it once the
+    // page has finished loading and the main thread is idle, so it doesn't
+    // compete with the hero video and first images.
+    const schedule = () => {
+      if ('requestIdleCallback' in window) idleId = window.requestIdleCallback(boot, { timeout: 4000 });
+      else timerId = window.setTimeout(boot, 2000);
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
 
     return () => {
       cancelled = true;
+      window.removeEventListener('load', schedule);
+      if (idleId !== null) window.cancelIdleCallback(idleId);
+      if (timerId !== null) window.clearTimeout(timerId);
       if (bootedRef.current && typeof window.Intercom === 'function') {
         window.Intercom('shutdown');
         bootedRef.current = false;

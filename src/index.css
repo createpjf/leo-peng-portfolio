@@ -1,25 +1,32 @@
 /**
  * ============================================================
- *  Global stylesheet
- *  Palette mirrors src/data/theme.js (kept in sync for JS inline
- *  styles); edit colours in both places.
+ *  Global stylesheet — the single source of design tokens and
+ *  component styles. Components keep inline styles only for
+ *  values computed at runtime (stagger delays, tooltip offset…).
  * ============================================================
  */
 
 :root {
   --bg: #ffffff;
   --bg-sec: #f0f0f0;
+  --bg-muted: #fafafa;
   --bg-dark: #0a0a0a;
   --text: #111111;
   --text-sec: #666666;
-  --text-lt: #767676;
+  --text-lt: #707070;
   --accent: #000000;
   --border: #e5e5e5;
   --border-dk: #222222;
 
+  /* Latin faces first so English keeps its look; Chinese glyphs then fall
+     through to a Simplified Chinese face per platform (macOS / iOS, older
+     macOS, Windows, Android / Linux) instead of whatever the browser picks. */
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif;
+
   /* Typography scale (rem so text honours browser font-size — WCAG 1.4.4).
-     Mirrors src/data/typography.js. Label sizes floor at 11px for
-     legibility; section titles sit at 24px (one step above item titles). */
+     Label sizes floor at 11px for legibility; section titles sit at 24px
+     (one step above item titles). */
   --fs-xs:  0.6875rem; /* 11px — smallest label (eyebrows, tags) */
   --fs-sm:  0.75rem;   /* 12px */
   --fs-base: 0.8125rem;/* 13px */
@@ -35,6 +42,8 @@
   --tracking-label: 0.08em;
   /* Body copy line-height */
   --leading-body: 1.6;
+  /* Easing used by the reveal / entrance animations */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -42,9 +51,51 @@ html { scroll-padding-top: 60px; }
 body { overflow-x: hidden; background: var(--bg); }
 a { text-decoration: none; color: inherit; cursor: pointer; }
 
+/* App shell. overflow-x: clip (not hidden): hidden would turn this box into a
+   scroll container and stop the sticky header from sticking to the viewport. */
+.app {
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  overflow-x: clip;
+}
+
 /* ─── Accessibility: visible keyboard focus ─── */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 :focus:not(:focus-visible) { outline: none; }
+/* Sections / <main> focused programmatically after a nav jump (see focusTarget) */
+[tabindex="-1"]:focus-visible { outline: none; }
+/* The default black ring disappears on the near-black footer */
+footer :focus-visible { outline-color: #fff; }
+
+/* Text for assistive tech only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: off-screen until focused with the keyboard */
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 300;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background: var(--text);
+  color: #fff;
+  font-size: var(--fs-md);
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
 
 /* ─── Reusable eyebrow / section label ─── */
 /* --tracking-label: shared letter-spacing for small uppercase labels */
@@ -64,6 +115,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   letter-spacing: -0.01em;
   margin-bottom: 40px;
 }
+.section-title--tight { margin-bottom: 32px; }
 
 /* Small bordered uppercase tag/badge */
 .tag-chip {
@@ -180,7 +232,7 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   color: var(--text);
   padding: 14px 0;
 }
-/* ─── Work card thumbnail (dynamic border-color / zoom stay inline) ─── */
+/* ─── Work card thumbnail ─── */
 .work-thumb {
   background: var(--bg-sec);
   aspect-ratio: 16 / 9;
@@ -196,16 +248,31 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
 .work-thumb-img {
   width: 100%;
   height: 100%;
+  transform: scale(1);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.work-thumb-img > img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ─── Hover affordances (CSS instead of imperative DOM writes) ─── */
-.footer-link { color: rgba(255,255,255,0.7); transition: color 0.2s; }
+.footer-link { font-size: var(--fs-base); color: rgba(255,255,255,0.7); transition: color 0.2s; }
 .footer-link:hover { color: #fff; }
-.exp-toggle { background: transparent; color: var(--text); transition: all 0.2s; }
+.exp-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 .exp-toggle:hover { background: var(--text); color: #fff; }
-.resume-link { gap: 8px; }
-.resume-link:hover { gap: 14px; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -231,18 +298,8 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   z-index: 1;
   background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.8) 100%);
 }
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 3px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-}
-.service-card:hover::before { transform: scaleX(1); }
-.nav-link { position: relative; padding-bottom: 2px; transition: color 0.2s; }
+.nav-link { position: relative; padding-bottom: 2px; color: var(--text-sec); font-weight: 400; transition: color 0.2s; }
+.nav-link[aria-current] { color: var(--text); font-weight: 500; }
 .nav-link::after {
   content: '';
   position: absolute;
@@ -254,10 +311,345 @@ a { text-decoration: none; color: inherit; cursor: pointer; }
   transition: transform 0.3s ease;
 }
 .nav-link:hover::after { transform: scaleX(1); }
-a:hover .resume-arrow { transform: translateX(4px); }
 
 /* ─── Performance: isolate layout for off-screen sections ─── */
 .section-pad { contain: layout style; }
+
+/* ─── Component defaults with zero specificity ───
+   Wrapped in :where() so the responsive rules further down override them
+   without !important. Later rules in this block win over earlier ones. */
+:where(.section-pad) { padding: 80px 40px; }
+:where(.section-pad--compact) { padding: 60px 40px; }
+:where(.section-divider) { border-bottom: 1px solid var(--border); }
+:where(.section-muted) { background: var(--bg-muted); }
+:where(.site-footer) { padding: 80px 40px 40px; background: var(--bg-dark); color: rgba(255,255,255,0.7); }
+:where(.quote-section) { padding: 80px 40px; text-align: center; border-bottom: 1px solid var(--border); }
+
+:where(.hero-dark h1) {
+  font-size: clamp(3rem, 6vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  margin-top: auto;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+:where(.hero-subtags) {
+  position: relative;
+  z-index: 2;
+  font-size: var(--fs-base);
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.15s forwards;
+}
+:where(.hero-info) {
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+}
+:where(.hero-info h2) {
+  text-wrap: balance;
+  font-size: var(--fs-5xl);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  animation: fadeUp 1s var(--ease-out) forwards;
+}
+:where(.hero-subtitle) {
+  font-size: var(--fs-sm);
+  color: var(--text-lt);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.1s forwards;
+}
+:where(.hero-info > div) { margin-bottom: 24px; }
+:where(.hero-bio) { margin-bottom: 32px; opacity: 0; animation: fadeUp 1s var(--ease-out) 0.2s forwards; }
+:where(.hero-bio p) { font-size: var(--fs-lg); color: var(--text-sec); line-height: 1.6; }
+:where(.hero-bio p:first-child) { margin-bottom: 12px; }
+:where(.hero-status) { opacity: 0; animation: fadeUp 1s var(--ease-out) 0.3s forwards; }
+:where(.hero-expertise) { opacity: 0; animation: fadeUp 1s var(--ease-out) 0.4s forwards; }
+:where(.hero-info .eyebrow) { margin-bottom: 8px; }
+:where(.status-dot) {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background-color: var(--accent);
+}
+:where(.pill-row) { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+:where(.pill-item) {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 10px 24px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--fs-base);
+  transition: all 0.25s ease;
+}
+/* Width capped at the viewport minus 2 × GUTTER (PillWithTooltip.jsx) */
+:where(.pill-tooltip) {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  z-index: 20;
+  width: 240px;
+  max-width: calc(100vw - 24px);
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+:where(.hero-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin-top: 24px;
+  font-size: var(--fs-xl);
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.5s forwards;
+}
+:where(.hero-cta) { padding: 12px 22px; }
+:where(.hero-link) { padding: 12px 0; }
+
+/* ─── Hero details ─── */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) var(--word-delay, 0s) forwards;
+}
+.hero-status-row { display: flex; align-items: center; margin-top: 8px; }
+.hero-status-text { font-size: var(--fs-base); }
+.hero-status-link {
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.hero-status-link:hover { text-decoration-color: currentColor; }
+/* Last block in the panel: no trailing margin (beats .hero-info > div rules) */
+.hero-info > .hero-actions { margin-bottom: 0; }
+/* Primary CTA — scrolls to the contact details in the footer */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 3px;
+  background: var(--text);
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+.hero-cta:hover { background: #333; }
+.hero-cta-arrow { display: inline-block; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+.hero-cta:hover .hero-cta-arrow { transform: translateY(3px); }
+/* Secondary link — LinkedIn (external) */
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--text);
+  color: var(--text);
+  font-weight: 500;
+  transition: gap 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+}
+.hero-link:hover { gap: 12px; }
+.hero-link-arrow { display: inline-block; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+.hero-link:hover .hero-link-arrow { transform: translate(2px, -2px); }
+
+/* ─── Expertise pill + tooltip (open state toggled by PillWithTooltip) ─── */
+.pill { position: relative; display: inline-block; }
+.pill-button { display: block; padding: 0; border: none; background: none; font: inherit; cursor: pointer; }
+.pill.is-open .pill-item { background: #000; color: #fff; border-color: #000; }
+.pill-info { flex-shrink: 0; width: 0.9em; height: 0.9em; opacity: 0.45; transition: opacity 0.25s ease; }
+.pill.is-open .pill-info { opacity: 0.85; }
+.pill.is-open .pill-tooltip { opacity: 1; visibility: visible; }
+.pill-tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #000;
+  transform: translateX(-50%);
+}
+
+/* ─── Scroll reveal ───
+   Elements fade + slide in once useInView adds .is-visible. The slide uses
+   the individual `translate` property so hover effects can use `transform`
+   with their own (undelayed) transition. --reveal-delay staggers items. */
+.reveal {
+  opacity: 0;
+  translate: 0 20px;
+  transition:
+    opacity 0.8s var(--ease-out) var(--reveal-delay, 0s),
+    translate 0.8s var(--ease-out) var(--reveal-delay, 0s),
+    transform 0.8s var(--ease-out);
+}
+.reveal.is-visible { opacity: 1; translate: 0 0; }
+
+/* Word-by-word reveals (FadeWords / BlurReveal). Per-word delay and timing
+   come from custom properties set on the elements. */
+.fade-words, .blur-words { display: flex; flex-wrap: wrap; }
+.fade-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--word-duration, 800ms) var(--ease-out) var(--word-delay, 0ms),
+    transform var(--word-duration, 800ms) var(--ease-out) var(--word-delay, 0ms);
+  will-change: opacity, transform;
+}
+.is-visible > .fade-word { opacity: 1; transform: translateY(0); will-change: auto; }
+.blur-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(var(--word-offset, 20px));
+  filter: blur(var(--word-blur, 8px));
+  transition:
+    filter var(--word-duration, 1000ms) var(--ease-out) var(--word-delay, 0ms),
+    opacity var(--word-duration, 1000ms) var(--ease-out) var(--word-delay, 0ms),
+    transform var(--word-duration, 1000ms) var(--ease-out) var(--word-delay, 0ms);
+  will-change: filter, opacity, transform;
+}
+.is-visible > .blur-word { opacity: 1; transform: translateY(0); filter: blur(0px); will-change: auto; }
+
+/* ─── Services ─── */
+.services-grid { background: var(--border); border: 1px solid var(--border); }
+/* Each card gets its own pixel-snapped layer (translateZ). Cards in the
+   right column sit on a half pixel; without the layer Chrome falls back to
+   grayscale text antialiasing there. No overflow: hidden — nothing
+   overflows, and it also forces grayscale text. */
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 48px 24px;
+  background: var(--bg);
+  cursor: default;
+  transform: translateZ(0);
+}
+.service-head { display: flex; flex-direction: column; }
+.service-num { font-size: var(--fs-4xl); font-weight: 300; line-height: 1; color: var(--text-lt); margin-bottom: 24px; }
+.service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+  border-radius: 3px;
+  background: var(--bg-sec);
+  color: var(--text);
+}
+.service-title { font-size: var(--fs-lg); font-weight: 500; margin-bottom: 8px; }
+.service-desc { font-size: var(--fs-base); color: var(--text-sec); line-height: 1.6; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 16px; }
+
+/* ─── Writing ─── */
+.writing-row { padding: 20px 0; border-bottom: 1px solid var(--border); }
+.writing-row:last-child { border-bottom: none; }
+.writing-date { font-size: var(--fs-base); font-variant-numeric: tabular-nums; color: var(--text-sec); }
+.writing-title { font-size: var(--fs-lg); font-weight: 500; color: var(--text); transition: color 0.2s; }
+.writing-desc { margin-left: 10px; font-size: var(--fs-sm); font-weight: 400; font-style: italic; color: var(--text-lt); }
+.writing-source {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-lt);
+}
+.writing-arrow { display: inline-block; margin-left: 8px; transform: translateX(0); transition: transform 0.2s; }
+
+/* ─── Work ─── */
+.work-card { display: flex; flex-direction: column; cursor: default; }
+a.work-card { cursor: pointer; }
+.work-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: var(--fs-md); }
+.work-title { display: block; margin-bottom: 4px; font-size: var(--fs-lg); font-weight: 500; }
+.work-category { font-size: var(--fs-sm); color: var(--text-sec); }
+.work-year { font-size: var(--fs-base); font-variant-numeric: tabular-nums; color: var(--text-lt); }
+
+/* ─── Experience ─── */
+.exp-list { max-width: 860px; }
+.exp-row { padding: 24px 0; border-bottom: 1px solid var(--border); }
+.exp-row--last { border-bottom: none; }
+.exp-date { font-size: var(--fs-base); font-variant-numeric: tabular-nums; color: var(--text-sec); }
+.exp-role { display: block; margin-bottom: 2px; font-size: var(--fs-lg); font-weight: 500; }
+.exp-company { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-base); color: var(--text-sec); }
+.exp-logo { height: 18px; max-width: 48px; border-radius: 3px; object-fit: contain; }
+/* Extra rows expand / collapse by animating the grid row from 0fr to 1fr */
+.exp-extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+.exp-extra.is-open { grid-template-rows: 1fr; opacity: 1; }
+.exp-extra-inner { overflow: hidden; }
+
+/* ─── Quote ─── */
+.quote-text {
+  justify-content: center;
+  max-width: 680px;
+  margin: 0 auto 20px;
+  font-size: clamp(1.375rem, 3vw, 2.25rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.quote-attribution { margin-top: 16px; font-size: var(--fs-md); font-weight: 400; letter-spacing: 0.02em; color: var(--text-lt); }
+
+/* ─── Footer ─── */
+.site-footer.reveal { transition: opacity 0.8s var(--ease-out), translate 0.8s var(--ease-out); }
+.footer-name { margin-bottom: 16px; font-size: var(--fs-2xl); font-weight: 500; color: #fff; }
+.footer-bio { max-width: 300px; font-size: var(--fs-base); line-height: 1.6; color: rgba(255,255,255,0.55); }
+.footer-bottom { display: flex; justify-content: space-between; font-size: var(--fs-sm); color: rgba(255,255,255,0.5); }
+
+/* ─── Hover / focus effects ───
+   Only on links (non-interactive rows and cards stay still). Hover only
+   where a real pointer can hover (taps would leave it stuck); keyboard
+   focus gets the same cue. */
+@media (hover: hover) {
+  .writing-row:hover { transform: translateX(8px); }
+  .writing-row:hover .writing-title { color: var(--accent); }
+  .writing-row:hover .writing-arrow { transform: translateX(3px); }
+  a.work-card:hover .work-thumb { border-color: var(--accent); }
+  a.work-card:hover .work-thumb-img { transform: scale(1.06); }
+}
+.writing-row:focus-visible { transform: translateX(8px); }
+.writing-row:focus-visible .writing-title { color: var(--accent); }
+.writing-row:focus-visible .writing-arrow { transform: translateX(3px); }
+a.work-card:focus-visible .work-thumb { border-color: var(--accent); }
+a.work-card:focus-visible .work-thumb-img { transform: scale(1.06); }
 
 /* ─── Responsive ─── */
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
@@ -265,10 +657,16 @@ a:hover .resume-arrow { transform: translateX(4px); }
 .exp-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; }
 .writing-row { display: grid; grid-template-columns: 100px 1fr auto; align-items: baseline; gap: 16px; }
 .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-dk);
+}
 
 @media (max-width: 1024px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
   .works-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -276,9 +674,9 @@ a:hover .resume-arrow { transform: translateX(4px); }
 @media (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr; min-height: calc(100dvh - 52px); grid-template-rows: 1fr auto; }
   .hero-dark { min-height: 0; }
-  .desktop-nav { display: none !important; }
+  .desktop-nav { display: none; }
   .desktop-language-switch { display: none; }
-  .mobile-menu-btn { display: flex !important; }
+  .mobile-menu-btn { display: flex; }
   .mobile-language-switch {
     display: inline-flex;
     position: absolute;
@@ -291,157 +689,163 @@ a:hover .resume-arrow { transform: translateX(4px); }
   .exp-type-badge { margin-top: 8px; justify-self: start; }
   .writing-row { grid-template-columns: 1fr; gap: 4px; }
   .works-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
-  #contact { padding: 48px 32px 32px !important; }
+  #contact { padding: 48px 32px 32px; }
   .footer-bottom { flex-direction: column; gap: 8px; align-items: center; text-align: center; }
-  .hero-info { padding: 40px 32px !important; }
-  .hero-bio p { font-size: 0.8125rem !important; }
+  .hero-info { padding: 40px 32px; }
+  .hero-bio p { font-size: 0.8125rem; }
+  /* Skip the costly blur filter on small / touch screens */
+  .blur-word, .is-visible > .blur-word { filter: none; }
+  .blur-word { transition-property: opacity, transform; will-change: opacity, transform; }
+  .is-visible > .blur-word { will-change: auto; }
 }
 
-html[lang="zh-CN"] .hero-bio,
-html[lang="zh-CN"] .service-card p { line-height: 1.75; }
+html[lang="zh-CN"] .hero-bio { line-height: 1.75; }
 
-/* ─── Tooltip: keep bubble on-screen on narrow viewports ─── */
-@media (max-width: 768px) {
-  .pill-row {
-    overflow: visible;
-  }
-  .pill-tooltip {
-    left: 0 !important;
-    right: auto !important;
-    transform: translateY(0) !important;
-    width: min(240px, calc(100vw - 40px)) !important;
-    max-width: calc(100vw - 40px) !important;
-  }
-  .pill-tooltip > span { left: 24px !important; }
-}
-
-/* ─── Footer & quote mobile tweaks ─── */
-@media (max-width: 480px) {
-  #contact { padding: 40px 20px 28px !important; }
-  .footer-grid { gap: 20px !important; }
-  .quote-section { padding: 48px 20px !important; }
+/* ─── Single-column services (phones): number + icon share one row ─── */
+@media (max-width: 599px) {
+  .service-card { padding: 32px 20px; }
+  .service-head { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .service-head > * { margin-bottom: 0; }
 }
 
 /* ─── Mobile: iPhone / Huawei / OPPO Find N5 folded ─── */
 @media (max-width: 480px) {
-  .hero-grid { min-height: calc(100dvh - 44px) !important; }
-  .site-header { padding: 0 20px !important; height: 44px !important; }
-  .site-header > div:first-child { font-size: 0.875rem !important; }
-  .hero-grid { min-height: calc(100dvh - 44px) !important; grid-template-rows: minmax(40vh, auto) 1fr; }
+  #contact { padding: 40px 20px 28px; }
+  .footer-grid { gap: 20px; }
+  .quote-section { padding: 48px 20px; }
+  .site-header { padding: 0 20px; height: 44px; }
+  .site-header > div:first-child { font-size: 0.875rem; }
+  .hero-grid { min-height: calc(100dvh - 44px); grid-template-rows: minmax(40vh, auto) 1fr; }
   .hero-dark {
-    padding: 32px 20px 24px !important;
+    padding: 32px 20px 24px;
   }
-  .hero-dark h1 { font-size: clamp(2rem, 9vw, 2.75rem) !important; margin-bottom: 12px !important; }
-  .hero-dark .hero-subtags { margin-bottom: 16px !important; font-size: 0.6875rem !important; }
+  .hero-dark h1 { font-size: clamp(2rem, 9vw, 2.75rem); margin-bottom: 12px; }
+  .hero-dark .hero-subtags { margin-bottom: 16px; font-size: 0.6875rem; }
   /* overflow visible so expertise tooltips above pills are not clipped */
-  .hero-info { padding: 24px 20px !important; overflow: visible; }
-  .hero-info h2 { font-size: 1.75rem !important; margin-bottom: 4px !important; }
-  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
-  .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 0.875rem !important; }
-  .hero-bio p:first-child { margin-bottom: 8px !important; }
-  .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info > div span:first-child { font-size: 0.6875rem !important; margin-bottom: 4px !important; }
-  .hero-info .pill-row { gap: 6px !important; margin-top: 4px !important; }
-  .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.75rem !important; }
-  .hero-info > a { margin-top: 12px !important; font-size: 0.875rem !important; padding: 8px 0 !important; }
-  .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
-  .status-dot { width: 16px !important; height: 16px !important; }
-  .hero-video { object-position: center 40% !important; }
-  .hero-bio p { font-size: 0.8125rem !important; margin-bottom: 8px !important; }
-  .hero-bio { margin-bottom: 20px !important; }
+  .hero-info { padding: 24px 20px; overflow: visible; }
+  .hero-info h2 { font-size: 1.75rem; margin-bottom: 4px; }
+  .hero-subtitle { font-size: 0.6875rem; margin-bottom: 16px; }
+  .hero-info > div { margin-bottom: 16px; }
+  .hero-info .eyebrow { font-size: 0.6875rem; margin-bottom: 4px; }
+  .hero-info .pill-row { gap: 6px; margin-top: 4px; }
+  .hero-info .pill-item { padding: 7px 14px; font-size: 0.75rem; }
+  .hero-actions { margin-top: 12px; font-size: 0.875rem; gap: 10px 20px; }
+  .hero-cta { padding: 10px 18px; }
+  .hero-link { padding: 8px 0; }
+  .section-pad { padding-left: 20px; padding-right: 20px; }
+  .status-dot { width: 16px; height: 16px; }
+  .hero-video { object-position: center 40%; }
+  .hero-bio { margin-bottom: 20px; }
+  .hero-bio p { font-size: 0.8125rem; margin-bottom: 8px; }
 }
 
 /* ─── Small mobile: iPhone SE / narrow Android ─── */
 @media (max-width: 375px) {
-  .hero-grid { min-height: calc(100dvh - 40px) !important; }
-  .site-header { padding: 0 16px !important; height: 40px !important; }
-  .hero-grid { min-height: calc(100dvh - 40px) !important; }
-  .hero-dark { padding: 28px 16px 20px !important; }
-  .hero-dark h1 { font-size: 1.75rem !important; margin-bottom: 10px !important; }
-  .hero-dark .hero-subtags { font-size: 0.6875rem !important; margin-bottom: 12px !important; }
-  .hero-info { padding: 20px 16px !important; }
-  .hero-info h2 { font-size: 1.5rem !important; }
-  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 14px !important; }
-  .hero-bio { margin-bottom: 16px !important; }
-  .hero-bio p { font-size: 0.8125rem !important; }
-  .hero-bio p:first-child { margin-bottom: 8px !important; }
-  .hero-info .pill-item { padding: 6px 12px !important; font-size: 0.6875rem !important; }
-  .hero-info > a { font-size: 0.8125rem !important; }
-  .hero-bio-secondary { display: none !important; }
+  .site-header { padding: 0 16px; height: 40px; }
+  .hero-grid { min-height: calc(100dvh - 40px); }
+  .hero-dark { padding: 28px 16px 20px; }
+  .hero-dark h1 { font-size: 1.75rem; margin-bottom: 10px; }
+  .hero-dark .hero-subtags { font-size: 0.6875rem; margin-bottom: 12px; }
+  .hero-info { padding: 20px 16px; }
+  .hero-info h2 { font-size: 1.5rem; }
+  .hero-subtitle { font-size: 0.6875rem; margin-bottom: 14px; }
+  .hero-bio { margin-bottom: 16px; }
+  .hero-bio p { font-size: 0.8125rem; }
+  .hero-bio p:first-child { margin-bottom: 8px; }
+  .hero-info .pill-item { padding: 6px 12px; font-size: 0.6875rem; }
+  .hero-actions { font-size: 0.8125rem; }
 }
 
 /* ─── Foldable unfolded: OPPO Find N5 / Samsung Fold ─── */
 @media (min-width: 600px) and (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr 1fr; min-height: calc(100dvh - 52px); }
-  .hero-dark { min-height: auto; padding: 48px 24px 28px !important; justify-content: center !important; }
-  .hero-dark h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem) !important; margin-bottom: 12px !important; }
-  .hero-dark .hero-subtags { font-size: 0.6875rem !important; margin-bottom: 20px !important; }
-  .hero-info { padding: 32px 20px !important; }
-  .hero-info h2 { font-size: 1.625rem !important; margin-bottom: 4px !important; }
-  .hero-subtitle { font-size: 0.6875rem !important; margin-bottom: 16px !important; }
-  .hero-bio { margin-bottom: 20px !important; }
-  .hero-bio p { font-size: 0.8125rem !important; }
-  .hero-bio p:first-child { margin-bottom: 8px !important; }
-  .hero-info > div { margin-bottom: 16px !important; }
-  .hero-info .pill-item { padding: 7px 14px !important; font-size: 0.6875rem !important; }
-  .hero-info > a { font-size: 0.875rem !important; margin-top: 12px !important; }
+  .hero-dark { min-height: auto; padding: 48px 24px 28px; justify-content: center; }
+  .hero-dark h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem); margin-bottom: 12px; }
+  .hero-dark .hero-subtags { font-size: 0.6875rem; margin-bottom: 20px; }
+  .hero-info { padding: 32px 20px; }
+  .hero-info h2 { font-size: 1.625rem; margin-bottom: 4px; }
+  .hero-subtitle { font-size: 0.6875rem; margin-bottom: 16px; }
+  .hero-bio { margin-bottom: 20px; }
+  .hero-bio p { font-size: 0.8125rem; }
+  .hero-bio p:first-child { margin-bottom: 8px; }
+  .hero-info > div { margin-bottom: 16px; }
+  .hero-info .pill-item { padding: 7px 14px; font-size: 0.6875rem; }
+  .hero-actions { font-size: 0.875rem; margin-top: 12px; }
   .works-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-video { object-position: center 35% !important; }
+  .hero-video { object-position: center 35%; }
 }
 
 /* ─── Large desktop: 21-23" FHD monitors ─── */
 @media (min-width: 1920px) {
-  .hero-dark h1 { font-size: clamp(4rem, 5vw, 5.5rem) !important; }
-  .hero-dark .hero-subtags { font-size: 0.875rem !important; }
-  .hero-dark { padding: 108px 56px 56px !important; }
-  .hero-info { padding: 80px 64px !important; }
-  .hero-info h2 { font-size: 3.125rem !important; }
-  .hero-subtitle { font-size: 0.8125rem !important; margin-bottom: 24px !important; }
-  .hero-bio { margin-bottom: 36px !important; }
-  .hero-bio p { font-size: 1.0625rem !important; }
-  .hero-bio p:first-child { margin-bottom: 12px !important; }
-  .hero-info > div { margin-bottom: 28px !important; }
-  .hero-info .pill-item { font-size: 0.875rem !important; padding: 12px 28px !important; }
-  .hero-info > a { font-size: 1.0625rem !important; }
-  .section-pad { padding: 96px 64px !important; }
-  .works-grid { gap: 24px !important; }
-  .exp-row { grid-template-columns: 180px 1fr auto !important; }
-  .writing-row { grid-template-columns: 120px 1fr auto !important; }
+  .hero-dark h1 { font-size: clamp(4rem, 5vw, 5.5rem); }
+  .hero-dark .hero-subtags { font-size: 0.875rem; }
+  .hero-dark { padding: 108px 56px 56px; }
+  .hero-info { padding: 80px 64px; }
+  .hero-info h2 { font-size: 3.125rem; }
+  .hero-subtitle { font-size: 0.8125rem; margin-bottom: 24px; }
+  .hero-bio { margin-bottom: 36px; }
+  .hero-bio p { font-size: 1.0625rem; }
+  .hero-bio p:first-child { margin-bottom: 12px; }
+  .hero-info > div { margin-bottom: 28px; }
+  .hero-info .pill-item { font-size: 0.875rem; padding: 12px 28px; }
+  .hero-actions { font-size: 1.0625rem; }
+  .section-pad { padding: 96px 64px; }
+  .works-grid { gap: 24px; }
+  .exp-row { grid-template-columns: 180px 1fr auto; }
+  .writing-row { grid-template-columns: 120px 1fr auto; }
 }
 
 /* ─── QHD+: 27" monitors / 32" with scaling ─── */
 @media (min-width: 2560px) {
-  .site-header { height: 64px !important; padding: 0 48px !important; }
-  .hero-grid { min-height: calc(100dvh - 64px) !important; }
-  .hero-dark h1 { font-size: clamp(5rem, 4.5vw, 7rem) !important; }
-  .hero-dark .hero-subtags { font-size: 1rem !important; letter-spacing: 0.2em !important; }
-  .hero-dark { padding: 128px 80px 80px !important; }
-  .hero-info { padding: 96px 88px !important; }
-  .hero-info h2 { font-size: 3.75rem !important; }
-  .hero-subtitle { font-size: 0.875rem !important; margin-bottom: 28px !important; }
-  .hero-bio { margin-bottom: 40px !important; }
-  .hero-bio p { font-size: 1.1875rem !important; line-height: 1.7 !important; }
-  .hero-bio p:first-child { margin-bottom: 14px !important; }
-  .hero-info > div { margin-bottom: 32px !important; }
-  .hero-info > div span:first-child { font-size: 0.8125rem !important; }
-  .hero-info .pill-item { font-size: 0.9375rem !important; padding: 14px 32px !important; }
-  .hero-info > a { font-size: 1.1875rem !important; padding: 16px 0 !important; }
-  .status-dot { width: 24px !important; height: 24px !important; }
-  .section-pad { padding: 120px 96px !important; }
-  .works-grid { gap: 32px !important; }
-  .exp-row { grid-template-columns: 200px 1fr auto !important; }
-  .writing-row { grid-template-columns: 140px 1fr auto !important; }
+  .site-header { height: 64px; padding: 0 48px; }
+  .hero-grid { min-height: calc(100dvh - 64px); }
+  .hero-dark h1 { font-size: clamp(5rem, 4.5vw, 7rem); }
+  .hero-dark .hero-subtags { font-size: 1rem; letter-spacing: 0.2em; }
+  .hero-dark { padding: 128px 80px 80px; }
+  .hero-info { padding: 96px 88px; }
+  .hero-info h2 { font-size: 3.75rem; }
+  .hero-subtitle { font-size: 0.875rem; margin-bottom: 28px; }
+  .hero-bio { margin-bottom: 40px; }
+  .hero-bio p { font-size: 1.1875rem; line-height: 1.7; }
+  .hero-bio p:first-child { margin-bottom: 14px; }
+  .hero-info > div { margin-bottom: 32px; }
+  .hero-info .eyebrow, .hero-info .pill-tooltip { font-size: 0.8125rem; }
+  .hero-info .pill-item { font-size: 0.9375rem; padding: 14px 32px; }
+  .hero-actions { font-size: 1.1875rem; }
+  .hero-cta { padding: 16px 28px; }
+  .hero-link { padding: 16px 0; }
+  .status-dot { width: 24px; height: 24px; }
+  .section-pad { padding: 120px 96px; }
+  .works-grid { gap: 32px; }
+  .exp-row { grid-template-columns: 200px 1fr auto; }
+  .writing-row { grid-template-columns: 140px 1fr auto; }
+}
+
+/* ─── Print: show everything that normally waits for a scroll reveal ─── */
+@media print {
+  .reveal, .fade-word, .blur-word, .hero-word,
+  .hero-subtags, .hero-subtitle, .hero-bio, .hero-status, .hero-expertise, .hero-actions {
+    opacity: 1 !important;
+    translate: none !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .site-header { position: static; }
+  .skip-link, .mobile-menu-overlay, .hero-video:is(video) { display: none !important; }
 }
 
 /* ─── Accessibility: respect reduced-motion preference ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }

@@ -6,13 +6,31 @@ const LocaleContext = createContext(null);
 
 const normalizeLocale = (value) => (value?.toLowerCase().startsWith('zh') ? 'zh' : 'en');
 
+// localStorage throws (SecurityError) when site data is blocked, e.g. Chrome's
+// "Block all cookies" — treat it as unavailable instead of crashing the app.
+const readSavedLocale = () => {
+  try {
+    return window.localStorage.getItem(LOCALE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const saveLocale = (value) => {
+  try {
+    window.localStorage.setItem(LOCALE_KEY, value);
+  } catch {
+    // Storage unavailable; the ?lang= URL param still carries the choice.
+  }
+};
+
 const getInitialLocale = () => {
   if (typeof window === 'undefined') return 'en';
 
   const urlLocale = new URL(window.location.href).searchParams.get('lang');
   if (urlLocale === 'zh' || urlLocale === 'en') return urlLocale;
 
-  const savedLocale = window.localStorage.getItem(LOCALE_KEY);
+  const savedLocale = readSavedLocale();
   if (savedLocale === 'zh' || savedLocale === 'en') return savedLocale;
 
   // Default to English for a stable first paint; users can switch and we remember it.
@@ -22,6 +40,19 @@ const getInitialLocale = () => {
 const updateMeta = (selector, value) => {
   const element = document.querySelector(selector);
   if (element) element.setAttribute('content', value);
+};
+
+// Each locale is its own URL (?lang=zh), so the canonical link follows it.
+// It is set here rather than in index.html so the raw HTML never carries a
+// canonical that contradicts the Chinese page.
+const updateCanonical = (href) => {
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
 };
 
 const updateStructuredData = (meta) => {
@@ -46,7 +77,7 @@ export const LocaleProvider = ({ children }) => {
   const setLocale = useCallback((nextLocale) => {
     const normalized = normalizeLocale(nextLocale);
     setLocaleState(normalized);
-    window.localStorage.setItem(LOCALE_KEY, normalized);
+    saveLocale(normalized);
 
     const url = new URL(window.location.href);
     url.searchParams.set('lang', normalized);
@@ -60,6 +91,8 @@ export const LocaleProvider = ({ children }) => {
     updateMeta('meta[property="og:title"]', content.meta.title);
     updateMeta('meta[property="og:description"]', content.meta.socialDescription);
     updateMeta('meta[property="og:locale"]', content.meta.ogLocale);
+    updateMeta('meta[property="og:url"]', content.meta.canonicalUrl);
+    updateCanonical(content.meta.canonicalUrl);
     updateMeta('meta[name="twitter:title"]', content.meta.title);
     updateMeta('meta[name="twitter:description"]', content.meta.socialDescription);
     updateStructuredData(content.meta);

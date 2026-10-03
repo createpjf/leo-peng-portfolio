@@ -1,70 +1,136 @@
-import React, { useId, useRef, useState } from 'react';
-import T from '../data/theme';
-import F from '../data/typography';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+
+/* Minimum distance between the tooltip bubble and the viewport edge
+   (.pill-tooltip's max-width in index.css uses 2 × GUTTER) */
+const GUTTER = 12;
+
+/* :focus-visible throws in browsers that don't support it (Safari < 15.4) */
+const isFocusVisible = (el) => {
+  try {
+    return el.matches(':focus-visible');
+  } catch {
+    return true;
+  }
+};
 
 /**
  * Expertise pill with a hover/focus/tap tooltip describing the skill.
  * Rendered as a real <button> so it is keyboard-focusable and the tooltip
- * is exposed to assistive tech via aria-describedby. A short close delay on
- * leave keeps the tooltip stable when the pointer crosses the small gap
- * between pill and bubble.
+ * is exposed to assistive tech via aria-describedby. The tooltip sits beside
+ * the button (not inside it) so it isn't folded into the button's name.
+ *
+ * - Mouse: opens on hover, with a short close delay on leave so the tooltip
+ *   stays stable when the pointer crosses the gap between pill and bubble.
+ * - Touch: tap toggles; tapping anywhere else closes it.
+ * - Keyboard: opens on focus, Escape closes it.
+ *
+ * The bubble is centred on the pill, then shifted horizontally so it never
+ * runs off the edge of the viewport (re-measured on resize / rotation).
  */
 const PillWithTooltip = ({ pill }) => {
-  const [hover, setHover] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [shift, setShift] = useState(0);
   const timer = useRef(null);
+  const pointerType = useRef('');
+  const wrapRef = useRef(null);
+  const buttonRef = useRef(null);
+  const tipRef = useRef(null);
   const tooltipId = useId();
-  const open = () => { clearTimeout(timer.current); setHover(true); };
-  const close = () => { timer.current = setTimeout(() => setHover(false), 120); };
+
+  const place = useCallback(() => {
+    const button = buttonRef.current;
+    const tip = tipRef.current;
+    if (!button || !tip) return;
+    const rect = button.getBoundingClientRect();
+    const width = tip.offsetWidth;
+    const viewport = document.documentElement.clientWidth;
+    const left = rect.left + rect.width / 2 - width / 2;
+    const maxLeft = Math.max(GUTTER, viewport - GUTTER - width);
+    setShift(Math.min(Math.max(left, GUTTER), maxLeft) - left);
+  }, []);
+
+  const show = () => {
+    clearTimeout(timer.current);
+    place();
+    setOpen(true);
+  };
+  const hide = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  // While open, close on Escape or on a tap/click outside the pill, and keep
+  // the bubble on-screen if the viewport resizes (e.g. device rotation).
+  useEffect(() => {
+    if (!open) return undefined;
+    const onPointerDown = (e) => {
+      if (!wrapRef.current?.contains(e.target)) setOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    window.addEventListener('resize', place);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('resize', place);
+    };
+  }, [open, place]);
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
   return (
-    <button
-      type="button"
-      style={{
-        position: 'relative', display: 'inline-block',
-        background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer',
-      }}
-      onMouseEnter={open}
-      onMouseLeave={close}
-      onFocus={open}
-      onBlur={close}
-      onClick={() => setHover((h) => !h)}
-      aria-describedby={tooltipId}
-    >
-      <span id={tooltipId} role="tooltip" className="pill-tooltip" style={{
-        position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%',
-        transform: `translateX(-50%) translateY(${hover ? '0' : '4px'})`,
-        background: '#000', color: '#fff',
-        fontSize: F.sm, lineHeight: 1.55, padding: '10px 16px',
-        borderRadius: 10, pointerEvents: 'none',
-        width: 240, textAlign: 'center',
-        opacity: hover ? 1 : 0,
-        visibility: hover ? 'visible' : 'hidden',
-        transition: 'opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease',
-        letterSpacing: '-0.01em',
-        zIndex: 20,
-      }}>
-        {pill.desc}
-        <span style={{
-          position: 'absolute', top: '100%', left: '50%',
-          transform: 'translateX(-50%)',
-          width: 0, height: 0,
-          borderLeft: '7px solid transparent',
-          borderRight: '7px solid transparent',
-          borderTop: '7px solid #000',
-        }} />
-      </span>
-      <span
-        className="pill-item"
-        style={{
-          display: 'block',
-          border: `1px solid ${T.border}`,
-          padding: '10px 24px', fontSize: F.base, borderRadius: 3,
-          transition: 'all 0.25s ease',
-          background: hover ? '#000' : 'transparent',
-          color: hover ? '#fff' : T.text,
-          borderColor: hover ? '#000' : T.border,
+    <span ref={wrapRef} className={`pill${open ? ' is-open' : ''}`}>
+      <button
+        ref={buttonRef}
+        type="button"
+        className="pill-button"
+        onPointerDown={(e) => { pointerType.current = e.pointerType; }}
+        // Hover only for real mice — touch fires emulated enter events too.
+        onPointerEnter={(e) => { if (e.pointerType === 'mouse') show(); }}
+        onPointerLeave={(e) => { if (e.pointerType === 'mouse') hide(); }}
+        // Keyboard focus opens it; focus from a click or tap does not.
+        onFocus={(e) => { if (isFocusVisible(e.currentTarget)) show(); }}
+        onBlur={hide}
+        // Mouse users already get the tooltip on hover, so clicks only toggle
+        // for touch and keyboard (Enter / Space) activation.
+        onClick={() => {
+          const type = pointerType.current;
+          pointerType.current = '';
+          if (type === 'mouse') return;
+          if (open) {
+            clearTimeout(timer.current);
+            setOpen(false);
+          } else {
+            show();
+          }
         }}
-      >{pill.label}</span>
-    </button>
+        aria-describedby={tooltipId}
+      >
+        <span className="pill-item">
+          {pill.label}
+          {/* ⓘ cue: the pill reveals a description on hover / tap / focus */}
+          <svg className="pill-info" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <circle cx="8" cy="8" r="6.75" fill="none" stroke="currentColor" strokeWidth="1.25" />
+            <path d="M8 7.25v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="8" cy="4.9" r="0.95" fill="currentColor" />
+          </svg>
+        </span>
+      </button>
+      <span
+        ref={tipRef}
+        id={tooltipId}
+        role="tooltip"
+        className="pill-tooltip"
+        style={{ transform: `translateX(calc(-50% + ${shift}px)) translateY(${open ? '0' : '4px'})` }}
+      >
+        {pill.desc}
+        {/* Arrow keeps pointing at the pill centre when the bubble is shifted */}
+        <span className="pill-tooltip-arrow" style={{ left: `calc(50% - ${shift}px)` }} />
+      </span>
+    </span>
   );
 };
 

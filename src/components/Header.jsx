@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import T from '../data/theme';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
+import scrollToSection, { setSectionHash } from '../utils/scrollToSection';
+import focusTarget from '../utils/focusTarget';
 
-const Header = ({ activeNav, setActiveNav }) => {
+const Header = ({ activeNav, onNavigate }) => {
   const { content } = useLocale();
   const { navItems, personalInfo, ui } = content;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const overlayRef = useRef(null);
+  // Section to focus once the mobile menu has closed (and the page is no
+  // longer inert); otherwise focus returns to the menu toggle.
+  const pendingFocusRef = useRef(null);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -17,26 +21,40 @@ const Header = ({ activeNav, setActiveNav }) => {
   }, [menuOpen]);
 
   // Close on Escape; move focus into the menu on open and back to the
-  // toggle on close so keyboard users aren't stranded.
+  // toggle on close so keyboard users aren't stranded. The page behind the
+  // menu is made inert so Tab can't wander into hidden content.
   useEffect(() => {
     if (!menuOpen) return;
     const toggleButton = menuButtonRef.current;
+    const background = document.querySelectorAll('.skip-link, main, footer');
+    background.forEach((el) => el.setAttribute('inert', ''));
     const onKeyDown = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     document.addEventListener('keydown', onKeyDown);
     const firstLink = overlayRef.current?.querySelector('a');
     firstLink?.focus();
     return () => {
+      background.forEach((el) => el.removeAttribute('inert'));
       document.removeEventListener('keydown', onKeyDown);
-      toggleButton?.focus();
+      const target = pendingFocusRef.current;
+      pendingFocusRef.current = null;
+      if (target) focusTarget(target);
+      else toggleButton?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
 
+  // Scroll to the section and move focus there, so keyboard and screen-reader
+  // users continue from the section rather than from the nav link.
   const handleNav = (e, item) => {
     e.preventDefault();
-    setActiveNav(item.id);
-    setMenuOpen(false);
+    onNavigate(item.id);
     const el = document.getElementById(item.id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      scrollToSection(el);
+      setSectionHash(item.id);
+      if (menuOpen) pendingFocusRef.current = el;
+      else focusTarget(el);
+    }
+    setMenuOpen(false);
   };
 
   return (
@@ -51,11 +69,7 @@ const Header = ({ activeNav, setActiveNav }) => {
             <a key={item.id} href={`#${item.id}`}
               className="nav-link"
               onClick={e => handleNav(e, item)}
-              aria-current={activeNav === item.id ? 'true' : undefined}
-              style={{
-                color: activeNav === item.id ? T.text : T.textSec,
-                fontWeight: activeNav === item.id ? 500 : 400,
-              }}
+              aria-current={activeNav === item.id ? 'location' : undefined}
             >{item.label}</a>
           ))}
         </nav>
@@ -106,7 +120,7 @@ const Header = ({ activeNav, setActiveNav }) => {
             className="mobile-menu-link"
             onClick={e => handleNav(e, item)}
             tabIndex={menuOpen ? 0 : -1}
-            aria-current={activeNav === item.id ? 'true' : undefined}
+            aria-current={activeNav === item.id ? 'location' : undefined}
             style={{
               transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
               opacity: menuOpen ? 1 : 0,

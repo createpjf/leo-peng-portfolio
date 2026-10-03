@@ -1,33 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useInView from '../hooks/useInView';
-
-/* Skip expensive blur filter on mobile / touch devices */
-const MOBILE_QUERY = '(max-width: 768px)';
-const useIsMobile = () => {
-  const [mobile, setMobile] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
-  );
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const handler = (e) => setMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-  return mobile;
-};
 
 /**
  * BlurReveal — text reveals word-by-word from blurred+transparent to clear.
- * Inspired by React Bits' BlurText, implemented with pure CSS transitions.
+ * Inspired by React Bits' BlurText, implemented with pure CSS transitions
+ * (.blur-word in index.css; the blur is skipped on small screens there).
  *
  * @param {string}  text         — the text to animate
- * @param {number}  delay        — ms between each word's animation start (default 80)
+ * @param {number}  delay        — ms between each word's animation start (default 100)
  * @param {string}  animateBy    — 'words' or 'chars' (default 'words')
  * @param {string}  className    — optional wrapper className
  * @param {Object}  style        — optional wrapper inline styles
  * @param {string}  tag          — wrapper element tag (default 'p')
  * @param {number}  blurAmount   — initial blur in px (default 8)
- * @param {number}  duration     — transition duration in ms (default 600)
+ * @param {number}  duration     — transition duration in ms (default 1000)
  * @param {string}  direction    — 'up' or 'down' (default 'up')
  */
 const BlurReveal = ({
@@ -42,29 +28,27 @@ const BlurReveal = ({
   direction = 'up',
 }) => {
   const { ref, inView } = useInView({ threshold: 0.2 });
-  const isMobile = useIsMobile();
 
   const segments = animateBy === 'chars' ? text.split('') : text.split(' ');
-  const yOffset = direction === 'up' ? 20 : -20;
 
+  // Segments are flex items (block-level), which some screen readers read one
+  // per line — expose the whole text once and hide the animated segments.
   return (
-    <Tag ref={ref} className={className} style={{ ...style, display: 'flex', flexWrap: 'wrap' }}>
+    <Tag
+      ref={ref}
+      className={`blur-words ${className}${inView ? ' is-visible' : ''}`}
+      style={{
+        ...style,
+        '--word-duration': `${duration}ms`,
+        '--word-blur': `${blurAmount}px`,
+        '--word-offset': direction === 'up' ? '20px' : '-20px',
+      }}
+    >
+      <span className="sr-only">{text}</span>
       {segments.map((segment, i) => (
-        <span
-          key={i}
-          style={{
-            display: 'inline-block',
-            filter: isMobile ? 'none' : (inView ? 'blur(0px)' : `blur(${blurAmount}px)`),
-            opacity: inView ? 1 : 0,
-            transform: inView ? 'translateY(0)' : `translateY(${yOffset}px)`,
-            transition: isMobile
-              ? `opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`
-              : `filter ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms, transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${i * delay}ms`,
-            willChange: inView ? 'auto' : (isMobile ? 'opacity, transform' : 'filter, opacity, transform'),
-          }}
-        >
+        <span key={i} aria-hidden="true" className="blur-word" style={{ '--word-delay': `${i * delay}ms` }}>
           {segment}
-          {animateBy === 'words' && i < segments.length - 1 ? '\u00A0' : ''}
+          {animateBy === 'words' && i < segments.length - 1 ? ' ' : ''}
         </span>
       ))}
     </Tag>

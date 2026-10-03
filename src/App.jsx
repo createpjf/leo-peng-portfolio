@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from 'react';
-import T from './data/theme';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
@@ -11,29 +10,55 @@ import Footer from './components/Footer';
 import useIntercom from './hooks/useIntercom';
 import useScrollSpy from './hooks/useScrollSpy';
 import { useLocale } from './i18n/LocaleContext';
+import focusTarget from './utils/focusTarget';
 
 const App = () => {
-  const { content } = useLocale();
-  const [activeNav, setActiveNav] = useState('services');
-  const [showFull, setShowFull] = useState(false);
-  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
+  const { locale, content } = useLocale();
+  // null while the hero is in view so no nav item is highlighted.
+  const [activeNav, setActiveNav] = useState(null);
+  useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw', locale === 'zh' ? 'zh-CN' : 'en');
 
   // Highlight the nav item for whichever section is in view while scrolling.
+  // The hero ('intro') maps to null so scrolling back to the top clears it.
   const spySections = useMemo(
-    () => content.navItems.map(({ id }) => ({ id, label: id })),
+    () => [{ id: 'intro', label: null }, ...content.navItems.map(({ id }) => ({ id, label: id }))],
     [content.navItems],
   );
-  useScrollSpy(spySections, setActiveNav);
+  const holdActive = useScrollSpy(spySections, setActiveNav);
+
+  // A nav click highlights its target right away and keeps it while the page
+  // scrolls there.
+  const navigateTo = useCallback((id) => {
+    setActiveNav(id);
+    holdActive();
+  }, [holdActive]);
+
+  // Opening a shared link like /#work: the browser tries to jump before React
+  // has rendered the section, so scroll there once on mount.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView({ block: 'start' });
+  }, []);
 
   return (
-    <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'hidden' }}>
-      <Header activeNav={activeNav} setActiveNav={setActiveNav} />
-      <main>
-        <HeroSection />
+    <div className="app">
+      <a
+        href="#main"
+        className="skip-link"
+        onClick={(e) => {
+          e.preventDefault();
+          const main = document.getElementById('main');
+          main?.scrollIntoView({ block: 'start' });
+          focusTarget(main);
+        }}
+      >{content.ui.skipToContent}</a>
+      <Header activeNav={activeNav} onNavigate={navigateTo} />
+      <main id="main">
+        <HeroSection onNavigate={navigateTo} />
         <ServicesSection />
-        <WritingSection />
         <WorksSection />
-        <ExperienceSection showFull={showFull} setShowFull={setShowFull} />
+        <WritingSection />
+        <ExperienceSection />
         <QuoteSection />
       </main>
       <Footer />

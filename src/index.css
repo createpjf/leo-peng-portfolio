@@ -597,7 +597,7 @@ a.work-card { cursor: pointer; }
 .work-year { font-size: var(--fs-base); font-variant-numeric: tabular-nums; color: var(--text-lt); }
 
 /* ─── Experience ─── */
-.exp-list { max-width: 860px; }
+.exp-list { max-width: 860px; margin: 0 auto; }
 .exp-row { padding: 24px 0; border-bottom: 1px solid var(--border); }
 .exp-row--last { border-bottom: none; }
 .exp-date { font-size: var(--fs-base); font-variant-numeric: tabular-nums; color: var(--text-sec); }

@@ -6,6 +6,13 @@ import useCanHover from '../hooks/useCanHover';
 import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 
+// Card width: 1 column below 600px, 2 up to 1024px, 3 above (see .works-grid).
+const THUMB_SIZES = '(max-width: 599px) 100vw, (max-width: 1024px) 50vw, 33vw';
+const thumbSrcSet = (src, width = 1600) => {
+  const variant = (w) => `${src.replace(/\.webp$/, `-${w}.webp`)} ${w}w`;
+  return `${variant(960)}, ${variant(1200)}, ${src} ${width}w`;
+};
+
 const WorkCard = ({ title, category, year, children, idx, href, newTabLabel }) => {
   const [hover, setHover] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.15 });
@@ -54,7 +61,13 @@ const WorksSection = () => {
     <div className="works-grid">
       {projects.map((p, i) => (
         <WorkCard key={p.id} title={p.title} category={p.category} year={p.year} idx={i} href={p.href} newTabLabel={ui.opensInNewTab}>
-          <img src={p.heroImg} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img
+            src={p.heroImg}
+            srcSet={thumbSrcSet(p.heroImg, p.heroWidth)}
+            sizes={THUMB_SIZES}
+            alt="" loading="lazy" decoding="async"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </WorkCard>
       ))}
     </div>

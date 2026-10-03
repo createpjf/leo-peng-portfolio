@@ -37,23 +37,25 @@ const projectShared = [
     id: 'retail-os', year: '2026',
     heroImg: { en: '/retail-system-hero-en.webp', zh: '/retail-system-hero.webp' },
   },
-  { id: 'routebox', year: '2026', href: 'https://api.routebox.dev/', heroImg: '/routebox-hero.webp' },
-  { id: 'suber', year: '2026', href: 'https://github.com/createpjf/suber-macos', heroImg: '/suber-hero.webp' },
+  { id: 'routebox', year: '2026', href: 'https://api.routebox.dev/', heroImg: '/routebox-hero.webp', heroWidth: 1376 },
+  { id: 'suber', year: '2026', href: 'https://github.com/createpjf/suber-macos', heroImg: '/suber-hero.webp', heroWidth: 1376 },
   {
     id: 'openclaw', year: '2026', href: 'https://github.com/createpjf/openclaw-flock-api-platform',
-    heroImg: '/openclaw-hero.webp',
+    heroImg: '/openclaw-hero.webp', heroWidth: 1376,
   },
-  { id: 'cleo', year: '2026', href: 'https://github.com/createpjf/cleo-dev', heroImg: '/cleo-hero.webp' },
+  { id: 'cleo', year: '2026', href: 'https://github.com/createpjf/cleo-dev', heroImg: '/cleo-hero.webp', heroWidth: 1376 },
   { id: 'guizhou-fc', year: '2026', href: 'https://www.guizhou-fc.com/', heroImg: '/guizhoufc-hero.webp' },
   {
     id: 'brand-film', year: '2024', href: 'https://www.youtube.com/watch?v=ntZSYRKRlbg',
-    heroImg: '/film-hero.webp',
+    heroImg: '/film-hero.webp', heroWidth: 1376,
   },
   {
     id: 'agent-worlds', year: '2025',
-    href: 'https://mp.weixin.qq.com/s/D6x7-5p8Inb_acqhCSp4CA?scene=1', heroImg: '/article-hero.webp',
+    href: 'https://mp.weixin.qq.com/s/D6x7-5p8Inb_acqhCSp4CA?scene=1', heroImg: '/article-hero.webp', heroWidth: 1376,
   },
 ];
+// Every hero image also has "-960.webp" and "-1200.webp" (px wide) variants
+// for srcset; heroWidth is the original's width (1600 unless noted).
 
 const writingShared = [
   { id: 'crypto-ai', date: '2026-02-16', href: 'https://x.com/createpjf/status/2023264735240630697', source: 'X' },
@@ -72,6 +74,7 @@ const copy = {
       description: 'Leo Peng is a Creative Technologist and AI Customer Success partner. He helps customers succeed with AI in an FDE model, from discovery to delivery.',
       socialDescription: 'Creative Technologist · AI Customer Success. Help customers succeed with AI in an FDE model.',
       ogLocale: 'en_US',
+      canonicalUrl: 'https://createpjf.com/',
       jobTitle: 'Creative Technologist · AI Customer Success',
       knowsAbout: ['AI Customer Success', 'Forward Deployed Engineering', 'Creative Technology', 'AI Systems', 'Solution Architecture'],
       workLocation: 'Shanghai',
@@ -153,6 +156,7 @@ const copy = {
       description: 'Leo Peng 是创意技术人与 AI 客户成功伙伴。以 FDE 模式帮助客户把 AI 真正用起来，从需求梳理到上线交付。',
       socialDescription: '创意技术人 · AI 客户成功。以 FDE 模式帮助客户在 AI 上获得成功。',
       ogLocale: 'zh_CN',
+      canonicalUrl: 'https://createpjf.com/?lang=zh',
       jobTitle: '创意技术人 · AI 客户成功',
       knowsAbout: ['AI 客户成功', 'Forward Deployed Engineering', '创意技术', 'AI 系统', '方案架构'],
       workLocation: '上海',

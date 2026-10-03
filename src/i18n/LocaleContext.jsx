@@ -42,6 +42,19 @@ const updateMeta = (selector, value) => {
   if (element) element.setAttribute('content', value);
 };
 
+// Each locale is its own URL (?lang=zh), so the canonical link follows it.
+// It is set here rather than in index.html so the raw HTML never carries a
+// canonical that contradicts the Chinese page.
+const updateCanonical = (href) => {
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
+};
+
 const updateStructuredData = (meta) => {
   const element = document.querySelector('script[type="application/ld+json"]');
   if (!element) return;
@@ -78,6 +91,8 @@ export const LocaleProvider = ({ children }) => {
     updateMeta('meta[property="og:title"]', content.meta.title);
     updateMeta('meta[property="og:description"]', content.meta.socialDescription);
     updateMeta('meta[property="og:locale"]', content.meta.ogLocale);
+    updateMeta('meta[property="og:url"]', content.meta.canonicalUrl);
+    updateCanonical(content.meta.canonicalUrl);
     updateMeta('meta[name="twitter:title"]', content.meta.title);
     updateMeta('meta[name="twitter:description"]', content.meta.socialDescription);
     updateStructuredData(content.meta);

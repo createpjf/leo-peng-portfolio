@@ -5,13 +5,16 @@ import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 import prefersReducedMotion, { REDUCED_MOTION_QUERY } from '../utils/prefersReducedMotion';
 
+// Visitors with Data Saver on skip the ~1.2 MB intro video (poster only).
+const prefersSaveData = () => typeof navigator !== 'undefined' && navigator.connection?.saveData === true;
+
 const HeroSection = () => {
   const { content } = useLocale();
   const { personalInfo, expertisePills, ui } = content;
   const videoRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
-  // Reduced-motion users get the static poster only (no autoplaying video).
-  const [videoRemoved, setVideoRemoved] = useState(prefersReducedMotion);
+  // Reduced-motion and Data Saver users get the static poster only.
+  const [videoRemoved, setVideoRemoved] = useState(() => prefersReducedMotion() || prefersSaveData());
 
   useEffect(() => {
     const v = videoRef.current;

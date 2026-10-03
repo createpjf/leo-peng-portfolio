@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import PillWithTooltip from './PillWithTooltip';
 import { useLocale } from '../i18n/LocaleContext';
 import prefersReducedMotion, { REDUCED_MOTION_QUERY } from '../utils/prefersReducedMotion';
+import scrollToSection from '../utils/scrollToSection';
+import focusTarget from '../utils/focusTarget';
 
 // Visitors with Data Saver on skip the ~1.2 MB intro video (poster only).
 const prefersSaveData = () => typeof navigator !== 'undefined' && navigator.connection?.saveData === true;
@@ -9,7 +11,7 @@ const prefersSaveData = () => typeof navigator !== 'undefined' && navigator.conn
 // Headline words fade up one after another, 80ms apart.
 const wordDelay = (i) => ({ '--word-delay': `${i * 0.08}s` });
 
-const HeroSection = () => {
+const HeroSection = ({ onNavigate }) => {
   const { content } = useLocale();
   const { personalInfo, expertisePills, ui } = content;
   const videoRef = useRef(null);
@@ -39,6 +41,16 @@ const HeroSection = () => {
     const timer = setTimeout(() => setVideoRemoved(true), 2800); // 2.5s transition + buffer
     return () => clearTimeout(timer);
   }, [videoEnded]);
+
+  // Primary CTA: jump to the contact details in the footer, the same way the
+  // header's "Contact" link does (highlight it, scroll, move focus there).
+  const goToContact = (e) => {
+    e.preventDefault();
+    const contact = document.getElementById('contact');
+    onNavigate?.('contact');
+    scrollToSection(contact);
+    focusTarget(contact);
+  };
 
   return (
     <section id="intro" className="hero-grid">
@@ -129,10 +141,15 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" className="resume-link">
-          {ui.viewResume} <span className="resume-arrow" aria-hidden="true">&rarr;</span>
-          <span className="sr-only">{ui.opensInNewTab}</span>
-        </a>
+        <div className="hero-actions">
+          <a href="#contact" className="hero-cta" onClick={goToContact}>
+            {ui.getInTouch} <span className="hero-cta-arrow" aria-hidden="true">&darr;</span>
+          </a>
+          <a href="https://www.linkedin.com/in/leopeng2023/" target="_blank" rel="noopener noreferrer" className="hero-link">
+            {ui.linkedin} <span className="hero-link-arrow" aria-hidden="true">&#8599;</span>
+            <span className="sr-only">{ui.opensInNewTab}</span>
+          </a>
+        </div>
       </div>
     </section>
   );

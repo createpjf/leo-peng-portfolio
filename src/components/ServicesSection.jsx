@@ -19,8 +19,11 @@ const ServicesSection = () => {
             className={`service-card reveal${inView ? ' is-visible' : ''}`}
             style={{ '--reveal-delay': `${i * 0.1}s` }}
           >
-            <span className="service-num">{s.num}</span>
-            <div className="service-icon">{ServiceIcons[s.iconType]}</div>
+            {/* Stacked on desktop; one row on single-column (phone) layouts */}
+            <div className="service-head">
+              <span className="service-num">{s.num}</span>
+              <div className="service-icon">{ServiceIcons[s.iconType]}</div>
+            </div>
             <h3 className="service-title">{s.title}</h3>
             <p className="service-desc">{s.desc}</p>
             <div className="service-tags">

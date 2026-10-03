@@ -47,10 +47,10 @@ const App = () => {
       >{content.ui.skipToContent}</a>
       <Header activeNav={activeNav} onNavigate={navigateTo} />
       <main id="main">
-        <HeroSection />
+        <HeroSection onNavigate={navigateTo} />
         <ServicesSection />
-        <WritingSection />
         <WorksSection />
+        <WritingSection />
         <ExperienceSection />
         <QuoteSection />
       </main>

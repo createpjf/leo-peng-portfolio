@@ -109,7 +109,15 @@ const PillWithTooltip = ({ pill }) => {
         }}
         aria-describedby={tooltipId}
       >
-        <span className="pill-item">{pill.label}</span>
+        <span className="pill-item">
+          {pill.label}
+          {/* ⓘ cue: the pill reveals a description on hover / tap / focus */}
+          <svg className="pill-info" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <circle cx="8" cy="8" r="6.75" fill="none" stroke="currentColor" strokeWidth="1.25" />
+            <path d="M8 7.25v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="8" cy="4.9" r="0.95" fill="currentColor" />
+          </svg>
+        </span>
       </button>
       <span
         ref={tipRef}

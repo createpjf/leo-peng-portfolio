@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
-import prefersReducedMotion from '../utils/prefersReducedMotion';
+import scrollToSection from '../utils/scrollToSection';
 import focusTarget from '../utils/focusTarget';
 
 const Header = ({ activeNav, onNavigate }) => {
@@ -49,7 +49,7 @@ const Header = ({ activeNav, onNavigate }) => {
     onNavigate(item.id);
     const el = document.getElementById(item.id);
     if (el) {
-      el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+      scrollToSection(el);
       if (menuOpen) pendingFocusRef.current = el;
       else focusTarget(el);
     }

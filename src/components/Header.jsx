@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import T from '../data/theme';
 import { useLocale } from '../i18n/LocaleContext';
 import LanguageSwitch from './LanguageSwitch';
 import prefersReducedMotion from '../utils/prefersReducedMotion';
@@ -70,10 +69,6 @@ const Header = ({ activeNav, onNavigate }) => {
               className="nav-link"
               onClick={e => handleNav(e, item)}
               aria-current={activeNav === item.id ? 'location' : undefined}
-              style={{
-                color: activeNav === item.id ? T.text : T.textSec,
-                fontWeight: activeNav === item.id ? 500 : 400,
-              }}
             >{item.label}</a>
           ))}
         </nav>

@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import T from './data/theme';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
@@ -17,7 +16,6 @@ const App = () => {
   const { content } = useLocale();
   // null while the hero is in view so no nav item is highlighted.
   const [activeNav, setActiveNav] = useState(null);
-  const [showFull, setShowFull] = useState(false);
   useIntercom(import.meta.env.VITE_INTERCOM_APP_ID || 'm0eitavw');
 
   // Highlight the nav item for whichever section is in view while scrolling.
@@ -36,9 +34,7 @@ const App = () => {
   }, [holdActive]);
 
   return (
-    // overflow-x: clip (not hidden) — hidden turns this div into a scroll
-    // container, which stops the sticky header from sticking to the viewport.
-    <div style={{ fontFamily: T.font, backgroundColor: T.bg, color: T.text, lineHeight: 1.5, overflowX: 'clip' }}>
+    <div className="app">
       <a
         href="#main"
         className="skip-link"
@@ -55,7 +51,7 @@ const App = () => {
         <ServicesSection />
         <WritingSection />
         <WorksSection />
-        <ExperienceSection showFull={showFull} setShowFull={setShowFull} />
+        <ExperienceSection />
         <QuoteSection />
       </main>
       <Footer />

@@ -1,5 +1,3 @@
-import T from '../data/theme';
-import F from '../data/typography';
 import BlurReveal from './BlurReveal';
 import { useLocale } from '../i18n/LocaleContext';
 
@@ -8,7 +6,7 @@ const QuoteSection = () => {
   const { personalInfo } = content;
 
   return (
-  <section className="quote-section" style={{ padding: '80px 40px', textAlign: 'center', borderBottom: `1px solid ${T.border}` }}>
+  <section className="quote-section">
     <BlurReveal
       key={locale}
       text={personalInfo.quote}
@@ -17,15 +15,9 @@ const QuoteSection = () => {
       blurAmount={10}
       duration={700}
       animateBy="words"
-      style={{
-        fontSize: 'clamp(1.375rem, 3vw, 2.25rem)', fontWeight: 400, fontStyle: 'italic',
-        lineHeight: 1.4, maxWidth: 680, margin: '0 auto 20px', letterSpacing: '-0.02em', color: T.text,
-        justifyContent: 'center',
-      }}
+      className="quote-text"
     />
-    <p style={{
-      fontSize: F.md, color: T.textLt, fontWeight: 400, marginTop: 16, letterSpacing: '0.02em',
-    }}>{personalInfo.quoteAttribution}</p>
+    <p className="quote-attribution">{personalInfo.quoteAttribution}</p>
   </section>
   );
 };

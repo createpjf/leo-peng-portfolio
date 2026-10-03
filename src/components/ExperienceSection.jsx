@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
-import T from '../data/theme';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
-import useCanHover from '../hooks/useCanHover';
-import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 
-const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
+const ExpRow = ({ item, isLast, idx }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
-  const canHover = useCanHover();
   return (
   <div
     ref={ref}
-    className="exp-row"
-    onMouseEnter={() => canHover && setHoveredIdx(idx)}
-    onMouseLeave={() => canHover && setHoveredIdx(null)}
-    style={{
-      padding: '24px 0',
-      borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
-      transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
-      opacity: inView ? 1 : 0,
-      transform: inView
-        ? (hoveredIdx === idx ? 'translateX(8px)' : 'translateX(0)')
-        : 'translateY(20px)',
-    }}
+    className={`exp-row reveal${inView ? ' is-visible' : ''}${isLast ? ' exp-row--last' : ''}`}
+    style={{ '--reveal-delay': `${idx * 0.1}s` }}
   >
-    <span style={{ fontSize: F.base, fontVariantNumeric: 'tabular-nums', color: T.textSec }}>{item.date}</span>
+    <span className="exp-date">{item.date}</span>
     <div>
-      <h3 style={{ fontSize: F.lg, fontWeight: 500, display: 'block', marginBottom: 2 }}>{item.role}</h3>
-      <span style={{ fontSize: F.base, color: T.textSec, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-        {item.logo && <img src={item.logo} alt="" loading="lazy" decoding="async" style={{ height: 18, maxWidth: 48, borderRadius: 3, objectFit: 'contain' }} />}
+      <h3 className="exp-role">{item.role}</h3>
+      <span className="exp-company">
+        {item.logo && <img src={item.logo} alt="" loading="lazy" decoding="async" className="exp-logo" />}
         {item.company}
       </span>
     </div>
@@ -38,16 +24,16 @@ const ExpRow = ({ item, isLast, hoveredIdx, idx, setHoveredIdx }) => {
   );
 };
 
-const ExperienceSection = ({ showFull, setShowFull }) => {
+const ExperienceSection = () => {
   const { content } = useLocale();
   const { experienceData, extraExperience, ui } = content;
-  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [showFull, setShowFull] = useState(false);
   const baseCount = experienceData.length;
 
   return (
-    <section id="experience" className="section-pad" style={{ padding: '80px 40px', borderBottom: `1px solid ${T.border}` }}>
+    <section id="experience" className="section-pad section-divider">
       <FadeWords key={ui.sections.experience} text={ui.sections.experience} className="section-title" />
-      <div style={{ maxWidth: 860, margin: '0 auto' }}>
+      <div className="exp-list">
         {/* Base items — always visible */}
         {experienceData.map((item, i) => (
           <ExpRow
@@ -55,8 +41,6 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
             item={item}
             idx={i}
             isLast={!showFull && i === baseCount - 1}
-            hoveredIdx={hoveredIdx}
-            setHoveredIdx={setHoveredIdx}
           />
         ))}
 
@@ -64,41 +48,29 @@ const ExperienceSection = ({ showFull, setShowFull }) => {
             screen readers and Tab skip the visually hidden rows */}
         <div
           id="experience-extra"
+          className={`exp-extra${showFull ? ' is-open' : ''}`}
           inert={showFull ? undefined : ''}
           aria-hidden={showFull ? undefined : true}
-          style={{
-            display: 'grid',
-            gridTemplateRows: showFull ? '1fr' : '0fr',
-            opacity: showFull ? 1 : 0,
-            transition: 'grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease',
-          }}
         >
-          <div style={{ overflow: 'hidden' }}>
+          <div className="exp-extra-inner">
             {extraExperience.map((item, i) => (
               <ExpRow
                 key={item.id}
                 item={item}
                 idx={baseCount + i}
                 isLast={i === extraExperience.length - 1}
-                hoveredIdx={hoveredIdx}
-                setHoveredIdx={setHoveredIdx}
               />
             ))}
           </div>
         </div>
       </div>
-      <div style={{ maxWidth: 860, margin: '0 auto' }}>
+      <div className="exp-list">
         <button
+          type="button"
           className="exp-toggle"
           onClick={() => setShowFull(!showFull)}
           aria-expanded={showFull}
           aria-controls="experience-extra"
-          style={{
-            display: 'block', width: '100%', textAlign: 'center',
-            border: `1px solid ${T.text}`, padding: 14, fontSize: F.base,
-            textTransform: 'uppercase', letterSpacing: '0.08em',
-            marginTop: 24, cursor: 'pointer', fontFamily: T.font,
-          }}
         >{showFull ? ui.showLess : ui.seeMore}</button>
       </div>
     </section>

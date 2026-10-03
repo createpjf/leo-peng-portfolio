@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import T from '../data/theme';
+import React from 'react';
 import FadeWords from './FadeWords';
 import useInView from '../hooks/useInView';
-import useCanHover from '../hooks/useCanHover';
-import F from '../data/typography';
 import { useLocale } from '../i18n/LocaleContext';
 
 const fmtDate = (d, locale) => {
@@ -18,10 +15,8 @@ const fmtDate = (d, locale) => {
   }).format(new Date(Date.UTC(Number(year), Number(parts[1]) - 1, 1)));
 };
 
-const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale, newTabLabel }) => {
-  const [hover, setHover] = useState(false);
+const WritingRow = ({ title, desc, date, href, source, idx, locale, newTabLabel }) => {
   const { ref, inView } = useInView({ threshold: 0.15 });
-  const canHover = useCanHover();
 
   return (
     <a
@@ -29,61 +24,19 @@ const WritingRow = ({ title, desc, date, href, source, idx, isLast, locale, newT
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="writing-row"
-      onMouseEnter={() => canHover && setHover(true)}
-      onMouseLeave={() => canHover && setHover(false)}
-      style={{
-        padding: '20px 0',
-        borderBottom: isLast ? 'none' : `1px solid ${T.border}`,
-        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${idx * 0.1}s`,
-        opacity: inView ? 1 : 0,
-        transform: inView
-          ? (hover ? 'translateX(8px)' : 'translateX(0)')
-          : 'translateY(20px)',
-        textDecoration: 'none',
-        color: 'inherit',
-      }}
+      className={`writing-row reveal${inView ? ' is-visible' : ''}`}
+      style={{ '--reveal-delay': `${idx * 0.1}s` }}
     >
-      <span style={{
-        fontSize: F.base,
-        fontVariantNumeric: 'tabular-nums',
-        color: T.textSec,
-      }}>
-        {fmtDate(date, locale)}
-      </span>
+      <span className="writing-date">{fmtDate(date, locale)}</span>
 
-      <span style={{
-        fontSize: F.lg,
-        fontWeight: 500,
-        color: hover ? T.accent : T.text,
-        transition: 'color 0.2s',
-      }}>
+      <span className="writing-title">
         {title}
-        {desc && (
-          <span style={{
-            fontSize: F.sm, fontWeight: 400, color: T.textLt, marginLeft: 10, fontStyle: 'italic',
-          }}>
-            —&nbsp;&nbsp;{desc}
-          </span>
-        )}
+        {desc && <span className="writing-desc">—&nbsp;&nbsp;{desc}</span>}
       </span>
 
-      <span style={{
-        fontSize: F.xs,
-        textTransform: 'uppercase',
-        letterSpacing: '0.08em',
-        color: T.textLt,
-        whiteSpace: 'nowrap',
-      }}>
+      <span className="writing-source">
         {source || ''}
-        <span aria-hidden="true" style={{
-          display: 'inline-block',
-          marginLeft: 8,
-          transition: 'transform 0.2s',
-          transform: hover ? 'translateX(3px)' : 'translateX(0)',
-        }}>
-          &#8599;
-        </span>
+        <span aria-hidden="true" className="writing-arrow">&#8599;</span>
       </span>
       <span className="sr-only">{newTabLabel}</span>
     </a>
@@ -95,14 +48,7 @@ const WritingSection = () => {
   const { writings, ui } = content;
 
   return (
-  <section
-    id="writing"
-    className="section-pad"
-    style={{
-      padding: '80px 40px',
-      borderBottom: `1px solid ${T.border}`,
-    }}
-  >
+  <section id="writing" className="section-pad section-divider">
     <FadeWords key={ui.sections.writing} text={ui.sections.writing} className="section-title" />
     <div>
       {writings.map((w, i) => (
@@ -116,7 +62,6 @@ const WritingSection = () => {
           idx={i}
           locale={locale}
           newTabLabel={ui.opensInNewTab}
-          isLast={i === writings.length - 1}
         />
       ))}
     </div>

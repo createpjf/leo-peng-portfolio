@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
-import T from '../data/theme';
-import F from '../data/typography';
 
-/* Minimum distance between the tooltip bubble and the viewport edge */
+/* Minimum distance between the tooltip bubble and the viewport edge
+   (.pill-tooltip's max-width in index.css uses 2 × GUTTER) */
 const GUTTER = 12;
 
 /* :focus-visible throws in browsers that don't support it (Safari < 15.4) */
@@ -83,14 +82,11 @@ const PillWithTooltip = ({ pill }) => {
   useEffect(() => () => clearTimeout(timer.current), []);
 
   return (
-    <span ref={wrapRef} style={{ position: 'relative', display: 'inline-block' }}>
+    <span ref={wrapRef} className={`pill${open ? ' is-open' : ''}`}>
       <button
         ref={buttonRef}
         type="button"
-        style={{
-          display: 'block',
-          background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer',
-        }}
+        className="pill-button"
         onPointerDown={(e) => { pointerType.current = e.pointerType; }}
         // Hover only for real mice — touch fires emulated enter events too.
         onPointerEnter={(e) => { if (e.pointerType === 'mouse') show(); }}
@@ -113,42 +109,18 @@ const PillWithTooltip = ({ pill }) => {
         }}
         aria-describedby={tooltipId}
       >
-        <span
-          className="pill-item"
-          style={{
-            display: 'block',
-            border: `1px solid ${T.border}`,
-            padding: '10px 24px', fontSize: F.base, borderRadius: 3,
-            transition: 'all 0.25s ease',
-            background: open ? '#000' : 'transparent',
-            color: open ? '#fff' : T.text,
-            borderColor: open ? '#000' : T.border,
-          }}
-        >{pill.label}</span>
+        <span className="pill-item">{pill.label}</span>
       </button>
-      <span ref={tipRef} id={tooltipId} role="tooltip" className="pill-tooltip" style={{
-        position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%',
-        transform: `translateX(calc(-50% + ${shift}px)) translateY(${open ? '0' : '4px'})`,
-        background: '#000', color: '#fff',
-        fontSize: F.sm, lineHeight: 1.55, padding: '10px 16px',
-        borderRadius: 10, pointerEvents: 'none',
-        width: 240, maxWidth: `calc(100vw - ${GUTTER * 2}px)`, textAlign: 'center',
-        opacity: open ? 1 : 0,
-        visibility: open ? 'visible' : 'hidden',
-        transition: 'opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease',
-        letterSpacing: '-0.01em',
-        zIndex: 20,
-      }}>
+      <span
+        ref={tipRef}
+        id={tooltipId}
+        role="tooltip"
+        className="pill-tooltip"
+        style={{ transform: `translateX(calc(-50% + ${shift}px)) translateY(${open ? '0' : '4px'})` }}
+      >
         {pill.desc}
         {/* Arrow keeps pointing at the pill centre when the bubble is shifted */}
-        <span style={{
-          position: 'absolute', top: '100%', left: `calc(50% - ${shift}px)`,
-          transform: 'translateX(-50%)',
-          width: 0, height: 0,
-          borderLeft: '7px solid transparent',
-          borderRight: '7px solid transparent',
-          borderTop: '7px solid #000',
-        }} />
+        <span className="pill-tooltip-arrow" style={{ left: `calc(50% - ${shift}px)` }} />
       </span>
     </span>
   );
